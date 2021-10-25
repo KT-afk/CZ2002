@@ -1,5 +1,6 @@
 package cz2002;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class RestaurantApplication {
@@ -9,17 +10,16 @@ public class RestaurantApplication {
 		System.out.println("Welcome to Restaurant Reservation Management System");
 
 		while(true) {
-			System.out.println("\nPlease select one of the following options: ");
-			System.out.println("1) Manage Menu Items");
-			System.out.println("2) Manage Promotion Sets");
-			System.out.println("3) Manage Orders");
-			System.out.println("4) Manage Reservations");
-			System.out.println("5) Check Table Availability");
-			System.out.println("6) Print Order Invoice");
-			System.out.println("7) Print Sale Revenue Report");
-			System.out.println("8) Quit");
-			System.out.print("> ");
-			int option = sc.nextInt();
+			int option = Prompt(sc,
+		"Manage Menu Items",
+				"Manage Promotion Sets",
+				"Manage Orders",
+				"Manage Reservations",
+				"Check Table Availability",
+				"Print Order Invoice",
+				"Print Sale Revenue Report",
+				"Quit"
+			);
 
 			if(option == 1)
 				ManageMenu(sc);
@@ -37,18 +37,11 @@ public class RestaurantApplication {
 				PrintRevenueReport(sc);
 			else if(option == 8)
 				break;
-			else
-				System.out.println("You have selected an invalid option");
 		}
 	}
 
 	public static void ManageMenu(Scanner sc) {
-		System.out.println("\nPlease select one of the following options: ");
-		System.out.println("1) Create Menu Item");
-		System.out.println("2) Edit Menu Item");
-		System.out.println("3) Remove Menu Item");
-		System.out.print("> ");
-		int option = sc.nextInt();
+		int option = Prompt(sc, "Create Menu Item", "Edit Menu Item", "Remove Menu Item");
 
 		if(option == 1)
 			; // Placeholder
@@ -56,19 +49,10 @@ public class RestaurantApplication {
 			; // Placeholder
 		else if(option == 3)
 			; // Placeholder
-		else {
-			System.out.println("You have selected an invalid option..");
-			ManageMenu(sc);
-		}
 	}
 
 	public static void ManagePromotionSet(Scanner sc) {
-		System.out.println("\nPlease select one of the following options: ");
-		System.out.println("1) Create Promotion Set");
-		System.out.println("2) Edit Promotion Set");
-		System.out.println("3) Remove Promotion Set");
-		System.out.print("> ");
-		int option = sc.nextInt();
+		int option = Prompt(sc, "Create Promotion Set", "Edit Promotion Set", "Remove Promotion Set");
 
 		if(option == 1)
 			; // Placeholder
@@ -76,19 +60,10 @@ public class RestaurantApplication {
 			; // Placeholder
 		else if(option == 3)
 			; // Placeholder
-		else {
-			System.out.println("You have selected an invalid option..");
-			ManagePromotionSet(sc);
-		}
 	}
 
 	public static void ManageOrder(Scanner sc) {
-		System.out.println("\nPlease select one of the following options: ");
-		System.out.println("1) Create Order");
-		System.out.println("2) View Order");
-		System.out.println("3) Edit Order");
-		System.out.print("> ");
-		int option = sc.nextInt();
+		int option = Prompt(sc, "Create Order", "View Order", "Edit Order");
 
 		if(option == 1)
 			; // Placeholder
@@ -96,19 +71,10 @@ public class RestaurantApplication {
 			; // Placeholder
 		else if(option == 3)
 			; // Placeholder
-		else {
-			System.out.println("You have selected an invalid option..");
-			ManageOrder(sc);
-		}
 	}
 
 	public static void ManageReservation(Scanner sc) {
-		System.out.println("\nPlease select one of the following options: ");
-		System.out.println("1) Create Reservation Booking");
-		System.out.println("2) View Reservation Booking");
-		System.out.println("3) Remove Reservation Booking");
-		System.out.print("> ");
-		int option = sc.nextInt();
+		int option = Prompt(sc,"Create Reservation Booking", "View Reservation Booking", "Remove Reservation Booking");
 
 		if(option == 1)
 			; // Placeholder
@@ -116,10 +82,6 @@ public class RestaurantApplication {
 			; // Placeholder
 		else if(option == 3)
 			; // Placeholder
-		else {
-			System.out.println("You have selected an invalid option..");
-			ManageReservation(sc);
-		}
 	}
 
 	public static void CheckAvailability(Scanner sc) {
@@ -132,5 +94,28 @@ public class RestaurantApplication {
 
 	public static void PrintRevenueReport(Scanner sc) {
 		// Placeholder
+	}
+
+	// Utility Functions
+	public static int Prompt(Scanner scanner, String... options) {
+		System.out.println("\nPlease select one of the following options: ");
+		for(int i = 1; i <= options.length; i++)
+			System.out.printf("%d) %s\n", i, options[i-1]);
+		System.out.print("> ");
+
+		try {
+			int option = scanner.nextInt();
+			if(option > options.length)
+				throw new Exception();
+
+			return option;
+		} catch (Exception e) {
+			// Clear buffer if there's an error
+			if(e instanceof InputMismatchException)
+				scanner.next();
+
+			System.out.println("You have selected an invalid option..");
+			return Prompt(scanner, options);
+		}
 	}
 }
