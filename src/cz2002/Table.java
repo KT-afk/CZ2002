@@ -18,18 +18,8 @@ public class Table {
 	{
 		return Status;
 	}
-	public boolean reserveTable(int noOfPeople)
-	{
-		if(noOfPeople <= Capacity)
-		{
-			Status = "occupied";
-			return true;
-		}
-		else 
-			return false;
-			
-	}
-	public void removeBooking()
+	
+	public void freeTable()
 	{
 		Status = "vacant";
 	}
