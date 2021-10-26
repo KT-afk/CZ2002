@@ -1,5 +1,6 @@
 package cz2002;
 
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ public class RestaurantApplication {
 				"Check Table Availability",
 				"Print Order Invoice",
 				"Print Sale Revenue Report",
+				"Change Date/Time",
 				"Quit"
 			);
 
@@ -98,7 +100,10 @@ public class RestaurantApplication {
 
 	// Utility Functions
 	public static int Prompt(Scanner scanner, String... options) {
-		System.out.println("\nPlease select one of the following options: ");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		System.out.println();
+		System.out.println(SystemClock.GetCurrentDateTime().format(formatter));
+		System.out.println("Please select one of the following options: ");
 		for(int i = 1; i <= options.length; i++)
 			System.out.printf("%d) %s\n", i, options[i-1]);
 		System.out.print("> ");
