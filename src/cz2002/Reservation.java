@@ -50,7 +50,7 @@ public class Reservation {
 	}
 	public Customer getCustomer()
 	{
-		
+		return customer;
 	}
 	
 }
