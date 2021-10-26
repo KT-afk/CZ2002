@@ -3,11 +3,17 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class Restaurant {
+	private static final int MAX_TABLE = 20;
 	private String NameOfRestaurant;
 	private String Address;
 	private String OpeningHours;
+	private ArrayList<Reservation> reservedList;
+	private ArrayList<Order> orderList;
+	private ArrayList<Table> tableList;
+	private int tableVacant;
 	//Order order = new Order();
 	
 	//Constructor
@@ -25,25 +31,20 @@ public class Restaurant {
 		System.out.println("Restaurant: " + this.NameOfRestaurant);
 		System.out.println("Address: " + this.Address);
 		System.out.println("Opening Hours: " + this.OpeningHours);
+		System.out.println("-----------------------------------");
 	}
 	
 	public void newReservation() {
 		Scanner sc = new Scanner(System.in);
 		//Reservation resv = new Reservation();
 		
-		System.out.println("Enter name");
-		System.out.println("----------------------");
-		System.out.println("Name : ");
+		System.out.println("Enter name: ");
 		String namein = sc.nextLine();
 		
-		System.out.println("Enter contact no.");
-		System.out.println("----------------------");
-		System.out.println("Contact : ");
+		System.out.println("Enter contact no.: ");
 		int contactin = sc.nextInt();
 		
-		System.out.println("Enter reservation date");
-		System.out.println("----------------------");
-		System.out.println("Date (dd/mm/yyyy) : ");
+		System.out.println("Enter reservation date (dd/mm/yyyy): ");
 		String datein = sc.nextLine(); 
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -56,9 +57,7 @@ public class Restaurant {
 		    e.printStackTrace();
 		}
 		
-		System.out.println("Enter reservation time");
-		System.out.println("----------------------");
-		System.out.println("Time (hh:mm) : ");
+		System.out.println("Enter reservation time (hh:mm): ");
 		String timein = sc.nextLine();
 		
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("hh:mm");
@@ -72,9 +71,7 @@ public class Restaurant {
 		}
 		//System.out.println("Time: " + dateFormat1.format(timein));
 		
-		System.out.println("Enter number of pax");
-		System.out.println("----------------------");
-		System.out.println("No. : ");
+		System.out.println("Enter number of pax: ");
 		int paxno = sc.nextInt();
 		
 		
