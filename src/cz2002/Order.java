@@ -26,5 +26,11 @@ public class Order{
 		if(orderItems.remove(item)) return "Item remove successfully";
 		else return "This item does not exist in this order";
 	}
-	
+	public double totalPrice(){
+		double totalPrice =0;
+		for(int i=0;i<orderItems.size();i++){
+			totalPrice+=orderItems.get(i).price;
+		}
+		return totalPrice;
+	}
 }
