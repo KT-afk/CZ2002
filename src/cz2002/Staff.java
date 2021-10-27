@@ -1,6 +1,6 @@
 import Person.Gender;
 
-public class Customer extends Person{
+public class Staff extends Person{
 	public static Integer StaffIDcounter=0;
 	private Integer id;
 	private String jobTitle;
