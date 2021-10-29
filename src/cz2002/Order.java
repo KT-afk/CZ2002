@@ -1,13 +1,15 @@
 import java.util.ArrayList;
-
+import java.util.Date;
 public class Order{
 	private Staff creator;
 	private ArrayList<MenuItem> orderItems;
 	private Reservation reserveInfo;
-	public Order(Staff creator, Array<MenuItem> orderItems, Reservation reserveInfo ) {
+	private Date date;
+	public Order(Staff creator, Array<MenuItem> orderItems, Reservation reserveInfo, Date date ) {
 		this.creator = creator;
 		this.orderItems = orderItems;
 		this.reserveInfo = reserveInfo;
+		this.date = date;
 	}
 	public Staff getCreator() {
 		return creator;
@@ -18,6 +20,8 @@ public class Order{
 	public Reservation getReserveInfo() {
 		return reserveInfo;
 	}
+	public Date getDate(){
+		return date;
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";
 		else return "Item already exist";
