@@ -28,7 +28,7 @@ public class Order{
 		return end;
 	}
 	public int getDuration(){
-		return ((start.getTime() - end.getTime)/(1000*60))
+		return ((start.getTime() - end.getTime)/(1000*60));
 	}
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";
