@@ -4,12 +4,13 @@ public class Order{
 	private Staff creator;
 	private ArrayList<MenuItem> orderItems;
 	private Reservation reserveInfo;
-	private Date date;
-	public Order(Staff creator, Array<MenuItem> orderItems, Reservation reserveInfo, Date date ) {
+	private Date start, end;
+	public Order(Staff creator, Array<MenuItem> orderItems, Reservation reserveInfo, Date start, Date end ) {
 		this.creator = creator;
 		this.orderItems = orderItems;
 		this.reserveInfo = reserveInfo;
-		this.date = date;
+		this.start = start;
+		this.end = end;
 	}
 	public Staff getCreator() {
 		return creator;
@@ -20,8 +21,15 @@ public class Order{
 	public Reservation getReserveInfo() {
 		return reserveInfo;
 	}
-	public Date getDate(){
-		return date;
+	public Date getStart(){
+		return start;
+	}
+	public Date getEnd(){
+		return end;
+	}
+	public int getDuration(){
+		return ((start.getTime() - end.getTime)/(1000*60))
+	}
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";
 		else return "Item already exist";
