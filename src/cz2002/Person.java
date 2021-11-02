@@ -1,3 +1,5 @@
+package cz2002;
+
 public class Person{
 	public enum Gender{
 		Male,

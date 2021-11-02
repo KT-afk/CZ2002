@@ -1,7 +1,6 @@
+package cz2002;
 
-import Person.Gender;
-
-public class Customer extends Person{
+public class Customer extends Person {
 	public static Integer CustIDcounter=0;
 	private Integer id;
 	private boolean membership;
