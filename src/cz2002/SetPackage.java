@@ -15,8 +15,19 @@ public class SetPackage extends MenuItem{
 	{
 		listOfDishes.add(food);
 	}
+
+	public void removeFood(FoodDish food)
+	{
+		listOfDishes.remove(food);
+	}
+
 	public ArrayList<FoodDish> getPackageItems()
 	{
 		return listOfDishes;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%6s %-20s $%.2f", getEnabled() ? "[ ]": "[*]", getName(), getPrice());
 	}
 }

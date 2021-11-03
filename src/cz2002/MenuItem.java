@@ -4,9 +4,11 @@ public class MenuItem {
 	private String name;
 	private String description;
 	private double price;
+	private boolean enabled;
 	
 	public MenuItem(String name, String description, double price)
 	{
+		this.enabled = true;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -24,6 +26,7 @@ public class MenuItem {
 	{
 		price = newPrice;
 	}
+	public boolean toggleEnable() { enabled = !enabled; return enabled; }
 	
 	public String getName()
 	{
@@ -37,4 +40,5 @@ public class MenuItem {
 	{
 		return price;
 	}
+	public boolean getEnabled() { return enabled; }
 }
