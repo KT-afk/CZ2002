@@ -43,10 +43,10 @@ public class Reservation implements Serializable{
 	{
 		return noOfPax;
 	}
-	public Table getTable()
-	{
-		return table;
-	}
+//	public Table getTable()
+//	{
+//		return table;
+//	}
 	public void deleteReservation()
 	{
 		name = "";
@@ -54,9 +54,9 @@ public class Reservation implements Serializable{
 		contact = "";
 		date = null;
 	}
-	public Customer getCustomer()
-	{
-		return customer;
-	}
+//	public Customer getCustomer()
+//	{
+//		return customer;
+//	}
 	
 }

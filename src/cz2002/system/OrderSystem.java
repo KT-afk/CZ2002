@@ -1,5 +1,7 @@
 package cz2002.system;
 
+import cz2002.entity.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,11 +34,11 @@ public class OrderSystem {
 				String staffin = sc.nextLine();
 				break;
 			default:
-				System.out.println("Option entered is invalid, please try again")
+				System.out.println("Option entered is invalid, please try again");
 		}
 		
 		
-		System.out.println("Order no. " + orderCount + 1 + "")
+		System.out.println("Order no. " + orderCount + 1 + "");
 		orderCount+=1;
 	}
 	
@@ -65,7 +67,7 @@ public class OrderSystem {
 		System.out.printf("Table no. available: ");
 		for(Table tableP : tableList) {
 		    if(tableP.getStatus() == "vacant") {
-		    	System.out.printf("%d, ", tableP.getTableno());
+//		    	System.out.printf("%d, ", tableP.getTableno());
 		    }
 		}
 	}
