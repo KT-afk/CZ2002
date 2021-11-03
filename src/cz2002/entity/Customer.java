@@ -12,7 +12,7 @@ public class Customer extends Person {
 	public Integer getID(){
 		return id;
 	}
-	public boolean membership(){
+	public boolean getMembership(){
 		return membership;
 	}
 	
