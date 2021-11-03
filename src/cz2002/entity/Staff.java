@@ -11,5 +11,11 @@ public class Staff extends Person {
 		id = StaffIDcounter++;
 		this.jobTitle = jobTitle;
 	}
+	public Integer getID(){
+		return id;
+	}
+	public String getJobTitle(){
+		return jobTitle;
+	}
 	
 }
