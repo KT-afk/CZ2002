@@ -9,5 +9,11 @@ public class Customer extends Person {
 		id = CustIDcounter++;
 		this.membership = membership;
 	}
+	public Integer getID(){
+		return id;
+	}
+	public boolean membership(){
+		return membership;
+	}
 	
 }
