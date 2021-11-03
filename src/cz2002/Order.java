@@ -20,6 +20,9 @@ public class Order{
 		this.start = start;
 		this.end = end;
 	}
+	public Integer getID(){
+		return id;
+	}
 	public Staff getCreator() {
 		return creator;
 	}
