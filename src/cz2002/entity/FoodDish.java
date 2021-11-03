@@ -1,6 +1,6 @@
-package cz2002;
+package cz2002.entity;
 
-public class FoodDish extends MenuItem{
+public class FoodDish extends MenuItem {
 	public enum menuItemType
 	{
 		MAIN_COURSE,

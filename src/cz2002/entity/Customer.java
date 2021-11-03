@@ -1,4 +1,4 @@
-package cz2002;
+package cz2002.entity;
 
 public class Customer extends Person {
 	public static Integer CustIDcounter=0;

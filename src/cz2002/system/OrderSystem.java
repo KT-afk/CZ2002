@@ -1,4 +1,4 @@
-package cz2002;
+package cz2002.system;
 
 import java.util.Scanner;
 

@@ -1,4 +1,6 @@
-package cz2002;
+package cz2002.entity;
+
+import cz2002.entity.Reservation;
 
 import java.util.ArrayList;
 

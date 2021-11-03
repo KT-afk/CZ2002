@@ -1,4 +1,7 @@
-package cz2002;
+package cz2002.system;
+
+import cz2002.entity.Order;
+import cz2002.entity.Table;
 
 import java.util.*;
 
@@ -31,7 +34,7 @@ public class GenerateSaleRevenueSystem{
 	}
 	public ArrayList<Table> checkTablesAvailability(){
 		Arraylist<Table> availableTable;
-		for(int i=0; i<TableList.size();i++{
+		for(int i=0; i<TableList.size();i++) {
 			if(TableList.get(i).status =="vacant"){
 				availableTable.add(TableList.get(i));
 			}

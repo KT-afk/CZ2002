@@ -1,15 +1,14 @@
-package cz2002;
+package cz2002.system;
+
+import cz2002.entity.Reservation;
+import cz2002.entity.Table;
 
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.TimeUnit;
-import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import java.io.*;
 
@@ -116,16 +115,16 @@ public class ReservationSystem {
 			 }    
 		//Reservation newReservation = new Reservation(namein, paxNo, contactin, reservationDate, reservationTime, table, Customer customer);
 	}
-	public int checkAvailableTables() {
-		for(int i = 0; i < tableList.size(); i++)
-		{
-			if(tableList.get(i).getStatus() == "vacant")
-			{
-				return tableList.get(i).getTableNo();
-			}
-		}
-		return -1;
-	}
+//	public int checkAvailableTables() {
+//		for(int i = 0; i < tableList.size(); i++)
+//		{
+//			if(tableList.get(i).getStatus() == "vacant")
+//			{
+//				return tableList.get(i).getTableNo();
+//			}
+//		}
+//		return -1;
+//	}
 	
 	
-}
+//}
