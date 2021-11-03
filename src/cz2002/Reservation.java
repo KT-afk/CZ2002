@@ -1,6 +1,7 @@
 package cz2002;
 
 import java.time.Duration;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,21 +9,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
-public class Reservation {
+public class Reservation implements Serializable{
 
 	private String name;
 	private int noOfPax;
 	private String contact;
-	private Date date;
-	private Customer customer;
-	private Table table;
+	private LocalDate date;
+	private LocalTime time;
+	private String customerId;
+	private int tableNo;
 	
-	private Reservation(String name, int noOfPax, String contact, Date date, Table table, Customer customer)
+	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo, String customerId)
 	{
 		this.name = name;
 		this.noOfPax = noOfPax;
 		this.contact = contact;
 		this.date = date;
+		this.time = time;
 		
 	}
 	public String getName()
@@ -33,13 +36,21 @@ public class Reservation {
 	{
 		return contact;
 	}
-	public Date getDate()
+	public LocalDate getDate()
 	{
 		return date;
 	}
-	public int noOfPax()
+	public LocalTime getTime()
+	{
+		return time;
+	}
+	public int getNoOfPax()
 	{
 		return noOfPax;
+	}
+	public Table getTable()
+	{
+		return table;
 	}
 	public void deleteReservation()
 	{
