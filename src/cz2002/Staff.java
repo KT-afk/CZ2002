@@ -1,4 +1,4 @@
-import Person.Gender;
+package cz2002;
 
 public class Staff extends Person{
 	public static Integer StaffIDcounter=0;
