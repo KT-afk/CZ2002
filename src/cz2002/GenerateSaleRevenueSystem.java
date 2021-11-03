@@ -29,4 +29,12 @@ public class GenerateSaleRevenueSystem{
 		}
 		return new RevenueData(orderListIncluded,totalPrice);
 	}
+	public ArrayList<Table> checkTablesAvailability(){
+		Arraylist<Table> availableTable;
+		for(int i=0; i<TableList.size();i++{
+			if(TableList.get(i).status =="vacant"){
+				availableTable.add(TableList.get(i));
+			}
+		}
+		return availableTable;
 }
