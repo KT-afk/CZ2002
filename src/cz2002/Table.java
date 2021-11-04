@@ -6,8 +6,7 @@ public class Table {
 	private int tableNo;
 	private int Capacity;
 	private String Status = "vacant";
-	private ArrayList<Reservation> reservationList;
-	//occupyingType can be reservation, walkin or Nil
+	//occupyingType can be reservation, walkin or 
 	private String occupyingType = "Nil";
 	
 	public Table(int capacity, int tableNo)
@@ -17,7 +16,6 @@ public class Table {
 		else
 			System.out.println("Invalid Capacity");
 		this.tableNo = tableNo;
-		this.reservationList = new ArrayList<Reservation>();
 	}
 	public int getCapacity()
 	{
@@ -40,10 +38,6 @@ public class Table {
 		//Assuming that reservation system has checked the table and ensured that its free
 		Status = "occupied";
 		this.occupyingType = occupyingType;
-	}
-	public ArrayList<Reservation> getReservationList()
-	{
-		return reservationList;
 	}
 	
 }

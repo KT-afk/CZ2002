@@ -34,7 +34,7 @@ public class ReservationSystem {
 		LocalDate currentDate = LocalDate.now();
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		int tableNo = -1;
-		String customerId;
+		String customerId = "";
 		Scanner sc = new Scanner(System.in);
 		//Reservation resv = new Reservation();
 		
@@ -83,6 +83,7 @@ public class ReservationSystem {
 			System.out.println("We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
 			paxNo = sc.nextInt();
 		}
+		customerId = nameIn + contactIn;
 		//Check if conflict with any existing reservation
 		tableNo = checkAvailableTables();
 		if(tableNo == -1)
