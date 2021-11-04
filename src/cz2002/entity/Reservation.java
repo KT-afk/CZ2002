@@ -1,13 +1,8 @@
-package cz2002;
+package cz2002.entity;
 
-import java.time.Duration;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 public class Reservation implements Serializable{
 
@@ -48,10 +43,10 @@ public class Reservation implements Serializable{
 	{
 		return noOfPax;
 	}
-	public Table getTable()
-	{
-		return table;
-	}
+//	public Table getTable()
+//	{
+//		return table;
+//	}
 	public void deleteReservation()
 	{
 		name = "";
@@ -59,9 +54,9 @@ public class Reservation implements Serializable{
 		contact = "";
 		date = null;
 	}
-	public Customer getCustomer()
-	{
-		return customer;
-	}
+//	public Customer getCustomer()
+//	{
+//		return customer;
+//	}
 	
 }

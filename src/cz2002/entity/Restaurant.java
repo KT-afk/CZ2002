@@ -1,4 +1,8 @@
-package cz2002;
+package cz2002.entity;
+import cz2002.entity.Order;
+import cz2002.entity.Reservation;
+import cz2002.entity.Table;
+
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;

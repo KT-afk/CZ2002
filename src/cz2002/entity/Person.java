@@ -1,4 +1,4 @@
-package cz2002;
+package cz2002.entity;
 
 public class Person{
 	public enum Gender{

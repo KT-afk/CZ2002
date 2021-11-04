@@ -1,10 +1,10 @@
-package  cz2002;
+package cz2002.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Order{
-	public static Snteger OrderIDCounter =0;
+	public static Integer OrderIDCounter =0;
 	private Integer id;
 	private Staff creator;
 	private ArrayList<MenuItem> orderItems;
