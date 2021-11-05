@@ -25,22 +25,22 @@ public class ReservationUI {
 		boolean continueOn = true;
 		// Reservation resv = new Reservation();
 
-		System.out.println("Enter name: \n");
+		System.out.println("Enter name: ");
 		String nameIn = sc.nextLine();
 
-		System.out.println("Enter contact no.: \n");
+		System.out.println("Enter contact no.: ");
 		String contactIn = sc.nextLine();
 		System.out.println("Enter reservation date (dd/mm/yyyy): ");
 		String dateIn = sc.nextLine();
 		LocalDate reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		while (reservationDate.isBefore(currentDate)) {
-			System.out.println("Sorry! This date has already passed" + "\n");
+			System.out.println("Sorry! This date has already passed!");
 			System.out.println("Enter reservation date (dd/mm/yyyy): ");
 			dateIn = sc.nextLine();
 			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		}
 		while (reservationDate.isBefore(currentDate.plusDays(5))) {
-			System.out.println("Sorry! You are only allowed to make a reservation 5 days in advance" + "\n");
+			System.out.println("Sorry! You are only allowed to make a reservation 5 days in advance");
 			System.out.println("Enter reservation date (dd/mm/yyyy): ");
 			dateIn = sc.nextLine();
 			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -60,58 +60,58 @@ public class ReservationUI {
 			choiceInterval = sc.nextInt();
 			switch (choiceInterval) {
 			case 1: {
-				reservationTime = LocalTime.parse("11:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("11:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 2: {
-				reservationTime = LocalTime.parse("11:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("11:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 3: {
-				reservationTime = LocalTime.parse("11:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("11:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 4: {
-				reservationTime = LocalTime.parse("11:45", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("11:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 
 			case 5: {
-				reservationTime = LocalTime.parse("12:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("12:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 6: {
-				reservationTime = LocalTime.parse("12:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("12:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 7: {
-				reservationTime = LocalTime.parse("12:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("12:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 
 			}
 			case 8: {
-				reservationTime = LocalTime.parse("12:45", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("12:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 9: {
-				reservationTime = LocalTime.parse("13:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("13:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 10: {
-				reservationTime = LocalTime.parse("13:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("13:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 11: {
-				reservationTime = LocalTime.parse("13:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("13:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
@@ -129,58 +129,58 @@ public class ReservationUI {
 			choiceInterval = sc.nextInt();
 			switch (choiceInterval) {
 			case 1: {
-				reservationTime = LocalTime.parse("18:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("18:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 2: {
-				reservationTime = LocalTime.parse("18:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("18:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 3: {
-				reservationTime = LocalTime.parse("18:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("18:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 4: {
-				reservationTime = LocalTime.parse("18:45", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("18:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 
 			case 5: {
-				reservationTime = LocalTime.parse("19:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("19:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 6: {
-				reservationTime = LocalTime.parse("19:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("19:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 7: {
-				reservationTime = LocalTime.parse("19:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("19:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 
 			}
 			case 8: {
-				reservationTime = LocalTime.parse("19:45", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("19:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 9: {
-				reservationTime = LocalTime.parse("20:00", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("20:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 10: {
-				reservationTime = LocalTime.parse("20:15", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("20:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 11: {
-				reservationTime = LocalTime.parse("20:30", DateTimeFormatter.ofPattern("hh:mm"));
+				reservationTime = LocalTime.parse("20:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}

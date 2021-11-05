@@ -19,7 +19,7 @@ public class RestaurantUI {
     public List<Table> createMockTable() {
         ArrayList<Table> tables = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             Table table = new Table(2, i);
             tables.add(table);
         }
@@ -27,14 +27,13 @@ public class RestaurantUI {
         return tables;
     }
 
-    // Check if Table is "vacant" and if is free for the next 1.5 hours (TableSystem and ReservationSystem)
+    // Check if Table is "vacant" and if is free for the next 1.5 hours (TableSystem
+    // and ReservationSystem)
     public void checkTableAvailability(List<Table> tables) {
         ReservationSystem reservationSystem = new ReservationSystem();
 
-        var vacantTables = tables.stream()
-                                .filter(table -> table.getStatus() == "vacant")
-                                .filter(table -> reservationSystem.checkTableForReservation(table.getTableNo()))
-                                .toList();
+        var vacantTables = tables.stream().filter(table -> table.getStatus() == "vacant")
+                .filter(table -> reservationSystem.checkTableForReservation(table.getTableNo())).toList();
 
         System.out.println("The following tables are currently available:");
     }

@@ -77,8 +77,6 @@ public class ReservationSystem {
 	public boolean makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
 			LocalTime reservationTime, String customerId) {
 
-		// Is there a need for customer id?
-		customerId = nameIn + contactIn;
 		ArrayList<Reservation> rList;
 		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
 		int tableNo = -1;
@@ -86,19 +84,22 @@ public class ReservationSystem {
 		// Check for available tables(no reservation assigned to that table yet)
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
-		for (int j = 0; j < tList.size(); j++) {
-			if (tList.get(j).getCapacity() >= paxNo) {
-				// Get the tableNo for those bigger than the paxNo
-				tableNo = tList.get(j).getTableNo();
-				// Check for reservations assigned to that table for any conflicts
-				if (!checkTableForReservation(tableNo)) {
-					tableNo = -1;
+		if (!tList.isEmpty() && !rList.isEmpty()) {
+			for (int j = 0; j < tList.size(); j++) {
+				if (tList.get(j).getCapacity() >= paxNo) {
+					// Get the tableNo for those bigger than the paxNo
+					tableNo = tList.get(j).getTableNo();
+					// Check for reservations assigned to that table for any conflicts
+					if (!checkTableForReservation(tableNo)) {
+						tableNo = -1;
+					}
 				}
 			}
+			// Fully booked
+			if (tableNo == -1)
+				return false;
 		}
-		// Fully booked
-		if (tableNo == -1)
-			return false;
+
 		Reservation r = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo,
 				customerId);
 		rList.add(r);
