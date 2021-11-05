@@ -9,115 +9,122 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.io.*;
 
 public class ReservationSystem {
-	protected  ArrayList<Table> tableList;
+	protected  ArrayList<Table> tList;
 	//Each reservation has a table allocated
-	protected ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
-	public ReservationSystem(ArrayList<Table> tableList) {
-		this.tableList = tableList;
+	protected ArrayList<Reservation> reservationList;
+	public ReservationSystem() {
 		
 	}
-	public void initDateReservationList(LocalDate date)
+	public void removeExpiredReservations(LocalDate d) 
 	{
-		
+		LocalTime reservationExpiry;
+		int i = 0;
+		reservationList = getPastReservation(d);
+		Iterator<Reservation> reservation = reservationList.iterator();
+		while(reservation.hasNext())
+		{
+			reservationExpiry = reservationList.get(i).getTime().plusMinutes(15);
+			if (reservationExpiry.isBefore(LocalTime.now()))
+			{
+				reservation.remove();
+				System.out.println("Removed 1 expired reservation\n");
+			}
+			i++;
+		}
 	}
-	public void removeReservation() 
+	//For walk in
+	//Find an available table
+	//Check the reservations for that table
+	public boolean checkTableForReservation( int tableNo)
 	{
-		
-	}
-	public boolean makeReservation() {
-		LocalTime currentTime = LocalTime.now();
-		LocalDate currentDate = LocalDate.now();
-		LocalDateTime currentDateTime = LocalDateTime.now();
-		int tableNo = -1;
-		String customerId = "";
-		Scanner sc = new Scanner(System.in);
-		//Reservation resv = new Reservation();
-
-		System.out.println("Enter name: \n");
-		String nameIn = sc.nextLine();
-
-		System.out.println("Enter contact no.: \n");
-		String contactIn = sc.nextLine();
-		System.out.println("Enter reservation date (dd/mm/yyyy): ");
-		String dateIn = sc.nextLine();
-		LocalDate reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-		while (reservationDate.isBefore(currentDate)) {
-			System.out.println("Sorry! This date has already passed" + "\n");
-			System.out.println("Enter reservation date (dd/mm/yyyy): ");
-			dateIn = sc.nextLine();
-			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-		}
-		System.out.println("Enter the session for which you wish to dine at our restaurant" + "\n" + "1) 1100-1500 \n" + "2) 1700-2200\n");
-		int session = sc.nextInt();
-		sc.nextLine();
-		System.out.println("Please enter the time of arrival");
-		String timeIn = sc.nextLine();
-		LocalTime reservationTime = LocalTime.parse(timeIn, DateTimeFormatter.ofPattern("hh:mm"));
-		while (session == 1 && reservationTime.isBefore(LocalTime.parse("11:00", DateTimeFormatter.ofPattern("hh:mm")))
-				&& reservationTime.isAfter(LocalTime.parse("15:00", DateTimeFormatter.ofPattern("hh:mm")))) {
-			System.out.println("You are entering an invalid time based on the session you selected.\n");
-			System.out.println("Please enter the reservation time within your session(hh:mm): ");
-			timeIn = sc.nextLine();
-			reservationTime = LocalTime.parse(timeIn, DateTimeFormatter.ofPattern("hh:mm"));
-		}
-		while (session == 2 && reservationTime.isBefore(LocalTime.parse("17:00", DateTimeFormatter.ofPattern("hh:mm")))
-				&& reservationTime.isAfter(LocalTime.parse("22:00", DateTimeFormatter.ofPattern("hh:mm")))) {
-			System.out.println("You are entering an invalid time based on the session you selected.\n");
-			System.out.println("Please enter the reservation time within your session(hh:mm): ");
-			timeIn = sc.nextLine();
-			reservationTime = LocalTime.parse(timeIn, DateTimeFormatter.ofPattern("hh:mm"));
-		}
-
-		System.out.println("Enter number of pax: ");
-		int paxNo = sc.nextInt();
-		if (paxNo > 10) {
-			System.out.println("We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
-			paxNo = sc.nextInt();
-		}
-		customerId = nameIn + contactIn;
-		//Check if conflict with any existing reservation
-		tableNo = checkAvailableTables();
-		if (tableNo == -1) {
-			for (int i = 0; i < reservationList.size(); i++) {
-				if (!reservationList.get(i).getDate().equals(reservationDate))
-					continue;
-				if ((reservationTime.until(reservationList.get(i).getTime(), ChronoUnit.MINUTES) <= 75) ||
-						(reservationTime.until(reservationList.get(i).getTime(), ChronoUnit.MINUTES) >= -75)) {
-					System.out.println("The date and time you are looking to reserve is occupied. Please choose another date time.");
+		LocalTime reservationTime;
+		ArrayList<Reservation> rList =  getPastReservation(LocalDate.now());
+		for (int i = 0; i < rList.size(); i++) {
+			reservationTime = rList.get(i).getTime();
+			if(rList.get(i).getTableNo() == tableNo)
+			{
+				//We need a method to force the customer to leave after 1hr 30mins for the next 
+				//reservation if there is a reservation
+				//We cannot allow a reservation/walk-in to be within 1hr 30mins of another reservation
+				//Set tableNo to -1 to indicate there are no tables for this reservation as it is fully booked
+				if ((reservationTime.until(reservationList.get(i).getTime(), ChronoUnit.MINUTES) <= 90) ||
+						(reservationTime.until(reservationList.get(i).getTime(), ChronoUnit.MINUTES) >= -90)) {
 					return false;
 				}
 			}
 		}
+		return true;
+	}
+	public boolean makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate, LocalTime reservationTime,
+			 String customerId) {
+		
+		//Is there a need for customer id?
+		customerId = nameIn + contactIn;
+		ArrayList<Reservation> rList;
+		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))+".ser";
+		int tableNo = -1;
+		rList = getPastReservation(reservationDate);
+		//Check for available tables(no reservation assigned to that table yet)
+		//Check if conflict with any existing reservation by filtering through the table list
+		for(int j = 0; j < tList.size(); j++)
+		{
+			if(tList.get(j).getCapacity() >= paxNo)
+			{
+				//Get the tableNo for those bigger than the paxNo
+				tableNo = tList.get(j).getTableNo();
+				//Check for reservations assigned to that table for any conflicts
+				if(!checkTableForReservation(tableNo))
+				{
+					tableNo = -1;
+				}
+			}
+		}
+		//Fully booked
+		if(tableNo == -1)
+			return false;
+		Reservation r = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo, customerId);
+		rList.add(r);
+		writeReservationToFile(rList, fileName);
+		return true;
+	}
+	//Create the file and serialize the list with its new addition into the file
+	public void writeReservationToFile(ArrayList<Reservation> rList, String fileName) 
+	{
 		try {
-			//Creating the object
-			Reservation s1 = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo, customerId);
-			//Creating stream and writing the object
-			FileOutputStream fout = new FileOutputStream("f.txt");
+			FileOutputStream fout = new FileOutputStream(fileName);
 			ObjectOutputStream out = new ObjectOutputStream(fout);
-			out.writeObject(s1);
+			out.writeObject(rList);
 			out.flush();
 			//closing the stream
 			out.close();
-			System.out.println("success");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
-		// [TODO] Placeholder return true to get code to compile
-		return true;
 	}
-
-	//Reservation newReservation = new Reservation(namein, paxNo, contactin, reservationDate, reservationTime, table, Customer customer);
-	public int checkAvailableTables() {
-		for (int i = 0; i < tableList.size(); i++) {
-			if (tableList.get(i).getStatus() == "vacant") {
-				return tableList.get(i).getTableNo();
-			}
-		}
-		return -1;
+	//Get the past reservations on the date we are looking to make a reservation
+	//by going through the arrayList for reservations on that date
+	public ArrayList<Reservation> getPastReservation(LocalDate d)
+	{
+		//Deserialize current reservations for that date
+		File f = new File("reservation" + d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))+".ser");
+		ArrayList<Reservation> rList = new ArrayList<Reservation>() ;
+        if (f.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f)))
+            {
+                rList = (ArrayList<Reservation>) ois.readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {                
+                e.printStackTrace();
+            }
+        }
+        return rList;
 	}
+	
+	
 }

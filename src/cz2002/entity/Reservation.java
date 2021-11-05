@@ -21,6 +21,7 @@ public class Reservation implements Serializable{
 		this.contact = contact;
 		this.date = date;
 		this.time = time;
+		this.tableNo = tableNo;
 		
 	}
 	public String getName()
@@ -43,17 +44,15 @@ public class Reservation implements Serializable{
 	{
 		return noOfPax;
 	}
+	public int getTableNo()
+	{
+		return tableNo;
+	}
 //	public Table getTable()
 //	{
 //		return table;
 //	}
-	public void deleteReservation()
-	{
-		name = "";
-		noOfPax = 0;
-		contact = "";
-		date = null;
-	}
+
 //	public Customer getCustomer()
 //	{
 //		return customer;
