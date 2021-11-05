@@ -9,8 +9,11 @@ import java.util.Scanner;
 import cz2002.system.ReservationSystem;
 
 public class ReservationUI {
-	public ReservationUI() {
 
+	private Scanner sc;
+
+	public ReservationUI(Scanner scanner) {
+		sc = scanner;
 	}
 
 	public void makeReservationUI() {
@@ -20,7 +23,6 @@ public class ReservationUI {
 		int session;
 		LocalTime reservationTime = LocalTime.now();
 		boolean continueOn = true;
-		Scanner sc = new Scanner(System.in);
 		// Reservation resv = new Reservation();
 
 		System.out.println("Enter name: \n");

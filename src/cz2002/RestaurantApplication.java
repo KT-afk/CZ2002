@@ -1,5 +1,9 @@
 package cz2002;
 
+import cz2002.system.TableSystem;
+import cz2002.ui.ReservationUI;
+import cz2002.ui.RestaurantUI;
+
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,6 +13,9 @@ public class RestaurantApplication {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Restaurant Reservation Management System");
+
+		ReservationUI reservationUI = new ReservationUI(sc);
+		RestaurantUI restaurantUI = new RestaurantUI(sc);
 
 		while(true) {
 			int option = Prompt(sc,
@@ -23,22 +30,16 @@ public class RestaurantApplication {
 				"Quit"
 			);
 
-			if(option == 1)
-				ManageMenu(sc);
-			else if(option == 2)
-				ManagePromotionSet(sc);
-			else if(option == 3)
-				ManageOrder(sc);
-			else if(option == 4)
-				ManageReservation(sc);
-			else if(option == 5)
-				CheckAvailability(sc);
-			else if(option == 6)
-				PrintOrderInvoice(sc);
-			else if(option == 7)
-				PrintRevenueReport(sc);
-			else if(option == 8)
-				break;
+			switch (option) {
+				case 1 -> ManageMenu(sc);
+				case 2 -> ManagePromotionSet(sc);
+				case 3 -> ManageOrder(sc);
+				case 4 -> reservationUI.makeReservationUI();
+				case 5 -> restaurantUI.checkTableAvailability(restaurantUI.createMockTable());
+				case 6 -> PrintOrderInvoice(sc);
+				case 7 -> PrintRevenueReport(sc);
+				case 8 -> { return; }
+			}
 		}
 	}
 
@@ -113,6 +114,7 @@ public class RestaurantApplication {
 			if(option > options.length)
 				throw new Exception();
 
+			scanner.nextLine();
 			return option;
 		} catch (Exception e) {
 			// Clear buffer if there's an error
