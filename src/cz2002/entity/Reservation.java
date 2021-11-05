@@ -3,9 +3,15 @@ package cz2002.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-public class Reservation implements Serializable{
+public class Reservation implements Serializable {
+	public enum Type {
+		PENDING, OCCUPIED, EXPIRED
+	}
 
+	private static int reservationIdCounter = 0;
+	private String id;
 	private String name;
 	private int noOfPax;
 	private String contact;
@@ -13,49 +19,57 @@ public class Reservation implements Serializable{
 	private LocalTime time;
 	private String customerId;
 	private int tableNo;
-	
-	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo, String customerId)
-	{
+
+	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo,
+			String customerId) {
 		this.name = name;
 		this.noOfPax = noOfPax;
 		this.contact = contact;
 		this.date = date;
 		this.time = time;
 		this.tableNo = tableNo;
-		
+		this.id = date.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + reservationIdCounter++;
 	}
-	public String getName()
-	{
+
+	public String getId() {
+		return id;
+	}
+
+	public String getType() {
 		return name;
 	}
-	public String getContact()
-	{
+
+	public String getName() {
+		return name;
+	}
+
+	public String getContact() {
 		return contact;
 	}
-	public LocalDate getDate()
-	{
+
+	public LocalDate getDate() {
 		return date;
 	}
-	public LocalTime getTime()
-	{
+
+	public LocalTime getTime() {
 		return time;
 	}
-	public int getNoOfPax()
-	{
+
+	public int getNoOfPax() {
 		return noOfPax;
 	}
-	public int getTableNo()
-	{
+
+	public int getTableNo() {
 		return tableNo;
 	}
-//	public Table getTable()
-//	{
-//		return table;
-//	}
+	// public Table getTable()
+	// {
+	// return table;
+	// }
 
-//	public Customer getCustomer()
-//	{
-//		return customer;
-//	}
-	
+	// public Customer getCustomer()
+	// {
+	// return customer;
+	// }
+
 }
