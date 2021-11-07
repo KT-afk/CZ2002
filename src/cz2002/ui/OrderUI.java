@@ -1,5 +1,6 @@
 package cz2002.ui;
 import cz2002.entity.*;
+import cz2002.entity.Person.Gender;
 import cz2002.system.*;
 
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ public class OrderUI {
 	public void manageOrders (List<Table> tables) {
 		int uchoice;
 		do {
+			System.out.println("-----------ORDER OPTIONS-----------");
 			uchoice = Prompt(sc,
 							"View Current Orders",
 							"View Order by ID",
@@ -28,7 +30,7 @@ public class OrderUI {
 							"Modify Existing Orders",
 							"Remove Orders",
 							"Complete Order",
-							"Quit"
+							"Return to Main Menu"
 						);
 			
 			switch(uchoice) {
@@ -65,37 +67,55 @@ public class OrderUI {
 	
 	private void newOrder(List<Table> tables) {
 		int orderType;
-		String staffin;
+		String staffin, staffpos, staffgen;
+		Gender gender;
 		ReservationSystem reservationSystem = new ReservationSystem(tables);
+		
+		ArrayList<FoodDish> dishItems = new ArrayList<FoodDish>();
+		ArrayList<SetPackage> packageItems = new ArrayList<SetPackage>();
 
 		do {
+			
 			System.out.println("Select type of order (1 or 2)");
 			System.out.println("-----------------------------");
 			System.out.println("1) From reservation");
 			System.out.println("2) From walk-in order");
 			orderType = sc.nextInt();
 			
+			System.out.println("Enter staff name: ");
+			staffin = sc.next();
+			
+			System.out.println("Enter staff title: ");
+			staffpos = sc.next();
+			
+			System.out.println("Enter staff gender(m/f): ");
+			staffgen = sc.next();
+			
+			gender = (staffgen == "m") ? Gender.Male : Gender.Female;
+			
+			Staff orStaff = new Staff(staffin, gender, staffpos);
+			
 			switch(orderType) {
 				case 1:
 					System.out.println("Enter reservation ID: ");
-					String resId = sc.nextLine();
+					String resId = sc.next();
 					Reservation resv = reservationSystem.getReservation(resId);
 					
-					System.out.println("Enter staff name: ");
-					staffin = sc.nextLine();
+					ArrayList<MenuItem> ordered = new ArrayList<MenuItem>();
+					
+					
+					DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					
+					Order newOrder = new Order(orStaff, ordered, resv, resv.getTableNo(), SystemClock.GetCurrentDateTime().format(formatter1));
+							
+					OrderSystem.addOrder(newOrder);
 					
 					break;
 				case 2:
-					ArrayList<FoodDish> dishItems = new ArrayList<FoodDish>();
-					ArrayList<SetPackage> packageItems = new ArrayList<SetPackage>();
-					
 					boolean stop = false;
 					
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 					System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
-					
-					System.out.println("Enter staff name: ");
-					staffin = sc.nextLine();
 					
 					do {
 						

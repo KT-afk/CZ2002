@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class OrderSystem {
-	private static ArrayList<Order> orderList;
+	private static ArrayList<Order> orderList = new ArrayList<Order>();
 	private static int orderCount = 0;
 	private static Scanner sc = new Scanner(System.in);
 	
@@ -24,8 +24,8 @@ public class OrderSystem {
 		return orderList;
 	}
 	
-	public static void newOrder() {
-		
+	public static void addOrder(Order order) {
+		orderList.add(order);
 	}
 	
 	public void printOrderInv() {

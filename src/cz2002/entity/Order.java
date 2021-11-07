@@ -10,15 +10,14 @@ public class Order{
 	private ArrayList<MenuItem> orderItems;
 	private Reservation reserveInfo;
 	private Table table;
-	private Date start, end;
-	public Order(Staff creator, ArrayList<MenuItem> orderItems, Reservation reserveInfo,Table table, Date start, Date end ) {
+	private Date start;;
+	public Order(Staff creator, ArrayList<MenuItem> orderItems, Reservation reserveInfo,Table table, Date start) {
 		id = OrderIDCounter++;
 		this.creator = creator;
 		this.orderItems = orderItems;
 		this.reserveInfo = reserveInfo;
 		this.table = table;
 		this.start = start;
-		this.end = end;
 	}
 	public Integer getID(){
 		return id;
@@ -37,9 +36,6 @@ public class Order{
 	}
 	public Date getEnd(){
 		return end;
-	}
-	public int getDuration(){
-		return (int) ((start.getTime() - end.getTime()) / (1000.0f * 60.0f));
 	}
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";
