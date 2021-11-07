@@ -28,6 +28,6 @@ public class ScannerUtil {
         }
     }
     public static int Prompt(Scanner scanner, String... options) {
-        return  CustomPrompt(scanner, "Please select one of the following options: ", options);
+        return CustomPrompt(scanner, "Please select one of the following options: ", options);
     }
 }
