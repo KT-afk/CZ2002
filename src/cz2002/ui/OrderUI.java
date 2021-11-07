@@ -6,6 +6,9 @@ import cz2002.system.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,9 +17,15 @@ import cz2002.SystemClock;
 public class OrderUI {
 	
 	private Scanner sc;
+	private ReservationSystem ReservationSystem;
+	private TableSystem TableSystem;
+	private RestaurantMenu RestaurantMenu;
 
-	public OrderUI(Scanner scanner) {
+	public OrderUI(Scanner scanner, ReservationSystem ReservationSystem, TableSystem TableSystem, RestaurantMenu RestaurantMenu) {
 		sc = scanner;
+		this.ReservationSystem = ReservationSystem;
+		this.TableSystem = TableSystem;
+		this.RestaurantMenu = RestaurantMenu;
 	}
 	
 	public void manageOrders (List<Table> tables) {
@@ -66,13 +75,15 @@ public class OrderUI {
 	}
 	
 	private void newOrder(List<Table> tables) {
-		int orderType;
+		int orderType, uadd;
 		String staffin, staffpos, staffgen;
+		String iname, desc;
+		double price;
 		Gender gender;
 		ReservationSystem reservationSystem = new ReservationSystem(tables);
 		
-		ArrayList<FoodDish> dishItems = new ArrayList<FoodDish>();
-		ArrayList<SetPackage> packageItems = new ArrayList<SetPackage>();
+		ArrayList<FoodDish> orDish = new ArrayList<FoodDish>();
+		ArrayList<SetPackage> orPack = new ArrayList<SetPackage>();
 
 		do {
 			
@@ -101,12 +112,62 @@ public class OrderUI {
 					String resId = sc.next();
 					Reservation resv = reservationSystem.getReservation(resId);
 					
-					ArrayList<MenuItem> ordered = new ArrayList<MenuItem>();
+					ReservationSystem.reservationArrival(resId);
+					
+					Table orTable = TableSystem.getTableByNo(resv.getTableNo());
+					
+					System.out.println("For packages in the menu");
+					for(int i=0;i<RestaurantMenu.setPackageMenu.size();i++) {
+						iname = RestaurantMenu.setPackageMenu.get(i).getName();
+						desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
+						price = RestaurantMenu.setPackageMenu.get(i).getPrice();
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+					}
+					do {
+						System.out.println("Choose packages to add into order");
+						System.out.println("Enter -1 to stop");
+						uadd = sc.nextInt();
+						
+						if(uadd == -1) {
+							break;
+						}
+						
+						if(uadd <= RestaurantMenu.setPackageMenu.size()) {
+							orPack.add(new SetPackage(RestaurantMenu.setPackageMenu.get(uadd-1).getName(), RestaurantMenu.setPackageMenu.get(uadd-1).getDescription(), RestaurantMenu.setPackageMenu.get(uadd-1).getPrice()));
+						}
+						else {
+							System.out.println("Choice is invalid");
+						}
+						
+					} while (true);
+					
+					System.out.println("For menu items in the menu");
+					for(int i=0;i<RestaurantMenu.alaCarteMenu.size();i++) {
+						iname = RestaurantMenu.alaCarteMenu.get(i).getName();
+						desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
+						price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+					}
+					do {
+						System.out.println("Choose menu items to add into order");
+						System.out.println("Enter -1 to stop");
+						uadd = sc.nextInt();
+						
+						if(uadd == -1) {
+							break;
+						}
+						
+						if(uadd <= RestaurantMenu.alaCarteMenu.size()) {
+							orDish.add(new FoodDish(RestaurantMenu.alaCarteMenu.get(uadd-1).getName(), RestaurantMenu.alaCarteMenu.get(uadd-1).getDescription(), RestaurantMenu.alaCarteMenu.get(uadd-1).getPrice(), RestaurantMenu.alaCarteMenu.get(uadd-1).getType()));
+						}
+						else {
+							System.out.println("Choice is invalid");
+						}
+						
+					} while (true);
 					
 					
-					DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-					
-					Order newOrder = new Order(orStaff, ordered, resv, resv.getTableNo(), SystemClock.GetCurrentDateTime().format(formatter1));
+					Order newOrder = new Order(orStaff, orDish, orPack, resv, orTable, LocalDateTime.now());
 							
 					OrderSystem.addOrder(newOrder);
 					

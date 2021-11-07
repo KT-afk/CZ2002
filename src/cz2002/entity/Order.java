@@ -1,20 +1,24 @@
 package cz2002.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Order{
 	public static Integer OrderIDCounter =0;
 	private Integer id;
 	private Staff creator;
-	private ArrayList<MenuItem> orderItems;
+	private ArrayList<FoodDish> fdItems;
+	private ArrayList<SetPackage> packItems;
 	private Reservation reserveInfo;
 	private Table table;
-	private Date start;;
-	public Order(Staff creator, ArrayList<MenuItem> orderItems, Reservation reserveInfo,Table table, Date start) {
+	private LocalDateTime start;;
+	public Order(Staff creator, ArrayList<FoodDish> fdItems, ArrayList<SetPackage> packItems, Reservation reserveInfo,Table table, LocalDateTime start) {
 		id = OrderIDCounter++;
 		this.creator = creator;
-		this.orderItems = orderItems;
+		this.fdItems = fdItems;
+		this.packItems = packItems;
 		this.reserveInfo = reserveInfo;
 		this.table = table;
 		this.start = start;
@@ -25,17 +29,17 @@ public class Order{
 	public Staff getCreator() {
 		return creator;
 	}
-	public ArrayList<MenuItem> getOrderItems(){
-		return orderItems;
+	public ArrayList<FoodDish> getDishItems(){
+		return fdItems;
+	}
+	public ArrayList<SetPackage> getPackItems() {
+		return packItems;
 	}
 	public Reservation getReserveInfo() {
 		return reserveInfo;
 	}
-	public Date getStart(){
+	public LocalDateTime getStart(){
 		return start;
-	}
-	public Date getEnd(){
-		return end;
 	}
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";

@@ -59,7 +59,10 @@ public class OrderSystem {
 		System.out.println("\n----------------Current Order List----------------");
 		for(Order order: orderList) {
 			System.out.println("[" + (ori++ + 1) + "] -Order ID: " + order.getID() + " -Created On: " + order.getStart());
-			for(MenuItem item: order.getOrderItems()) {
+			for(MenuItem item: order.getDishItems()) {
+				System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+			}
+			for(MenuItem item: order.getPackItems()) {
 				System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
 			}
 		}
@@ -70,8 +73,11 @@ public class OrderSystem {
 		for(Order order: orderList) {
 			if(order.getID() == iinput) {
 				System.out.println("Order ID: " + order.getID() + " - Created On: " + order.getStart());
-				for(MenuItem item: order.getOrderItems()) {
-					System.out.println("  --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+				for(FoodDish fditem: order.getDishItems()) {
+					System.out.println("  --" + fditem.getName() + " | " + fditem.getDescription() + " | " + fditem.getPrice());
+				}
+				for(SetPackage pitem: order.getPackItems()) {
+					System.out.println("  --" + pitem.getName() + " | " + pitem.getDescription() + " | " + pitem.getPrice());
 				}
 				return;
 			}
