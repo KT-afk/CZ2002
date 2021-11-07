@@ -239,7 +239,7 @@ public class OrderUI {
 
 				int i;
 				for (i = 0; i < availTable.size(); i++) {
-					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo())) {
+					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now())) {
 						break;
 					}
 				}
