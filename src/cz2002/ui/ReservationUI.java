@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
+import cz2002.entity.Table;
 import cz2002.system.ReservationSystem;
 import cz2002.system.TableSystem;
 
@@ -17,7 +19,7 @@ public class ReservationUI {
 		sc = scanner;
 	}
 
-	public void makeReservationUI() {
+	public void makeReservationUI(List<Table> tables) {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
 		String customerId = "";
 		int choiceInterval;
@@ -198,7 +200,7 @@ public class ReservationUI {
 					"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
 			paxNo = sc.nextInt();
 		}
-		ReservationSystem rSystem = new ReservationSystem(TableSystem.CreateMockTableList());
+		ReservationSystem rSystem = new ReservationSystem(tables);
 		boolean rStatus = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime,
 				customerId);
 		if (!rStatus)

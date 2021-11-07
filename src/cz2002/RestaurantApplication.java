@@ -1,8 +1,6 @@
 package cz2002;
 
-import cz2002.entity.RestaurantMenu;
-import cz2002.entity.FoodDish;
-import cz2002.entity.SetPackage;
+import cz2002.entity.*;
 import cz2002.system.TableSystem;
 import cz2002.ui.*;
 
@@ -20,7 +18,16 @@ public class RestaurantApplication {
 		RestaurantUI restaurantUI = new RestaurantUI(sc);
 		OrderUI orderUI = new OrderUI(sc);
 
-		var mockTables = TableSystem.CreateMockTableList();
+		TableSystem tableSystem = new TableSystem();
+
+		int capacity = 2;
+
+		for(int i = 0; i < 10; i++) {
+			tableSystem.addTable(capacity++);
+
+			if(capacity >= 10)
+				capacity = 2;
+		}
 		
 		RestaurantMenu menu = new RestaurantMenu();
 		//Initialise random food and set packages for now
@@ -64,13 +71,13 @@ public class RestaurantApplication {
 					menuManager.run("Set Package");
 					break;
 				case 3:
-					orderUI.manageOrders(mockTables);
+					orderUI.manageOrders(tableSystem.getTableList());
 					break;
 				case 4:
-					reservationUI.makeReservationUI();
+					reservationUI.makeReservationUI(tableSystem.getTableList());
 					break;
 				case 5:
-					restaurantUI.checkTableAvailability(mockTables);
+					restaurantUI.checkTableAvailability(tableSystem.getTableList());
 					break;
 				case 6:
 					PrintOrderInvoice(sc);

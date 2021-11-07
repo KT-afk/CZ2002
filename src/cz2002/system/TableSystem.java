@@ -7,30 +7,28 @@ import java.util.List;
 
 public class TableSystem {
 	public static int tableCounter=0;
-	private static ArrayList<Table> tableList = new ArrayList<Table>();
+	private ArrayList<Table> tableList = new ArrayList<Table>();
 
-	public static ArrayList<Table> getTableList() {
+	public ArrayList<Table> getTableList() {
 		return tableList;
 	}
 	public String addTable(int capacity) {
 		if(capacity<2 || capacity>10) return "Invalid capacity!";
-		Table table = new Table(capacity,++tableCounter);
+		Table table = new Table(capacity, ++tableCounter);
 		if(tableList.add(table)) return "Table added successfully!";
 		else return "Failed to add table!";
 	}
 	public String removeTable(int tableNo) {
-		tableList.map((table)->{
-			if(table.tableNo == tableNo) {
-				if(tableList.remove(table)) return "Table removed successfully!";
-				else return "Failed to removed table";
-			}
-		});
-		return "Invalid table number!";
+		if(tableList.removeIf(table-> table.getTableNo() == tableNo))
+			return "Table removed successfully!";
+
+		return "Failed to removed table";
 	}
-	public ArrayList<Table> CheckAvailability(){
+
+	public ArrayList<Table> checkAvailability(){
 		ArrayList<Table> availableTables=new ArrayList<Table>();
 		for(int i=0;i<tableList.size();i++) {
-			if(tableList.get(i).status == "vacant") {
+			if(tableList.get(i).getStatus() == Table.Status.VACANT) {
 				availableTables.add(tableList.get(i));
 			}
 		}
@@ -38,12 +36,10 @@ public class TableSystem {
 	}
 	public Table getTableByNo(int tableNo) {
 		for(int i=0;i<tableList.size();i++) {
-			if(tableList.get(i).tableNo == tableNo) {
+			if(tableList.get(i).getTableNo() == tableNo) {
 				return tableList.get(i);
 			}
 		}
 		return null;
 	}
-	
-	
 }

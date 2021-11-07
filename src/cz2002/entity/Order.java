@@ -34,9 +34,6 @@ public class Order{
 	public Date getStart(){
 		return start;
 	}
-	public Date getEnd(){
-		return end;
-	}
 	public String addItem(MenuItem item) {
 		if(orderItems.add(item)) return "Item added successfully";
 		else return "Item already exist";

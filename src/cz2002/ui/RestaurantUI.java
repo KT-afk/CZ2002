@@ -26,7 +26,7 @@ public class RestaurantUI {
         ReservationSystem reservationSystem = new ReservationSystem(tables);
 
         var vacantTables = tables.stream()
-                                .filter(table -> table.getStatus().equalsIgnoreCase("vacant"))
+                                .filter(table -> table.getStatus() == Table.Status.VACANT)
                                 .toList();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
