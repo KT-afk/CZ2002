@@ -110,8 +110,7 @@ public class ReservationSystem {
 		ArrayList<Reservation> rList;
 		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
 		int tableNo = -1;
-		rList = getPastReservation(reservationDate);
-		// Check for available tables(no reservation assigned to that table yet)
+		rList = getPastReservation(reservationDate);\
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
 		if (!tList.isEmpty() && !rList.isEmpty()) {
