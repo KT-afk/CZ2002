@@ -36,4 +36,15 @@ public class FoodDish extends MenuItem {
 
 		return String.format("%6s %-20s %-15s $%.2f", getEnabled() ? "[ ]": "[*]", getName(), typeString, getPrice());
 	}
+	
+	public String customerToString() {
+		String typeString = "";
+		switch (type) {
+			case MAIN_COURSE    -> typeString = "Main Course";
+			case DESERT         -> typeString = "Desert";
+			case DRINKS         -> typeString = "Drinks";
+		}
+
+		return String.format("%-20s %-20s $%-20.2f %-20s", getName(), typeString, getPrice(), getDescription());
+	}
 }

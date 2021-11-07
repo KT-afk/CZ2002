@@ -31,4 +31,8 @@ public class SetPackage extends MenuItem {
 	public String toString() {
 		return String.format("%6s %-20s $%.2f", getEnabled() ? "[ ]": "[*]", getName(), getPrice());
 	}
+	
+	public String customerToString() {
+		return String.format("%-20s $%-20.2f %-20s", getName(), getPrice(), getDescription());
+	}
 }

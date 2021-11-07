@@ -20,4 +20,35 @@ public class RestaurantMenu {
 	{
 		setPackageMenu.add(set);
 	}
+	
+	public void printAllMenu()
+	{
+		System.out.println("\nRestaurant Menu Promotion Packages: ");
+        System.out.printf("   %-20s %-20s %-20s\n", "Name", "Price ($S)", "Description");
+        System.out.println("=".repeat(55));
+        if(!setPackageMenu.isEmpty()) {
+            int i = 1;
+            for(SetPackage item : setPackageMenu) {
+                System.out.printf("%d) %s\n", i++, item.customerToString());
+            }
+        } else  {
+            System.out.println("-- No Promotion Packages --");
+        }
+        
+		System.out.println("\nRestaurant Menu Dishes: ");
+		System.out.printf("   %-20s %-20s %-20s %-20s\n", "Name", "Type", "Price ($S)", "Description");
+        System.out.println("=".repeat(80));
+		
+        if(!alaCarteMenu.isEmpty()) {
+            int i = 1;
+            for(FoodDish item : alaCarteMenu) {
+                if (item.getEnabled())
+                {
+                	System.out.printf("%d) %s\n", i++, item.customerToString());
+                }
+            }
+        } else  {
+            System.out.println("-- No Dishes --");
+        }
+	}
 }
