@@ -80,10 +80,9 @@ public class OrderUI {
 	
 	private void newOrder(Staff staff, List<Table> tables) {
 		int orderType, uadd;
-		String staffin, staffpos, staffgen;
-		String iname, desc;
+		String iname, desc, resId;
 		double price;
-		Gender gender;
+		Reservation resv;
 		ReservationSystem reservationSystem = new ReservationSystem(tables);
 		
 		ArrayList<FoodDish> orDish = new ArrayList<FoodDish>();
@@ -99,9 +98,18 @@ public class OrderUI {
 			
 			switch(orderType) {
 				case 1:
-					System.out.println("Enter reservation ID: ");
-					String resId = sc.next();
-					Reservation resv = reservationSystem.getReservation(resId);
+					do {
+						System.out.println("Enter reservation ID: ");
+						resId = sc.next();
+						resv = reservationSystem.getReservation(resId);
+						
+						if(resv == null) {
+							System.out.println("Invalid reservation ID");
+						}
+						else {
+							break;
+						}
+					} while(true);
 					
 					ReservationSystem.reservationArrival(resId);
 					
@@ -214,13 +222,16 @@ public class OrderUI {
 						
 					} while (true);
 					
-					ArrayList<Table> availTable = TableSystem.checkAvailability();
+					ArrayList<Table> availTable = TableSystem.getAvailableTables();
 					
-					for(int i=0;i<availTable.size();i++) {
-						
+					int i;
+					for(i=0;i<availTable.size();i++) {
+						if(ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo())) {
+							break;
+						}
 					}
 					
-					Order newOrder2 = new Order(orStaff, orDish, orPack, null, orTable, LocalDateTime.now());
+					Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
 							
 					OrderSystem.addOrder(newOrder2);
 					
