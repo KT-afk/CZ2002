@@ -4,11 +4,7 @@ import cz2002.entity.RestaurantMenu;
 import cz2002.entity.FoodDish;
 import cz2002.entity.SetPackage;
 import cz2002.system.TableSystem;
-import cz2002.ui.ReservationUI;
-import cz2002.ui.RestaurantUI;
-import cz2002.ui.FoodDishUI;
-import cz2002.ui.PromotionSetUI;
-import cz2002.ui.MenuUI;
+import cz2002.ui.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -22,6 +18,7 @@ public class RestaurantApplication {
 
 		ReservationUI reservationUI = new ReservationUI(sc);
 		RestaurantUI restaurantUI = new RestaurantUI(sc);
+		OrderUI orderUI = new OrderUI(sc);
 
 		var mockTables = TableSystem.CreateMockTableList();
 		
@@ -67,7 +64,7 @@ public class RestaurantApplication {
 					menuManager.run("Set Package");
 					break;
 				case 3:
-					ManageOrder(sc);
+					orderUI.manageOrders(mockTables);
 					break;
 				case 4:
 					reservationUI.makeReservationUI();

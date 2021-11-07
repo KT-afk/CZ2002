@@ -5,6 +5,7 @@ import cz2002.system.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import cz2002.SystemClock;
@@ -17,7 +18,7 @@ public class OrderUI {
 		sc = scanner;
 	}
 	
-	public void manageOrders () {
+	public void manageOrders (List<Table> tables) {
 		int uchoice;
 		do {
 			uchoice = Prompt(sc,
@@ -38,7 +39,7 @@ public class OrderUI {
 					viewOrder();
 					break;
 				case 3:
-					newOrder();
+					newOrder(tables);
 					break;
 				case 4:
 					modifyOrders();
@@ -62,8 +63,11 @@ public class OrderUI {
 		OrderSystem.viewOrder(iinput);
 	}
 	
-	private void newOrder() {
+	private void newOrder(List<Table> tables) {
 		int orderType;
+		String staffin;
+		ReservationSystem reservationSystem = new ReservationSystem(tables);
+
 		do {
 			System.out.println("Select type of order (1 or 2)");
 			System.out.println("-----------------------------");
@@ -75,10 +79,10 @@ public class OrderUI {
 				case 1:
 					System.out.println("Enter reservation ID: ");
 					String resId = sc.nextLine();
-					Reservation resv = ReservationSystem.getReservation(resId);
+					Reservation resv = reservationSystem.getReservation(resId);
 					
 					System.out.println("Enter staff name: ");
-					String staffin = sc.nextLine();
+					staffin = sc.nextLine();
 					
 					break;
 				case 2:
@@ -91,7 +95,7 @@ public class OrderUI {
 					System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
 					
 					System.out.println("Enter staff name: ");
-					String staffin = sc.nextLine();
+					staffin = sc.nextLine();
 					
 					do {
 						
