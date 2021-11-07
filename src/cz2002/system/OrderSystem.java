@@ -13,12 +13,8 @@ import java.util.ArrayList;
 public class OrderSystem {
 	private static ArrayList<Order> orderList = new ArrayList<Order>();
 	private static int orderCount = 0;
-	private static Scanner sc = new Scanner(System.in);
 	
-	private ArrayList<Table> tableList;
-	private int tableVacant;
 	private boolean isValid = false;
-	private final int totalTables = 20;
 	
 	public static ArrayList<Order> getOrderList() {
 		return orderList;
@@ -26,6 +22,19 @@ public class OrderSystem {
 	
 	public static void addOrder(Order order) {
 		orderList.add(order);
+		orderCount++;
+		System.out.println("\nOrder " + orderCount + " Successfully Created");
+		System.out.println("======= Order " + orderCount + " =======");
+		System.out.println("Order Items: ");
+		for(int i=0;i<order.getDishItems().size();i++) {
+			System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+		}
+		System.out.println("Set Packages: ");
+		for(int i=0;i<order.getPackItems().size();i++) {
+			System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+		}
+		System.out.println("Order created on " + order.getStart());
+		System.out.println("================================");
 	}
 	
 	public void printOrderInv() {

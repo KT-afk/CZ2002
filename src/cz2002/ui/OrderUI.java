@@ -79,7 +79,7 @@ public class OrderUI {
 	}
 	
 	private void newOrder(Staff staff, List<Table> tables) {
-		int orderType, uadd;
+		int orderType, uadd, uc;
 		String iname, desc, resId;
 		double price;
 		Reservation resv;
@@ -99,9 +99,24 @@ public class OrderUI {
 			switch(orderType) {
 				case 1:
 					do {
-						System.out.println("Enter reservation ID: ");
+						System.out.println("Enter reservation ID ('n' to cancel): ");
 						resId = sc.next();
-						resv = reservationSystem.getReservation(resId);
+						
+						if(resId == "n") {
+							return;
+						}
+						
+						if(resId.length() != 8) {
+							System.out.println("Invalid reservation ID");
+							continue;
+						}
+						try {
+							resv = reservationSystem.getReservation(resId);
+						}
+						catch(Exception e) {
+							System.out.println("Invalid reservation ID");
+							continue;
+						}
 						
 						if(resv == null) {
 							System.out.println("Invalid reservation ID");
@@ -145,7 +160,7 @@ public class OrderUI {
 						iname = RestaurantMenu.alaCarteMenu.get(i).getName();
 						desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
 						price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | $" + price);
 					}
 					do {
 						System.out.println("Choose menu items to add into order");
@@ -177,7 +192,7 @@ public class OrderUI {
 						iname = RestaurantMenu.setPackageMenu.get(i).getName();
 						desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
 						price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | $" + price);
 					}
 					do {
 						System.out.println("Choose packages to add into order");
@@ -235,11 +250,19 @@ public class OrderUI {
 							
 					OrderSystem.addOrder(newOrder2);
 					
-					
 					break;
 				default:
 					System.out.println("Option entered is invalid, please try again\n");
 			}
+			
+			uc = Prompt(sc,
+					"Create Another Order",
+					"Stop"
+				);
+			if(uc == 2) {
+				return;
+			}
+			
 		} while(true);
 		
 	}
