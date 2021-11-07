@@ -3,8 +3,8 @@ package cz2002.entity;
 import java.util.ArrayList;
 
 public class RestaurantMenu {
-	private ArrayList<FoodDish> alaCarteMenu;
-	private ArrayList<SetPackage> setPackageMenu;
+	public ArrayList<FoodDish> alaCarteMenu;
+	public ArrayList<SetPackage> setPackageMenu;
 	
 	public RestaurantMenu()
 	{

@@ -1,9 +1,14 @@
 package cz2002;
 
-import cz2002.entity.Table;
+import cz2002.entity.RestaurantMenu;
+import cz2002.entity.FoodDish;
+import cz2002.entity.SetPackage;
 import cz2002.system.TableSystem;
 import cz2002.ui.ReservationUI;
 import cz2002.ui.RestaurantUI;
+import cz2002.ui.FoodDishUI;
+import cz2002.ui.PromotionSetUI;
+import cz2002.ui.MenuUI;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -19,10 +24,27 @@ public class RestaurantApplication {
 		RestaurantUI restaurantUI = new RestaurantUI(sc);
 
 		var mockTables = TableSystem.CreateMockTableList();
+		
+		RestaurantMenu menu = new RestaurantMenu();
+		//Initialise random food and set packages for now
+		menu.alaCarteMenu.add(new FoodDish("Foo", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
+		menu.alaCarteMenu.add(new FoodDish("Foo1", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
+		menu.alaCarteMenu.add(new FoodDish("Foo2", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
+		menu.alaCarteMenu.add(new FoodDish("Foo3", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
 
+		menu.alaCarteMenu.get(1).toggleEnable();
+		menu.alaCarteMenu.get(3).toggleEnable();
+
+		menu.setPackageMenu.add(new SetPackage("FooSet", "Bar", 20));
+		menu.setPackageMenu.add(new SetPackage("FooSetDeluxe", "Bar", 20));
+
+		menu.setPackageMenu.get(0).addFood(menu.alaCarteMenu.get(0));
+		menu.setPackageMenu.get(1).addFood(menu.alaCarteMenu.get(0));
+		menu.setPackageMenu.get(1).addFood(menu.alaCarteMenu.get(2));
+		
 		while(true) {
 			int option = Prompt(sc,
-		"Manage Menu Items",
+				"Manage Menu Items",
 				"Manage Promotion Sets",
 				"Manage Orders",
 				"Manage Reservations",
@@ -34,19 +56,38 @@ public class RestaurantApplication {
 			);
 
 			switch (option) {
-				case 1 -> ManageMenu(sc);
-				case 2 -> ManagePromotionSet(sc);
-				case 3 -> ManageOrder(sc);
-				case 4 -> reservationUI.makeReservationUI();
-				case 5 -> restaurantUI.checkTableAvailability(mockTables);
-				case 6 -> PrintOrderInvoice(sc);
-				case 7 -> PrintRevenueReport(sc);
-				case 8 -> { return; }
+				case 1:
+					//ManageMenu(sc);
+					MenuUI menuManager = new FoodDishUI(sc, menu.alaCarteMenu);
+					menuManager.run("Menu Item");
+					break;
+				case 2:
+					//ManagePromotionSet(sc);
+					menuManager = new PromotionSetUI(sc, menu.setPackageMenu, menu.alaCarteMenu);
+					menuManager.run("Set Package");
+					break;
+				case 3:
+					ManageOrder(sc);
+					break;
+				case 4:
+					reservationUI.makeReservationUI();
+					break;
+				case 5:
+					restaurantUI.checkTableAvailability(mockTables);
+					break;
+				case 6:
+					PrintOrderInvoice(sc);
+					break;
+				case 7:
+					PrintRevenueReport(sc);
+					break;
+				case 8:
+					return;
 			}
 		}
 	}
 
-	public static void ManageMenu(Scanner sc) {
+	/*public static void ManageMenu(Scanner sc) {
 		int option = Prompt(sc, "Create Menu Item", "Edit Menu Item", "Remove Menu Item");
 
 		if(option == 1)
@@ -66,7 +107,7 @@ public class RestaurantApplication {
 			; // Placeholder
 		else if(option == 3)
 			; // Placeholder
-	}
+	}*/
 
 	public static void ManageOrder(Scanner sc) {
 		int option = Prompt(sc, "Create Order", "View Order", "Edit Order");
