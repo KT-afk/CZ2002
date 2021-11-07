@@ -41,18 +41,29 @@ public class Order{
 	public LocalDateTime getStart(){
 		return start;
 	}
-	public String addItem(MenuItem item) {
-		if(orderItems.add(item)) return "Item added successfully";
+	public String addDishItem(FoodDish item) {
+		if(fdItems.add(item)) return "Item added successfully";
 		else return "Item already exist";
 	}
-	public String removeItem(MenuItem item) {
-		if(orderItems.remove(item)) return "Item remove successfully";
+	public String removeDishItem(FoodDish item) {
+		if(fdItems.remove(item)) return "Item remove successfully";
+		else return "This item does not exist in this order";
+	}
+	public String addPackItem(SetPackage item) {
+		if(packItems.add(item)) return "Item added successfully";
+		else return "Item already exist";
+	}
+	public String removePackItem(SetPackage item) {
+		if(packItems.remove(item)) return "Item remove successfully";
 		else return "This item does not exist in this order";
 	}
 	public double totalPrice(){
 		double totalPrice =0;
-		for(int i=0;i<orderItems.size();i++){
-			totalPrice+=orderItems.get(i).getPrice();
+		for(int i=0;i<fdItems.size();i++){
+			totalPrice+=fdItems.get(i).getPrice();
+		}
+		for(int i=0;i<packItems.size();i++){
+			totalPrice+=packItems.get(i).getPrice();
 		}
 		return totalPrice;
 	}

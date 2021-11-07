@@ -93,10 +93,6 @@ public class OrderSystem {
 		for(Order order: orderList) {
 			if(order.getID() == uinput) {
 				do {
-					System.out.println("Order ID: " + order.getID() + " - Created On: " + order.getStart());
-					for(MenuItem item: order.getOrderItems()) {
-						System.out.println("  --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
-					}
 					
 				} while(finish);
 				return;
