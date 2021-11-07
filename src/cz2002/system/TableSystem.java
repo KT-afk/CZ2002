@@ -36,5 +36,14 @@ public class TableSystem {
 		}
 		return availableTables;
 	}
+	public Table getTableByNo(int tableNo) {
+		for(int i=0;i<tableList.size();i++) {
+			if(tableList.get(i).tableNo == tableNo) {
+				return tableList.get(i);
+			}
+		}
+		return null;
+	}
+	
 	
 }
