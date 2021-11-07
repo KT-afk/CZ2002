@@ -28,7 +28,7 @@ public class OrderUI {
 		this.RestaurantMenu = RestaurantMenu;
 	}
 	
-	public void manageOrders (List<Table> tables) {
+	public void manageOrders (Staff staff, List<Table> tables) {
 		int uchoice;
 		do {
 			System.out.println("-----------ORDER OPTIONS-----------");
@@ -50,7 +50,7 @@ public class OrderUI {
 					viewOrder();
 					break;
 				case 3:
-					newOrder(tables);
+					newOrder(staff, tables);
 					break;
 				case 4:
 					modifyOrders();
@@ -78,7 +78,7 @@ public class OrderUI {
 		OrderSystem.viewOrder(iinput);
 	}
 	
-	private void newOrder(List<Table> tables) {
+	private void newOrder(Staff staff, List<Table> tables) {
 		int orderType, uadd;
 		String staffin, staffpos, staffgen;
 		String iname, desc;
@@ -96,19 +96,6 @@ public class OrderUI {
 			System.out.println("1) From reservation");
 			System.out.println("2) From walk-in order");
 			orderType = sc.nextInt();
-			
-			System.out.println("Enter staff name: ");
-			staffin = sc.next();
-			
-			System.out.println("Enter staff title: ");
-			staffpos = sc.next();
-			
-			System.out.println("Enter staff gender(m/f): ");
-			staffgen = sc.next();
-			
-			gender = (staffgen == "m") ? Gender.Male : Gender.Female;
-			
-			Staff orStaff = new Staff(staffin, gender, staffpos);
 			
 			switch(orderType) {
 				case 1:
@@ -171,7 +158,7 @@ public class OrderUI {
 					} while (true);
 					
 					
-					Order newOrder = new Order(orStaff, orDish, orPack, resv, orTable, LocalDateTime.now());
+					Order newOrder = new Order(staff, orDish, orPack, resv, orTable, LocalDateTime.now());
 							
 					OrderSystem.addOrder(newOrder);
 					
