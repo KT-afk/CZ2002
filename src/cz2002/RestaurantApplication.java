@@ -1,6 +1,8 @@
 package cz2002;
 
 import cz2002.entity.*;
+import cz2002.system.ReservationSystem;
+import cz2002.system.SaleRevenueSystem;
 import cz2002.system.TableSystem;
 import cz2002.ui.*;
 
@@ -14,11 +16,14 @@ public class RestaurantApplication {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Restaurant Reservation Management System");
 
-		ReservationUI reservationUI = new ReservationUI(sc);
-		RestaurantUI restaurantUI = new RestaurantUI(sc);
-		OrderUI orderUI = new OrderUI(sc);
-
 		TableSystem tableSystem = new TableSystem();
+		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem();
+		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
+
+		ReservationUI reservationUI = new ReservationUI(sc);
+		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
+		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
+		OrderUI orderUI = new OrderUI(sc);
 
 		int capacity = 2;
 
@@ -77,13 +82,13 @@ public class RestaurantApplication {
 					reservationUI.makeReservationUI(tableSystem.getTableList());
 					break;
 				case 5:
-					restaurantUI.checkTableAvailability(tableSystem.getTableList());
+					restaurantUI.checkTableAvailability();
 					break;
 				case 6:
-					PrintOrderInvoice(sc);
+					orderUI.printOrderInvoice();
 					break;
 				case 7:
-					PrintRevenueReport(sc);
+					saleRevenueUI.printSaleRevenueReport();
 					break;
 				case 8:
 					return;

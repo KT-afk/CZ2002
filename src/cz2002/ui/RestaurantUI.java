@@ -15,19 +15,19 @@ import java.util.Scanner;
 public class RestaurantUI {
 
     private Scanner sc;
+    private ReservationSystem reservationSystem;
+    private TableSystem tableSystem;
 
-    public RestaurantUI(Scanner scanner) {
+    public RestaurantUI(ReservationSystem reservationSystem, TableSystem tableSystem, Scanner scanner) {
+        this.reservationSystem = reservationSystem;
+        this.tableSystem = tableSystem;
         sc = scanner;
     }
 
     // Check if Table is "vacant" and if is free for the next 1.5 hours (TableSystem
     // and ReservationSystem)
-    public void checkTableAvailability(List<Table> tables) {
-        ReservationSystem reservationSystem = new ReservationSystem(tables);
-
-        var vacantTables = tables.stream()
-                                .filter(table -> table.getStatus() == Table.Status.VACANT)
-                                .toList();
+    public void checkTableAvailability() {
+        var vacantTables = tableSystem.checkAvailability();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
