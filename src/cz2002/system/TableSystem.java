@@ -25,7 +25,7 @@ public class TableSystem {
 		return "Failed to removed table";
 	}
 
-	public ArrayList<Table> checkAvailability(){
+	public ArrayList<Table> getAvailableTables(){
 		ArrayList<Table> availableTables=new ArrayList<Table>();
 		for(int i=0;i<tableList.size();i++) {
 			if(tableList.get(i).getStatus() == Table.Status.VACANT) {
