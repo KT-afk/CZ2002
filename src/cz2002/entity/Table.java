@@ -25,8 +25,8 @@ public class Table {
 		return Capacity;
 	}
 
-	public String getStatus() {
-		return type.toString();
+	public Status getStatus() {
+		return type;
 	}
 
 	public int getTableNo() {

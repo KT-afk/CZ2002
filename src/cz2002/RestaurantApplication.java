@@ -1,8 +1,8 @@
 package cz2002;
 
-import cz2002.entity.RestaurantMenu;
-import cz2002.entity.FoodDish;
-import cz2002.entity.SetPackage;
+import cz2002.entity.*;
+import cz2002.system.ReservationSystem;
+import cz2002.system.SaleRevenueSystem;
 import cz2002.system.TableSystem;
 import cz2002.ui.*;
 
@@ -16,11 +16,23 @@ public class RestaurantApplication {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Restaurant Reservation Management System");
 
+		TableSystem tableSystem = new TableSystem();
+		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem();
+		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
+
 		ReservationUI reservationUI = new ReservationUI(sc);
-		RestaurantUI restaurantUI = new RestaurantUI(sc);
+		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
+		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
 		OrderUI orderUI = new OrderUI(sc);
 
-		var mockTables = TableSystem.CreateMockTableList();
+		int capacity = 2;
+
+		for(int i = 0; i < 10; i++) {
+			tableSystem.addTable(capacity++);
+
+			if(capacity >= 10)
+				capacity = 2;
+		}
 		
 		RestaurantMenu menu = new RestaurantMenu();
 		//Initialise random food and set packages for now
@@ -64,19 +76,19 @@ public class RestaurantApplication {
 					menuManager.run("Set Package");
 					break;
 				case 3:
-					orderUI.manageOrders(mockTables);
+					orderUI.manageOrders(tableSystem.getTableList());
 					break;
 				case 4:
-					reservationUI.makeReservationUI();
+					reservationUI.makeReservationUI(tableSystem.getTableList());
 					break;
 				case 5:
-					restaurantUI.checkTableAvailability(mockTables);
+					restaurantUI.checkTableAvailability();
 					break;
 				case 6:
-					PrintOrderInvoice(sc);
+					orderUI.printOrderInvoice();
 					break;
 				case 7:
-					PrintRevenueReport(sc);
+					saleRevenueUI.printSaleRevenueReport();
 					break;
 				case 8:
 					return;

@@ -67,6 +67,10 @@ public class OrderUI {
 			}
 		}while (true);
 	}
+
+	public void printOrderInvoice() {
+
+	}
 	
 	private void viewOrder() {
 		System.out.println("\nType in the order ID for viewing: ");
@@ -230,6 +234,8 @@ public class OrderUI {
 		
 	}
 
+
+
 	// Utility Functions
 	private static int Prompt(Scanner scanner, String... options) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -256,6 +262,5 @@ public class OrderUI {
 			return Prompt(scanner, options);
 		}
 	}
-
 	
 }

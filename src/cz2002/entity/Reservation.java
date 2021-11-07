@@ -6,9 +6,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Reservation implements Serializable {
-	public enum Type {
-		PENDING, OCCUPIED, EXPIRED
-	}
 
 	private static int reservationIdCounter = 0;
 	private String id;
@@ -17,7 +14,6 @@ public class Reservation implements Serializable {
 	private String contact;
 	private LocalDate date;
 	private LocalTime time;
-	private String customerId;
 	private int tableNo;
 
 	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo,
@@ -33,10 +29,6 @@ public class Reservation implements Serializable {
 
 	public String getId() {
 		return id;
-	}
-
-	public String getType() {
-		return name;
 	}
 
 	public String getName() {
