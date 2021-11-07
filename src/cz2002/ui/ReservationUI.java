@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -201,8 +202,8 @@ public class ReservationUI {
 			paxNo = sc.nextInt();
 		}
 		ReservationSystem rSystem = new ReservationSystem(tables);
-		boolean rStatus = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime,
-				customerId);
+		boolean rStatus = false;
+		rStatus = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, customerId);
 		if (!rStatus)
 			System.out.println("We are fully booked");
 		else
