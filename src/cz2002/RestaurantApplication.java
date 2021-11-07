@@ -1,22 +1,18 @@
 package cz2002;
 
-import cz2002.entity.Table;
 import cz2002.entity.RestaurantMenu;
-import cz2002.entity.MenuItem;
 import cz2002.entity.FoodDish;
 import cz2002.entity.SetPackage;
 import cz2002.system.TableSystem;
 import cz2002.ui.ReservationUI;
 import cz2002.ui.RestaurantUI;
-import cz2002.ui.ManageFoodDish;
-import cz2002.ui.ManagePromotionSet;
-import cz2002.ui.MenuManager;
-import cz2002.util.ScannerUtil;
+import cz2002.ui.FoodDishUI;
+import cz2002.ui.PromotionSetUI;
+import cz2002.ui.MenuUI;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class RestaurantApplication {
 
@@ -62,12 +58,12 @@ public class RestaurantApplication {
 			switch (option) {
 				case 1:
 					//ManageMenu(sc);
-					MenuManager menuManager = new ManageFoodDish(sc, menu.alaCarteMenu);
+					MenuUI menuManager = new FoodDishUI(sc, menu.alaCarteMenu);
 					menuManager.run("Menu Item");
 					break;
 				case 2:
 					//ManagePromotionSet(sc);
-					menuManager = new ManagePromotionSet(sc, menu.setPackageMenu, menu.alaCarteMenu);
+					menuManager = new PromotionSetUI(sc, menu.setPackageMenu, menu.alaCarteMenu);
 					menuManager.run("Set Package");
 					break;
 				case 3:

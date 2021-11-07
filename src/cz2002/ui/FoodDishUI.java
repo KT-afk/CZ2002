@@ -6,9 +6,9 @@ import cz2002.util.ScannerUtil;
 
 import java.util.*;
 
-public class ManageFoodDish extends MenuManager {
+public class FoodDishUI extends MenuUI {
 
-    public ManageFoodDish(Scanner scanner, ArrayList<FoodDish> restaurantMenu) {
+    public FoodDishUI(Scanner scanner, ArrayList<FoodDish> restaurantMenu) {
         super(scanner, restaurantMenu);
         setFormatting("   %-5s %-20s %-15s %s", "Status", "Name", "Type", "Price ($S)");
     }

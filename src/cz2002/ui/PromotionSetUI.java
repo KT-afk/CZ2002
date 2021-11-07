@@ -2,18 +2,17 @@ package cz2002.ui;
 
 import cz2002.entity.FoodDish;
 import cz2002.entity.MenuItem;
-import cz2002.entity.RestaurantMenu;
 import cz2002.entity.SetPackage;
 import cz2002.util.ScannerUtil;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public class ManagePromotionSet extends MenuManager {
+public class PromotionSetUI extends MenuUI {
 
     private List<FoodDish> foodDishMenu;
 
-    public ManagePromotionSet(Scanner scanner, ArrayList<SetPackage> setPackageMenu, ArrayList<FoodDish> foodDishMenu) {
+    public PromotionSetUI(Scanner scanner, ArrayList<SetPackage> setPackageMenu, ArrayList<FoodDish> foodDishMenu) {
         super(scanner, setPackageMenu);
         this.foodDishMenu = foodDishMenu;
         setFormatting("   %-5s %-20s %s", "Status", "Name", "Price ($S)");

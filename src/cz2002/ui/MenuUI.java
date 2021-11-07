@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-public abstract class MenuManager {
+public abstract class MenuUI {
 
     protected Scanner sc;
     protected List<MenuItem> menu;
@@ -17,7 +17,7 @@ public abstract class MenuManager {
     private String format = "";
     private String[] headers = {};
 
-    public MenuManager(Scanner scanner, List<? extends MenuItem> restaurantMenu) {
+    public MenuUI(Scanner scanner, List<? extends MenuItem> restaurantMenu) {
         sc = scanner;
         menu = (List<MenuItem>) restaurantMenu;
     }
