@@ -1,8 +1,10 @@
 package cz2002.entity;
 
+import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class RestaurantMenu {
+public class RestaurantMenu implements Serializable {
 	public ArrayList<FoodDish> alaCarteMenu;
 	public ArrayList<SetPackage> setPackageMenu;
 	
@@ -10,15 +12,35 @@ public class RestaurantMenu {
 	{
 		alaCarteMenu = new ArrayList<FoodDish>();
 		setPackageMenu = new ArrayList<SetPackage>();
+
+		load();
 	}
-	
-	public void addAlaCarte(FoodDish food)
-	{
-		alaCarteMenu.add(food);
+
+	public void save() {
+		try {
+			FileOutputStream f = new FileOutputStream("menu.dat");
+			ObjectOutputStream out = new ObjectOutputStream(f);
+			out.writeObject(this);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
-	public void addSetPackage(SetPackage set)
-	{
-		setPackageMenu.add(set);
+
+	public void load() {
+		File f = new File("menu.dat");
+		if(f.exists()) {
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+				var menu = (RestaurantMenu) ois.readObject();
+				this.alaCarteMenu = menu.alaCarteMenu;
+				this.setPackageMenu = menu.setPackageMenu;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void printAllMenu()

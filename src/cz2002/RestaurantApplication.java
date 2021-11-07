@@ -33,22 +33,6 @@ public class RestaurantApplication {
 		Staff currentStaff = staffList.get(staffSelection);
 
 		RestaurantMenu menu = new RestaurantMenu();
-		//Initialise random food and set packages for now
-		menu.alaCarteMenu.add(new FoodDish("Foo", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
-		menu.alaCarteMenu.add(new FoodDish("Foo1", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
-		menu.alaCarteMenu.add(new FoodDish("Foo2", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
-		menu.alaCarteMenu.add(new FoodDish("Foo3", "Bar", 1.2, FoodDish.menuItemType.MAIN_COURSE));
-
-		menu.alaCarteMenu.get(1).toggleEnable();
-		menu.alaCarteMenu.get(3).toggleEnable();
-
-		menu.setPackageMenu.add(new SetPackage("FooSet", "Bar", 20));
-		menu.setPackageMenu.add(new SetPackage("FooSetDeluxe", "Bar", 20));
-
-		menu.setPackageMenu.get(0).addFood(menu.alaCarteMenu.get(0));
-		menu.setPackageMenu.get(1).addFood(menu.alaCarteMenu.get(0));
-		menu.setPackageMenu.get(1).addFood(menu.alaCarteMenu.get(2));
-
 		TableSystem tableSystem = new TableSystem();
 		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem();
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
@@ -87,11 +71,13 @@ public class RestaurantApplication {
 					//ManageMenu(sc);
 					MenuUI menuManager = new FoodDishUI(sc, menu.alaCarteMenu);
 					menuManager.run("Menu Item");
+					menu.save();
 					break;
 				case 2:
 					//ManagePromotionSet(sc);
 					menuManager = new PromotionSetUI(sc, menu.setPackageMenu, menu.alaCarteMenu);
 					menuManager.run("Set Package");
+					menu.save();
 					break;
 				case 3:
 					orderUI.manageOrders(currentStaff, tableSystem.getTableList());
