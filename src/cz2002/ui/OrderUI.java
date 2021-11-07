@@ -257,7 +257,7 @@ public class OrderUI {
 			
 			uc = Prompt(sc,
 					"Create Another Order",
-					"Stop"
+					"End Creation"
 				);
 			if(uc == 2) {
 				return;
