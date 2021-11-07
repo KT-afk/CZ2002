@@ -66,9 +66,10 @@ public class ReservationSystem {
 	// For walk in
 	// Find an available table
 	// Check the reservations for that table
-	public boolean checkTableForReservation(int tableNo) {
+	public boolean checkTableForReservation(int tableNo, LocalDate d) {
 		LocalTime reservationTime;
-		ArrayList<Reservation> rList = getPastReservation(LocalDate.now());
+
+		ArrayList<Reservation> rList = getPastReservation(d);
 		for (int i = 0; i < rList.size(); i++) {
 			reservationTime = rList.get(i).getTime();
 			if (rList.get(i).getTableNo() == tableNo) {
@@ -119,7 +120,7 @@ public class ReservationSystem {
 					// Get the tableNo for those bigger than the paxNo
 					tableNo = tList.get(j).getTableNo();
 					// Check for reservations assigned to that table for any conflicts
-					if (!checkTableForReservation(tableNo)) {
+					if (!checkTableForReservation(tableNo, reservationDate)) {
 						tableNo = -1;
 					}
 				}
