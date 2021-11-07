@@ -291,7 +291,31 @@ public class OrderUI {
 	}
 
 	private void completeOrder() {
+		int uc;
+		do {
+			System.out.println("\nType in the order ID to pay: ");
+			int uinput = sc.nextInt();
+			
+			do {
+				System.out.println("Is the customer a member? (y/n) ");
+				String mem = sc.next();
+				
+				if(mem == "y") {
+					OrderSystem.completeOrder(uinput, 0.9);
+					break;
+				}
+				else {
+					OrderSystem.completeOrder(uinput, 1);
+					break;
+				}
+			} while(true);
+			
 
+			uc = Prompt(sc, "Pay Another Order", "End Pay");
+			if (uc == 2) {
+				return;
+			}
+		} while (true);
 	}
 
 	// Utility Functions

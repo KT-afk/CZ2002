@@ -46,8 +46,7 @@ public class OrderSystem {
 			
 			for(Order orderP : orderList) {
 			    if(orderP.getID() == orderID) {
-			    	
-			    	
+
 			    	isValid = true;
 			    	break;
 			    }
@@ -119,8 +118,38 @@ public class OrderSystem {
 		while (it.hasNext()) {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
-		    it.remove();
-		    return;
+			  it.remove();
+			  return;
+		  }
+		}
+
+		System.out.println("No order with ID " + uinput + " is found");
+		return;
+		
+	}
+	
+	public static void completeOrder(int uinput, double discountamt) {
+		
+		double discount = 1 * discountamt;
+		Iterator<Order> it = orderList.iterator();
+		
+		while (it.hasNext()) {
+		  Order order = it.next();
+		  if (order.getID().equals(uinput)) {
+			System.out.println("===================== Order " + order.getID() + " =====================");
+			System.out.println("Order Items: ");
+			for(int i=0;i<order.getDishItems().size();i++) {
+				System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+			}
+			System.out.println("Set Packages: ");
+			for(int i=0;i<order.getPackItems().size();i++) {
+				System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+			}
+			System.out.println("Total Cost: $" + order.totalPrice()*discount );
+			System.out.println("Order created on " + order.getStart());
+			System.out.println("==============================================");
+			it.remove();
+			return;
 		  }
 		}
 
