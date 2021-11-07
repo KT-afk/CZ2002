@@ -6,23 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TableSystem {
-
-    public List<Table> getTables() {
-        return new ArrayList<>();
-    }
-
-    public static List<Table> CreateMockTableList() {
-        ArrayList<Table> tables = new ArrayList<>();
-        int capacity = 2;
-
-        for(int i = 0; i < 10; i++) {
-            Table table = new Table(capacity++, i);
-            tables.add(table);
-
-            if(capacity >= 10)
-                capacity = 2;
-        }
-
-        return tables;
-    }
+	public static int tableCounter=0;
+	public ArrayList<Table> tableList;
+	public String addTable(int capacity) {
+		if(capacity<2 || capacity>10) return "Invalid capacity!";
+		Table table = new Table(capacity,++tableCounter);
+		if(tableList.add(table)) return "Table added successfully!";
+		else return "Failed to add table!";
+	}
+	public String removeTable(int tableNo) {
+		tableList.map((table)->{
+			if(table.tableNo == tableNo) {
+				if(tableList.remove(table)) return "Table removed successfully!";
+				else return "Failed to removed table";
+			}
+		})
+		return "Invalid table number!";
+	}
+	public ArrayList<Table> CheckAvailability(){
+		ArrayList<Table> availableTables;
+		for(int i=0;i<tableList.size();i++) {
+			if(tableList.get(i).status == "vacant") {
+				availableTables.add(tableList.get(i));
+			}
+		}
+		return availableTables;
+	}
+	
 }
