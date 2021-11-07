@@ -22,6 +22,19 @@ public class ReservationSystem {
 		tList = new ArrayList<>(tables);
 	}
 
+	public Reservation getReservation(String Id) {
+		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
+		ArrayList<Reservation> rList = getPastReservation(d);
+		int i;
+		for (i = 0; i < rList.size(); i++) {
+			if (rList.get(i).getId() == Id) {
+				return rList.get(i);
+			}
+		}
+		System.out.println("This reservation ID does not exist!");
+		return null;
+	}
+
 	public void reservationArrival(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
 		ArrayList<Reservation> rList = getPastReservation(d);
@@ -82,7 +95,7 @@ public class ReservationSystem {
 			if (reservation.getTableNo() == tableNo) {
 				reservationTime = reservation.getTime();
 
-				if(reservationTime.isBefore(LocalTime.now()))
+				if (reservationTime.isBefore(LocalTime.now()))
 					continue;
 				else
 					return reservationTime;
