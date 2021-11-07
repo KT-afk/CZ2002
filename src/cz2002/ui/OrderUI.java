@@ -267,7 +267,7 @@ public class OrderUI {
 		do {
 			System.out.println("\nType in the order ID to modify: ");
 			int uinput = sc.nextInt();
-			OrderSystem.modifyOrder(uinput);
+			OrderSystem.modifyOrder(uinput, RestaurantMenu);
 
 			uc = Prompt(sc, "Modify Another Orders", "End Modification");
 			if (uc == 2) {
