@@ -253,7 +253,7 @@ public class OrderUI {
 				System.out.println("Option entered is invalid, please try again\n");
 			}
 
-			uc = Prompt(sc, "Create Another Order", "Stop");
+			uc = Prompt(sc, "Create Another Order", "End Creation");
 			if (uc == 2) {
 				return;
 			}
