@@ -80,6 +80,8 @@ public class RestaurantApplication {
 				"Quit"
 			);
 
+			sc.nextLine();
+
 			switch (option) {
 				case 1:
 					//ManageMenu(sc);

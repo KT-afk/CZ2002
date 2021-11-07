@@ -164,14 +164,65 @@ public class OrderUI {
 					
 					break;
 				case 2:
-					boolean stop = false;
-					
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-					System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
-					
+					System.out.println("For packages in the menu");
+					for(int i=0;i<RestaurantMenu.setPackageMenu.size();i++) {
+						iname = RestaurantMenu.setPackageMenu.get(i).getName();
+						desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
+						price = RestaurantMenu.setPackageMenu.get(i).getPrice();
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+					}
 					do {
+						System.out.println("Choose packages to add into order");
+						System.out.println("Enter -1 to stop");
+						uadd = sc.nextInt();
 						
-					} while(!stop);
+						if(uadd == -1) {
+							break;
+						}
+						
+						if(uadd <= RestaurantMenu.setPackageMenu.size()) {
+							orPack.add(new SetPackage(RestaurantMenu.setPackageMenu.get(uadd-1).getName(), RestaurantMenu.setPackageMenu.get(uadd-1).getDescription(), RestaurantMenu.setPackageMenu.get(uadd-1).getPrice()));
+						}
+						else {
+							System.out.println("Choice is invalid");
+						}
+						
+					} while (true);
+					
+					System.out.println("For menu items in the menu");
+					for(int i=0;i<RestaurantMenu.alaCarteMenu.size();i++) {
+						iname = RestaurantMenu.alaCarteMenu.get(i).getName();
+						desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
+						price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
+						System.out.println((i+1) + ") " + iname + " | " + desc + " | " + price);
+					}
+					do {
+						System.out.println("Choose menu items to add into order");
+						System.out.println("Enter -1 to stop");
+						uadd = sc.nextInt();
+						
+						if(uadd == -1) {
+							break;
+						}
+						
+						if(uadd <= RestaurantMenu.alaCarteMenu.size()) {
+							orDish.add(new FoodDish(RestaurantMenu.alaCarteMenu.get(uadd-1).getName(), RestaurantMenu.alaCarteMenu.get(uadd-1).getDescription(), RestaurantMenu.alaCarteMenu.get(uadd-1).getPrice(), RestaurantMenu.alaCarteMenu.get(uadd-1).getType()));
+						}
+						else {
+							System.out.println("Choice is invalid");
+						}
+						
+					} while (true);
+					
+					ArrayList<Table> availTable = TableSystem.checkAvailability();
+					
+					for(int i=0;i<availTable.size();i++) {
+						
+					}
+					
+					Order newOrder2 = new Order(orStaff, orDish, orPack, null, orTable, LocalDateTime.now());
+							
+					OrderSystem.addOrder(newOrder2);
 					
 					
 					break;
