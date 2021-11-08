@@ -15,6 +15,12 @@ import java.util.Scanner;
 
 import cz2002.SystemClock;
 
+/**
+ * Represents the Order UI only
+ * @author Richie Ang
+ * @version 1.0
+ * @since 2021-11-6
+ */
 public class OrderUI {
 
 	private Scanner sc;
@@ -22,6 +28,13 @@ public class OrderUI {
 	private TableSystem TableSystem;
 	private RestaurantMenu RestaurantMenu;
 
+	/**
+	 * OrderUI Constructor with the necessary systems
+	 * @param scanner
+	 * @param ReservationSystem
+	 * @param TableSystem
+	 * @param RestaurantMenu
+	 */
 	public OrderUI(Scanner scanner, ReservationSystem ReservationSystem, TableSystem TableSystem,
 			RestaurantMenu RestaurantMenu) {
 		sc = scanner;
@@ -30,6 +43,11 @@ public class OrderUI {
 		this.RestaurantMenu = RestaurantMenu;
 	}
 
+	/**
+	 * Order Management Options UI
+	 * @param staff
+	 * @param List tables of table objects
+	 */
 	public void manageOrders(Staff staff, List<Table> tables) {
 		int uchoice;
 		do {
@@ -67,6 +85,7 @@ public class OrderUI {
 
 	}
 
+	
 	private void viewOrder() {
 		System.out.println("\nType in the order ID for viewing: ");
 		int iinput = sc.nextInt();
