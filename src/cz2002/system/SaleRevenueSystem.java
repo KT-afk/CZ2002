@@ -1,3 +1,9 @@
+package cz2002.system;
+
+import cz2002.entity.Order;
+import cz2002.entity.SaleRevenue;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,6 +14,12 @@ import java.util.Date;
  * @since 2021-11-06
  */
 public class SaleRevenueSystem {
+
+	private OrderSystem orderSystem;
+	public SaleRevenueSystem(OrderSystem orderSystem) {
+		this.orderSystem = orderSystem;
+	}
+
 	/**
 	 * This method is to generate Sale Revenue Report of a specific period
 	 * @param start start date of this period
@@ -16,7 +28,7 @@ public class SaleRevenueSystem {
 	 */
 	public SaleRevenue generateSaleRevenueRep(Date start, Date end) {
 		ArrayList<Order> orderListIncluded = new ArrayList<>();
-		var orderList = OrderSystem.getOrderList();
+		var orderList = orderSystem.getOrderList();
 		double totalPrice=0;
 		//suppose OrderList is where we store all orders
 		for(Order order : orderList) {

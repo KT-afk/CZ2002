@@ -3,8 +3,19 @@ package cz2002.util;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Utility Class for Scanner object
+ */
 public class ScannerUtil {
 
+    /**
+     * Prompts user to select an index (starting from 1) from a list of given strings
+     * This function will prompt user to enter again if the entered index is not within the list's range or if value is invalid
+     * @param scanner Scanner object
+     * @param prompt Prompt that is printed out
+     * @param options List of string values that is printed out for user to select
+     * @return Selected option from the given list
+     */
     public static int CustomPrompt(Scanner scanner, String prompt, String... options) {
         System.out.println();
         System.out.println(prompt);
@@ -27,6 +38,13 @@ public class ScannerUtil {
             return CustomPrompt(scanner, prompt, options);
         }
     }
+
+    /**
+     *
+     * @param scanner
+     * @param options
+     * @return
+     */
     public static int Prompt(Scanner scanner, String... options) {
         return CustomPrompt(scanner, "Please select one of the following options: ", options);
     }

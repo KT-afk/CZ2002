@@ -16,11 +16,11 @@ public class OrderSystem {
 	/**
 	 * ArrayList of all the orders in the system
 	 */
-	private static ArrayList<Order> orderList = new ArrayList<Order>();
+	private ArrayList<Order> orderList = new ArrayList<Order>();
 	/**
 	 * Count of total orders added so far
 	 */
-	private static int orderCount = 0;
+	private int orderCount = 0;
 	/**
 	 * while loop checker
 	 */
@@ -30,7 +30,7 @@ public class OrderSystem {
 	 * Get the whole ArrayList of orders
 	 * @return ArrayList of order objects
 	 */
-	public static ArrayList<Order> getOrderList() {
+	public ArrayList<Order> getOrderList() {
 		return orderList;
 	}
 	
@@ -39,7 +39,7 @@ public class OrderSystem {
 	 * from OrderUI and shows the total order
 	 * @param order
 	 */
-	public static void addOrder(Order order) {
+	public void addOrder(Order order) {
 		orderList.add(order);
 		orderCount++;
 		System.out.println("\nOrder " + orderCount + " Successfully Created");
@@ -65,7 +65,7 @@ public class OrderSystem {
 	/**
 	 * Prints all the order details in the order ArrayList
 	 */
-	public static void viewAllOrders() {
+	public void viewAllOrders() {
 		int ori;
 		
 		if (orderList.size() < 1) {
@@ -90,7 +90,7 @@ public class OrderSystem {
 	 * View the specific order details from orderID
 	 * @param iinput
 	 */
-	public static void viewOrder(int iinput) {
+	public void viewOrder(int iinput) {
 	
 		for(Order order: orderList) {
 			if(order.getID() == iinput) {
@@ -113,7 +113,7 @@ public class OrderSystem {
 	 * @param uinput
 	 * @param RestaurantMenu
 	 */
-	public static void modifyOrder(int uinput, RestaurantMenu RestaurantMenu) {
+	public void modifyOrder(int uinput, RestaurantMenu RestaurantMenu) {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -277,7 +277,7 @@ public class OrderSystem {
 	 * Removed order from the order ArrayList
 	 * @param uinput
 	 */
-	public static void removeOrder(int uinput) {
+	public void removeOrder(int uinput) {
 		
 		Iterator<Order> it = orderList.iterator();
 		
@@ -300,7 +300,7 @@ public class OrderSystem {
 	 * @param uinput
 	 * @param discountamt
 	 */
-	public static void completeOrder(int uinput, double discountamt) {
+	public void completeOrder(int uinput, double discountamt) {
 		
 		double discount = 1 * discountamt;
 		Iterator<Order> it = orderList.iterator();

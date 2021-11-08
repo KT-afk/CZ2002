@@ -1,6 +1,7 @@
 package cz2002;
 
 import cz2002.entity.*;
+import cz2002.system.OrderSystem;
 import cz2002.system.ReservationSystem;
 import cz2002.system.SaleRevenueSystem;
 import cz2002.system.TableSystem;
@@ -8,16 +9,27 @@ import cz2002.ui.*;
 import cz2002.util.ScannerUtil;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Restaurant Application Main entry class for the project
+ */
 public class RestaurantApplication {
 
+	/**
+	 * Main entry point
+	 * 
+	 * @param args Arguments
+	 */
 	public static void main(String[] args) {
+
+		Restaurant restaurant = new Restaurant("NTUCates", "50 Nanyang Ave, 639798", "1100 - 2200");
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Restaurant Reservation Management System");
+		restaurant.printRestaurantDetails();
 
 		ArrayList<Staff> staffList = new ArrayList<>();
 		staffList.add(new Staff("Amy", Person.Gender.Female, "Manager"));
@@ -34,13 +46,14 @@ public class RestaurantApplication {
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
-		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem();
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
+		OrderSystem orderSystem = new OrderSystem();
+		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem(orderSystem);
 
 		ReservationUI reservationUI = new ReservationUI(sc, tableSystem.getTableList());
 		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
-		OrderUI orderUI = new OrderUI(sc, reservationSystem, tableSystem, menu);
+		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu);
 
 		int capacity = 2;
 
