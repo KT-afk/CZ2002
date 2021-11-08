@@ -34,6 +34,22 @@ public class ReservationSystem {
 		return null;
 	}
 
+	public boolean removeReservation(String id, LocalDate d) {
+		LocalTime reservationExpiry;
+		int i = 0;
+		ArrayList<Reservation> rList;
+		rList = getPastReservation(d);
+		Iterator<Reservation> reservation = rList.iterator();
+		while (reservation.hasNext()) {
+			if (rList.get(i).getId() == id) {
+				reservation.remove();
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+
 	public void reservationArrival(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
 		ArrayList<Reservation> rList = getPastReservation(d);
@@ -105,7 +121,7 @@ public class ReservationSystem {
 		return null;
 	}
 
-	public boolean makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
+	public String makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
 			LocalTime reservationTime, String customerId) {
 
 		ArrayList<Reservation> rList;
@@ -127,14 +143,14 @@ public class ReservationSystem {
 			}
 			// Fully booked
 			if (tableNo == -1)
-				return false;
+				return "";
 		}
 
 		Reservation r = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo,
 				customerId);
 		rList.add(r);
 		writeReservationToFile(rList, fileName);
-		return true;
+		return r.getId();
 	}
 
 	// Create the file and serialize the list with its new addition into the file

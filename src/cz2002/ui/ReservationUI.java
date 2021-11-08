@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import cz2002.entity.Reservation;
 import cz2002.entity.Table;
 import cz2002.system.ReservationSystem;
 import cz2002.system.TableSystem;
@@ -15,12 +16,42 @@ import cz2002.system.TableSystem;
 public class ReservationUI {
 
 	private Scanner sc;
+	private ReservationSystem rSystem;
 
-	public ReservationUI(Scanner scanner) {
+	public ReservationUI(Scanner scanner, List<Table> tables) {
 		sc = scanner;
+		rSystem = new ReservationSystem(tables);
 	}
 
-	public void makeReservationUI(List<Table> tables) {
+	public void checkReservationUI() {
+		System.out.println("Which date would you like to view the reservations for? Please enter in dd/MM/yyyy");
+		String date = sc.nextLine();
+		LocalDate d = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		ArrayList<Reservation> rList = rSystem.getPastReservation(d);
+		for (int i = 0; i < rList.size(); i++) {
+			System.out.println("Date: " + date);
+			System.out.println("Time: " + rList.get(i).getTime());
+			System.out.println("Name: " + rList.get(i).getName());
+			System.out.println("ReservationID: " + rList.get(i).getId());
+			System.out.println("NoOfPax: " + rList.get(i).getNoOfPax());
+			System.out.println("TableNo: " + rList.get(i).getTableNo());
+		}
+	}
+
+	public void removeReservationUI() {
+		System.out.println("What date is the reservation you would you like to remove?");
+		String date = sc.nextLine();
+		LocalDate d = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		System.out.println("Which reservation would you like to remove?");
+		String rID = sc.nextLine();
+		if (rSystem.removeReservation(rID, d)) {
+			System.out.println("Reservation has been removed successfully");
+		} else {
+			System.out.println("The reservation you would like to remove cannot be found");
+		}
+	}
+
+	public void makeReservationUI() {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
 		String customerId = "";
 		int choiceInterval;
@@ -43,8 +74,8 @@ public class ReservationUI {
 			dateIn = sc.nextLine();
 			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		}
-		while (reservationDate.isBefore(currentDate.plusDays(5))) {
-			System.out.println("Sorry! You are only allowed to make a reservation 5 days in advance");
+		while (reservationDate.isBefore(currentDate.plusDays(1))) {
+			System.out.println("Sorry! You are only allowed to make a reservation 1 day in advance");
 			System.out.println("Enter reservation date (dd/mm/yyyy): ");
 			dateIn = sc.nextLine();
 			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -201,13 +232,15 @@ public class ReservationUI {
 					"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
 			paxNo = sc.nextInt();
 		}
-		ReservationSystem rSystem = new ReservationSystem(tables);
-		boolean rStatus = false;
-		rStatus = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, customerId);
-		if (!rStatus)
+		String rID;
+		rID = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, customerId);
+		if (rID.isEmpty())
 			System.out.println("We are fully booked");
-		else
+		else {
 			System.out.println("Success! The reservation has been booked!");
+			System.out.println("Your reservation ID is " + rID);
+		}
+
 	}
 
 }
