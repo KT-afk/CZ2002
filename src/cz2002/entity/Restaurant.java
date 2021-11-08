@@ -13,9 +13,9 @@ public class Restaurant {
 
 	/**
 	 * Creates a Restaurant object
-	 * @param nameOfRestaurant
-	 * @param address
-	 * @param openingHours
+	 * @param nameOfRestaurant Restaurant Name
+	 * @param address Restaurant Address
+	 * @param openingHours Restaurant Opening Hours
 	 */
 	public Restaurant(String nameOfRestaurant, String address, String openingHours) {
 		this.nameOfRestaurant = nameOfRestaurant;
