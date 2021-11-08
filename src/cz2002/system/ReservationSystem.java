@@ -10,10 +10,20 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 import java.io.*;
 
+/**
+ * ReservationSystem class
+ * 
+ * @author Ong Kong Tat
+ * @version 1.0
+ * @since 2020-11-01
+ */
+
 public class ReservationSystem {
+	/**
+	 * List of tables
+	 */
 	protected ArrayList<Table> tList;
 	// Each reservation has a table allocated
 
@@ -72,7 +82,6 @@ public class ReservationSystem {
 			reservationExpiry = rList.get(i).getTime().plusMinutes(15);
 			if (reservationExpiry.isBefore(LocalTime.now())) {
 				reservation.remove();
-				System.out.println("Removed 1 expired reservation\n");
 			}
 			i++;
 		}
@@ -121,7 +130,7 @@ public class ReservationSystem {
 	}
 
 	public String makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
-			LocalTime reservationTime, String customerId) {
+			LocalTime reservationTime) {
 
 		ArrayList<Reservation> rList;
 		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
@@ -145,8 +154,7 @@ public class ReservationSystem {
 				return "";
 		}
 
-		Reservation r = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo,
-				customerId);
+		Reservation r = new Reservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, tableNo);
 		rList.add(r);
 		writeReservationToFile(rList, fileName);
 		return r.getId();

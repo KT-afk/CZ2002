@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 
 /**
  * Order class
+ * 
  * @author Tran Trung Dung
  * @version 1.0
  * @since 2020-11-01
  */
-public class Order{
+public class Order {
 	/**
 	 * Order ID counter
 	 */
-	public static Integer OrderIDCounter =0;
+	public static Integer OrderIDCounter = 0;
 	/**
 	 * Order ID
 	 */
@@ -43,18 +44,20 @@ public class Order{
 	/**
 	 * Start time of the order
 	 */
-	private LocalDateTime start;;
+	private LocalDateTime start;
 
 	/**
 	 * Constructor
-	 * @param creator Staff that create this order
-	 * @param fdItems List of Food Dish item in this order
-	 * @param packItems List of package item in this order
+	 * 
+	 * @param creator     Staff that create this order
+	 * @param fdItems     List of Food Dish item in this order
+	 * @param packItems   List of package item in this order
 	 * @param reserveInfo Reservation Information
-	 * @param table Table of this order
-	 * @param start Start time of the order
+	 * @param table       Table of this order
+	 * @param start       Start time of the order
 	 */
-	public Order(Staff creator, ArrayList<FoodDish> fdItems, ArrayList<SetPackage> packItems, Reservation reserveInfo,Table table, LocalDateTime start) {
+	public Order(Staff creator, ArrayList<FoodDish> fdItems, ArrayList<SetPackage> packItems, Reservation reserveInfo,
+			Table table, LocalDateTime start) {
 		id = OrderIDCounter++;
 		this.creator = creator;
 		this.fdItems = fdItems;
@@ -66,14 +69,16 @@ public class Order{
 
 	/**
 	 * This method is to get Order ID
+	 * 
 	 * @return id of this order
 	 */
-	public Integer getID(){
+	public Integer getID() {
 		return id;
 	}
 
 	/**
 	 * This method is to get Staff that created this order
+	 * 
 	 * @return Staff that created this order
 	 */
 	public Staff getCreator() {
@@ -82,13 +87,16 @@ public class Order{
 
 	/**
 	 * This method is to get List of Food Dish item in this order
+	 * 
 	 * @return List of Food Dish item in this order
 	 */
-	public ArrayList<FoodDish> getDishItems(){
+	public ArrayList<FoodDish> getDishItems() {
 		return fdItems;
 	}
+
 	/**
 	 * This method is to get List of Package item in this order
+	 * 
 	 * @return List of Package item in this order
 	 */
 	public ArrayList<SetPackage> getPackItems() {
@@ -97,6 +105,7 @@ public class Order{
 
 	/**
 	 * This method is to get Reservation Information
+	 * 
 	 * @return Reservation object of the Reservation
 	 */
 	public Reservation getReserveInfo() {
@@ -105,55 +114,73 @@ public class Order{
 
 	/**
 	 * This method is to get start date of this order
+	 * 
 	 * @return start date of this order
 	 */
-	public LocalDateTime getStart(){
+	public LocalDateTime getStart() {
 		return start;
 	}
+
 	/**
 	 * This method is to add a Food Dish item to this order
+	 * 
 	 * @return a message about status of this method to system
 	 */
 	public String addDishItem(FoodDish item) {
-		if(fdItems.add(item)) return "Item added successfully";
-		else return "Item already exist";
+		if (fdItems.add(item))
+			return "Item added successfully";
+		else
+			return "Item already exist";
 	}
+
 	/**
 	 * This method is to remove a Food Dish item to this order
+	 * 
 	 * @return a message about status of this method to system
 	 */
 	public String removeDishItem(FoodDish item) {
-		if(fdItems.remove(item)) return "Item remove successfully";
-		else return "This item does not exist in this order";
+		if (fdItems.remove(item))
+			return "Item remove successfully";
+		else
+			return "This item does not exist in this order";
 	}
+
 	/**
 	 * This method is to add a Package item to this order
+	 * 
 	 * @return a message about status of this method to system
 	 */
 	public String addPackItem(SetPackage item) {
-		if(packItems.add(item)) return "Item added successfully";
-		else return "Item already exist";
+		if (packItems.add(item))
+			return "Item added successfully";
+		else
+			return "Item already exist";
 	}
+
 	/**
 	 * This method is to remove a Package item to this order
+	 * 
 	 * @return a message about status of this method to system
 	 */
 	public String removePackItem(SetPackage item) {
-		if(packItems.remove(item)) return "Item remove successfully";
-		else return "This item does not exist in this order";
+		if (packItems.remove(item))
+			return "Item remove successfully";
+		else
+			return "This item does not exist in this order";
 	}
 
 	/**
 	 * This method is to get the current total price of this order
+	 * 
 	 * @return current total price of order
 	 */
-	public double totalPrice(){
-		double totalPrice =0;
-		for(int i=0;i<fdItems.size();i++){
-			totalPrice+=fdItems.get(i).getPrice();
+	public double totalPrice() {
+		double totalPrice = 0;
+		for (int i = 0; i < fdItems.size(); i++) {
+			totalPrice += fdItems.get(i).getPrice();
 		}
-		for(int i=0;i<packItems.size();i++){
-			totalPrice+=packItems.get(i).getPrice();
+		for (int i = 0; i < packItems.size(); i++) {
+			totalPrice += packItems.get(i).getPrice();
 		}
 		return totalPrice;
 	}

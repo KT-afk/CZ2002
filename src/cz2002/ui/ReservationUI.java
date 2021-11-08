@@ -101,7 +101,6 @@ public class ReservationUI {
 
 	public void makeReservationUI() {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
-		String customerId = "";
 		int choiceInterval;
 		int session;
 		LocalTime reservationTime = LocalTime.now();
@@ -301,7 +300,7 @@ public class ReservationUI {
 			paxNo = sc.nextInt();
 		}
 		String rID;
-		rID = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime, customerId);
+		rID = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime);
 		if (rID.isEmpty())
 			System.out.println("We are fully booked");
 		else {
