@@ -129,6 +129,7 @@ public class OrderSystem {
 					System.out.println("2) Add set package");
 					System.out.println("3) Remove menu item");
 					System.out.println("4) Remove set package");
+					System.out.println("5) End Modify");
 					
 					ucho = sc.nextInt();
 					
@@ -160,6 +161,7 @@ public class OrderSystem {
 							}
 
 						} while (true);
+						break;
 					case 2:
 						System.out.println("For menu items in the menu");
 						for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
@@ -188,6 +190,7 @@ public class OrderSystem {
 							}
 
 						} while (true);
+						break;
 					case 3:
 						do {
 							System.out.println("Order Items: ");
@@ -215,6 +218,7 @@ public class OrderSystem {
 							}
 
 						} while (true);
+						break;
 					case 4:
 						do {
 							System.out.println("Set Packages: ");
@@ -242,11 +246,13 @@ public class OrderSystem {
 							}
 
 						} while (true);
+						break;
+					case 5: 
+						return;
 					}
 					
 				} while(true);
 				
-				return;
 			}
 		}
 		System.out.println("No order with ID " + uinput + " is found\n");
