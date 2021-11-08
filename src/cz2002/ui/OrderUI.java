@@ -2,14 +2,11 @@ package cz2002.ui;
 
 import cz2002.entity.*;
 import cz2002.system.*;
-
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
-
-import cz2002.SystemClock;
 import cz2002.util.ScannerUtil;
 
 /**
@@ -82,13 +79,22 @@ public class OrderUI {
 
 	}
 
-	
+	/**
+	 * Gets order ID and calls OrderSystem method to view the order
+	 */
 	private void viewOrder() {
 		System.out.println("\nType in the order ID for viewing: ");
 		int iinput = sc.nextInt();
 		OrderSystem.viewOrder(iinput);
 	}
 
+	/**
+	 * Check the type of order whether it is a reservation or a walk in,
+	 * allowing user to add items and packages into order before
+	 * calling the OrderSystem method to create a new order
+	 * @param staff
+	 * @param tables
+	 */
 	private void newOrder(Staff staff, List<Table> tables) {
 		int orderType, uadd, uc;
 		String iname, desc, resId;
@@ -141,10 +147,12 @@ public class OrderUI {
 
 				System.out.println("For packages in the menu");
 				for (int i = 0; i < RestaurantMenu.setPackageMenu.size(); i++) {
-					iname = RestaurantMenu.setPackageMenu.get(i).getName();
-					desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
-					price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
+					if(RestaurantMenu.setPackageMenu.get(i).getEnabled()) {
+						iname = RestaurantMenu.setPackageMenu.get(i).getName();
+						desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
+						price = RestaurantMenu.setPackageMenu.get(i).getPrice();
+						System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
+					}
 				}
 				do {
 					System.out.println("Choose packages to add into order");
@@ -167,10 +175,12 @@ public class OrderUI {
 
 				System.out.println("For menu items in the menu");
 				for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
-					iname = RestaurantMenu.alaCarteMenu.get(i).getName();
-					desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
-					price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
+					if(RestaurantMenu.alaCarteMenu.get(i).getEnabled()) {
+						iname = RestaurantMenu.alaCarteMenu.get(i).getName();
+						desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
+						price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
+						System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
+					}
 				}
 				do {
 					System.out.println("Choose menu items to add into order");
@@ -278,6 +288,9 @@ public class OrderUI {
 
 	}
 
+	/**
+	 * Gets the order ID and calls the OrderSystem method to modify the order
+	 */
 	private void modifyOrders() {
 		int uc;
 		do {
@@ -292,6 +305,9 @@ public class OrderUI {
 		} while (true);
 	}
 
+	/**
+	 * Gets the order ID and calls the OrderSystem method to remove the order
+	 */
 	private void removeOrders() {
 		int uc;
 		do {
@@ -305,7 +321,10 @@ public class OrderUI {
 			}
 		} while (true);
 	}
-
+	
+	/**
+	 * Gets the order ID and membership status before calling the OrderSystem method to complete and print order invoice
+	 */
 	private void completeOrder() {
 		int uc;
 		do {

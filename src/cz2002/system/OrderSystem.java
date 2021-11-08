@@ -1,25 +1,44 @@
 package cz2002.system;
 
 import cz2002.entity.*;
-import java.util.List;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Manages all the data and inputs from OrderUI and Order ArrayList
+ * @author Richie Ang
+ * @version 1.0
+ * @since 2021-11-6
+ *
+ */
 public class OrderSystem {
+	/**
+	 * ArrayList of all the orders in the system
+	 */
 	private static ArrayList<Order> orderList = new ArrayList<Order>();
+	/**
+	 * Count of total orders added so far
+	 */
 	private static int orderCount = 0;
-	
+	/**
+	 * while loop checker
+	 */
 	private boolean isValid = false;
 	
+	/**
+	 * Get the whole ArrayList of orders
+	 * @return ArrayList of order objects
+	 */
 	public static ArrayList<Order> getOrderList() {
 		return orderList;
 	}
 	
+	/**
+	 * Adds an order into the ArrayList with information
+	 * from OrderUI and shows the total order
+	 * @param order
+	 */
 	public static void addOrder(Order order) {
 		orderList.add(order);
 		orderCount++;
@@ -43,24 +62,9 @@ public class OrderSystem {
 		System.out.println("==============================================");
 	}
 	
-	public void printOrderInv() {
-		Scanner sc = new Scanner(System.in);
-		
-		while(!isValid) {
-			System.out.println("Enter Order ID to print: ");
-			int orderID = sc.nextInt();
-			
-			for(Order orderP : orderList) {
-			    if(orderP.getID() == orderID) {
-
-			    	isValid = true;
-			    	break;
-			    }
-			}
-			System.out.println("Order ID " + orderID + " not found, please try again");
-		}
-	}
-	
+	/**
+	 * Prints all the order details in the order ArrayList
+	 */
 	public static void viewAllOrders() {
 		int ori;
 		
@@ -82,6 +86,10 @@ public class OrderSystem {
 		}
 	}
 	
+	/**
+	 * View the specific order details from orderID
+	 * @param iinput
+	 */
 	public static void viewOrder(int iinput) {
 	
 		for(Order order: orderList) {
@@ -100,6 +108,11 @@ public class OrderSystem {
 		
 	}
 	
+	/**
+	 * Modify the order items with the orderID 
+	 * @param uinput
+	 * @param RestaurantMenu
+	 */
 	public static void modifyOrder(int uinput, RestaurantMenu RestaurantMenu) {
 		
 		Scanner sc = new Scanner(System.in);
@@ -260,6 +273,10 @@ public class OrderSystem {
 		
 	}
 	
+	/**
+	 * Removed order from the order ArrayList
+	 * @param uinput
+	 */
 	public static void removeOrder(int uinput) {
 		
 		Iterator<Order> it = orderList.iterator();
@@ -277,6 +294,12 @@ public class OrderSystem {
 		
 	}
 	
+	/**
+	 * Prints out order invoice and total amount based on membership status
+	 * Deletes order from the order ArrayList
+	 * @param uinput
+	 * @param discountamt
+	 */
 	public static void completeOrder(int uinput, double discountamt) {
 		
 		double discount = 1 * discountamt;
