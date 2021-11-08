@@ -12,8 +12,14 @@ public class Person implements Serializable {
 	/**
 	 * Gender type
 	 */
-	public enum Gender{
+	public enum Gender {
+		/**
+		 * Person is Male
+		 */
 		Male,
+		/**
+		 * Person is Female
+		 */
 		Female
 	}
 

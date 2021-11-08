@@ -12,6 +12,7 @@ import java.util.Scanner;
 import cz2002.entity.Reservation;
 import cz2002.entity.Table;
 import cz2002.system.ReservationSystem;
+import cz2002.util.ScannerUtil;
 
 /**
  * ReservationSystem class
@@ -43,9 +44,28 @@ public class ReservationUI {
 	}
 
 	/**
+	 * Runs Reservation UI routine
+	 */
+	public void run() {
+		boolean running = true;
+
+		while (running) {
+			int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation", "Back");
+			sc.nextLine();
+
+			switch (option) {
+				case 1 -> checkReservationUI();
+				case 2 -> makeReservationUI();
+				case 3 -> removeReservationUI();
+				case 4 -> running = false;
+			}
+		}
+	}
+
+	/**
 	 * This method is to display the System messages for reservations and get the
 	 * and getting the required input
-	 * 
+	 *
 	 * @return void
 	 */
 	public void checkReservationUI() {
@@ -59,11 +79,13 @@ public class ReservationUI {
 						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
 				if (reservationDate.isAfter(currentDate)) {
 					dateIn = sc.nextLine();
-					if (reservationDate.isAfter(currentDate.plusDays(1))) {
-						break;
-					} else {
-						throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
-					}
+					break;
+					/*
+					 * if (reservationDate.isAfter(currentDate.plusDays(1))) { break; } else { throw
+					 * new
+					 * Exception("Sorry! You are only allowed to make a reservation 1 day in advance"
+					 * ); }
+					 */
 				} else {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
 				}
