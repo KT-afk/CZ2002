@@ -5,19 +5,59 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Reservation class
+ * 
+ * @author Ong Kong Tat
+ * @version 1.0
+ * @since 2020-11-01
+ */
 public class Reservation implements Serializable {
 
+	/**
+	 * Reservation ID counter
+	 */
 	private static int reservationIdCounter = 0;
+	/**
+	 * Reservation ID
+	 */
 	private String id;
+	/**
+	 * Name
+	 */
 	private String name;
+	/**
+	 * No of people
+	 */
 	private int noOfPax;
+	/**
+	 * Contact number
+	 */
 	private String contact;
+	/**
+	 * Reservation date
+	 */
 	private LocalDate date;
+	/**
+	 * Reservation time
+	 */
 	private LocalTime time;
+	/**
+	 * Table number
+	 */
 	private int tableNo;
 
-	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo,
-			String customerId) {
+	/**
+	 * Constructor
+	 * 
+	 * @param name    Staff that create this order
+	 * @param noOfPax List of Food Dish item in this order
+	 * @param contact List of package item in this order
+	 * @param date    Reservation Information
+	 * @param time    Table of this order
+	 * @param tableNo Start time of the order
+	 */
+	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo) {
 		this.name = name;
 		this.noOfPax = noOfPax;
 		this.contact = contact;
@@ -27,41 +67,66 @@ public class Reservation implements Serializable {
 		this.id = date.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + reservationIdCounter++;
 	}
 
+	/**
+	 * This method is to get Reservation ID
+	 * 
+	 * @return id of this reservation
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * This method is to get name
+	 * 
+	 * @return name of this reservation
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * This method is to get contact
+	 * 
+	 * @return contact of this reservation
+	 */
 	public String getContact() {
 		return contact;
 	}
 
+	/**
+	 * This method is to get date
+	 * 
+	 * @return date of this reservation
+	 */
 	public LocalDate getDate() {
 		return date;
 	}
 
+	/**
+	 * This method is to get time
+	 * 
+	 * @return time of this reservation
+	 */
 	public LocalTime getTime() {
 		return time;
 	}
 
+	/**
+	 * This method is to get noOfPax
+	 * 
+	 * @return noOfPax of this reservation
+	 */
 	public int getNoOfPax() {
 		return noOfPax;
 	}
 
+	/**
+	 * This method is to get tableNo
+	 * 
+	 * @return tableNo of this reservation
+	 */
 	public int getTableNo() {
 		return tableNo;
 	}
-	// public Table getTable()
-	// {
-	// return table;
-	// }
-
-	// public Customer getCustomer()
-	// {
-	// return customer;
-	// }
-
 }

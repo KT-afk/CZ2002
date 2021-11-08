@@ -8,17 +8,19 @@ import cz2002.system.TableSystem;
 import cz2002.ui.*;
 import cz2002.util.ScannerUtil;
 
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Restaurant Application
- * Main entry class for the project
+ * Restaurant Application Main entry class for the project
  */
 public class RestaurantApplication {
 
 	/**
 	 * Main entry point
+	 * 
 	 * @param args Arguments
 	 */
 	public static void main(String[] args) {
@@ -64,6 +66,7 @@ public class RestaurantApplication {
 		}
 
 		while (true) {
+			reservationSystem.removeExpiredReservations(LocalDate.now());
 			int option = ScannerUtil.Prompt(sc, "Manage Menu Items", "Manage Promotion Sets", "Manage Orders",
 					"Manage Reservations", "Check Table Availability", "Print Order Invoice",
 					"Print Sale Revenue Report",
@@ -71,9 +74,9 @@ public class RestaurantApplication {
 					"Quit");
 
 			sc.nextLine();
-
 			switch (option) {
 			case 1:
+
 				// ManageMenu(sc);
 				MenuUI menuManager = new FoodDishUI(sc, menu.alaCarteMenu);
 				menuManager.run("Menu Item");
