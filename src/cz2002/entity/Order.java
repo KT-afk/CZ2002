@@ -208,6 +208,11 @@ public class Order implements Serializable {
 		for (int i = 0; i < packItems.size(); i++) {
 			totalPrice += packItems.get(i).getPrice();
 		}
+
 		return totalPrice;
+	}
+
+	public double getGST() {
+		return  0.07 * totalPrice();
 	}
 }
