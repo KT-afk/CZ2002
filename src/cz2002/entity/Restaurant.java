@@ -24,6 +24,30 @@ public class Restaurant {
 	}
 
 	/**
+	 * Return name of restaurant
+	 * @return
+	 */
+	public String getname() {
+		return nameOfRestaurant;
+	}
+	
+	/**
+	 * Return address
+	 * @return
+	 */
+	public String getaddress() {
+		return address;
+	}
+	
+	/**
+	 * Return opening hours
+	 * @return
+	 */
+	public String getopenhr() {
+		return openingHours;
+	}
+	
+	/**
 	 * Print restaurant information
 	 */
 	public void printRestaurantDetails() {

@@ -46,6 +46,10 @@ public class Order implements Serializable {
 	 * Start time of the order
 	 */
 	private LocalDateTime start;
+	/**
+	 * Whether order is completed
+	 */
+	private boolean isCompleted;
 
 	/**
 	 * Constructor
@@ -66,6 +70,7 @@ public class Order implements Serializable {
 		this.reserveInfo = reserveInfo;
 		this.table = table;
 		this.start = start;
+		this.isCompleted = false;
 	}
 
 	/**
@@ -76,7 +81,19 @@ public class Order implements Serializable {
 	public Integer getID() {
 		return id;
 	}
-
+	/**
+	 * This method checks whether status is compeleted
+	 * @return
+	 */
+	public boolean getStatus() {
+		return isCompleted;
+	}
+	/**
+	 * This method makes the order complete
+	 */
+	public void setComplete() {
+		this.isCompleted = true;;
+	}
 	/**
 	 * This method is to get Staff that created this order
 	 * 
@@ -133,7 +150,15 @@ public class Order implements Serializable {
 		else
 			return "Item already exist";
 	}
-
+	
+	/**
+	 * This method is to get the table obj
+	 * @return
+	 */
+	public Table getTable() {
+		return table;
+	}
+	
 	/**
 	 * This method is to remove a Food Dish item to this order
 	 * 

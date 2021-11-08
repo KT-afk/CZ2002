@@ -56,7 +56,7 @@ public class RestaurantApplication {
 		ReservationUI reservationUI = new ReservationUI(sc, tableSystem.getTableList());
 		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
-		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu);
+		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu, restaurant);
 
 		int capacity = 2;
 
