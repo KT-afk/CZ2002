@@ -1,9 +1,13 @@
 package cz2002.ui;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,11 +29,35 @@ public class ReservationUI {
 
 	public void checkReservationUI() {
 		System.out.println("Which date would you like to view the reservations for? Please enter in dd/MM/yyyy");
-		String date = sc.nextLine();
-		LocalDate d = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		ArrayList<Reservation> rList = rSystem.getPastReservation(d);
+		String dateIn = sc.nextLine();
+		LocalDate currentDate = LocalDate.now();
+		LocalDate reservationDate;
+		while (true) {
+			try {
+				reservationDate = LocalDate.parse(dateIn,
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
+				if (reservationDate.isAfter(currentDate)) {
+					dateIn = sc.nextLine();
+					if (reservationDate.isAfter(currentDate.plusDays(1))) {
+						break;
+					} else {
+						throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
+					}
+				} else {
+					throw new Exception("Sorry! You are entering a date that has already passed!");
+				}
+			} catch (DateTimeParseException e) {
+				System.out.println("You have entered an invalid date!");
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			} catch (Exception e) {
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			}
+		}
+		ArrayList<Reservation> rList = rSystem.getPastReservation(reservationDate);
 		for (int i = 0; i < rList.size(); i++) {
-			System.out.println("Date: " + date);
+			System.out.println("Date: " + dateIn);
 			System.out.println("Time: " + rList.get(i).getTime());
 			System.out.println("Name: " + rList.get(i).getName());
 			System.out.println("ReservationID: " + rList.get(i).getId());
@@ -40,11 +68,31 @@ public class ReservationUI {
 
 	public void removeReservationUI() {
 		System.out.println("What date is the reservation you would you like to remove?");
-		String date = sc.nextLine();
-		LocalDate d = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		LocalDate currentDate = LocalDate.now();
+		String dateIn = sc.nextLine();
+		LocalDate reservationDate;
+		while (true) {
+			try {
+				reservationDate = LocalDate.parse(dateIn,
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
+				if (reservationDate.isAfter(currentDate)) {
+					break;
+				} else {
+					throw new Exception("Sorry! You are entering a date that has already passed!");
+				}
+			} catch (DateTimeParseException e) {
+				System.out.println("You have entered an invalid date!");
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			} catch (Exception e) {
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			}
+		}
+
 		System.out.println("Which reservation would you like to remove?");
 		String rID = sc.nextLine();
-		if (rSystem.removeReservation(rID, d)) {
+		if (rSystem.removeReservation(rID, reservationDate)) {
 			System.out.println("Reservation has been removed successfully");
 		} else {
 			System.out.println("The reservation you would like to remove cannot be found");
@@ -67,18 +115,29 @@ public class ReservationUI {
 		String contactIn = sc.nextLine();
 		System.out.println("Enter reservation date (dd/mm/yyyy): ");
 		String dateIn = sc.nextLine();
-		LocalDate reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		while (reservationDate.isBefore(currentDate)) {
-			System.out.println("Sorry! This date has already passed!");
-			System.out.println("Enter reservation date (dd/mm/yyyy): ");
-			dateIn = sc.nextLine();
-			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		}
-		while (reservationDate.isBefore(currentDate.plusDays(1))) {
-			System.out.println("Sorry! You are only allowed to make a reservation 1 day in advance");
-			System.out.println("Enter reservation date (dd/mm/yyyy): ");
-			dateIn = sc.nextLine();
-			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		LocalDate reservationDate;
+		while (true) {
+			try {
+				reservationDate = LocalDate.parse(dateIn,
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
+				if (reservationDate.isAfter(currentDate)) {
+					dateIn = sc.nextLine();
+					if (reservationDate.isAfter(currentDate.plusDays(1))) {
+						break;
+					} else {
+						throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
+					}
+				} else {
+					throw new Exception("Sorry! You are entering a date that has already passed!");
+				}
+			} catch (DateTimeParseException e) {
+				System.out.println("You have entered an invalid date!");
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			} catch (Exception e) {
+				System.out.println("Enter reservation date: ");
+				dateIn = sc.nextLine();
+			}
 		}
 		session = 0;
 		System.out.println("Enter the session for which you wish to dine at our restaurant" + "\n" + "1) 1100-1330 \n"
@@ -232,14 +291,12 @@ public class ReservationUI {
 		System.out.println("Enter number of pax (1-10): ");
 		int paxNo = sc.nextInt();
 		while (paxNo > 10 || paxNo <= 0) {
-			if (paxNo > 10)
-			{
+			if (paxNo > 10) {
 				System.out.println(
 						"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
-			}
-			else
-			{
-				System.out.println("Number of pax cannot be less than or equal to 0. Please enter a valid number\nEnter number of pax: ");
+			} else {
+				System.out.println(
+						"Number of pax cannot be less than or equal to 0. Please enter a valid number\nEnter number of pax: ");
 			}
 			paxNo = sc.nextInt();
 		}
