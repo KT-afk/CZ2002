@@ -5,6 +5,7 @@ import cz2002.entity.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.ArrayList;
 
@@ -178,6 +179,7 @@ public class OrderSystem {
 			System.out.println();
 			System.out.println("----------------------------------------------");
 			System.out.printf("Total Cost: %30s$%s\n", "", order.totalPrice()*discount );
+			
 			System.out.println("----------------------------------------------");
 			System.out.println();
 			System.out.printf("Order ended on %s %s\n", LocalDate.now(), LocalTime.now());
@@ -192,6 +194,20 @@ public class OrderSystem {
 		System.out.println("No order with ID " + uinput + " is found");
 		return;
 		
+	}
+	
+	/**
+	 * Assumes customer finishes the order within 1.5 hour
+	 */
+	public void autoCompleteOrder() {
+		Iterator<Order> it = orderList.iterator();
+		while (it.hasNext()) {
+			Order order = it.next();
+			if(order.getStart().plusHours(1).plusMinutes(30).isBefore(LocalDateTime.now())) {
+				order.setComplete();
+				order.getTable().freeTable();
+			}
+		}
 	}
 
 	/**
