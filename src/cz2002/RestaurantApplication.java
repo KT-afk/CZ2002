@@ -95,7 +95,7 @@ public class RestaurantApplication {
 				orderUI.manageOrders(currentStaff, tableSystem.getTableList());
 				break;
 			case 4:
-				reservationUI.makeReservationUI();
+				reservationUI.run();
 				break;
 			case 5:
 				restaurantUI.checkTableAvailability();

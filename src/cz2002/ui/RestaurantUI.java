@@ -7,8 +7,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ *     User Interface for Restaurant
+ *     @author Abdul Siddiq
+ *     @version 1.0
+ *     @since 2021-11-08
+ */
 public class RestaurantUI {
 
+    /**
+     * Scanner
+     */
     private Scanner sc;
     private ReservationSystem reservationSystem;
     private TableSystem tableSystem;
