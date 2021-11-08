@@ -6,6 +6,7 @@ import cz2002.system.*;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.stream.Stream;
 
 import cz2002.util.ScannerUtil;
@@ -188,7 +189,7 @@ public class OrderUI {
 
 				int i;
 				for (i = 0; i < availTable.size(); i++) {
-					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now())) {
+					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(), LocalTime.now())) {
 						break;
 					}
 				}
@@ -220,8 +221,6 @@ public class OrderUI {
 			System.out.println("\nType in the order ID to modify: ");
 			int uinput = sc.nextInt();
 			int ucho, uadd;
-			String iname, desc;
-			double price;
 			MenuItem item;
 			ArrayList<Order> orderList = OrderSystem.getOrderList();
 			
