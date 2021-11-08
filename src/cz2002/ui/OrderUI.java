@@ -215,6 +215,8 @@ public class OrderUI {
 				}
 
 				Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
+				
+				availTable.get(i).reserveTable();
 
 				OrderSystem.addOrder(newOrder2);
 

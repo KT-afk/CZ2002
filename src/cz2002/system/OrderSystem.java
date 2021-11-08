@@ -133,6 +133,7 @@ public class OrderSystem {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
 			  order.setComplete();
+			  order.getTable().freeTable();
 			  return;
 		  }
 		}
@@ -185,6 +186,7 @@ public class OrderSystem {
 			System.out.println("==============================================");
 			System.out.println("************************************************");
 			order.setComplete();
+			order.getTable().freeTable();
 			return;
 		  }
 		}
