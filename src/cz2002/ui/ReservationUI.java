@@ -1,9 +1,6 @@
 package cz2002.ui;
 
-import java.sql.Date;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,18 +12,42 @@ import java.util.Scanner;
 import cz2002.entity.Reservation;
 import cz2002.entity.Table;
 import cz2002.system.ReservationSystem;
-import cz2002.system.TableSystem;
+
+/**
+ * ReservationSystem class
+ * 
+ * @author Ong Kong Tat
+ * @version 1.0
+ * @since 2020-11-01
+ */
 
 public class ReservationUI {
-
+	/**
+	 * Scanner
+	 */
 	private Scanner sc;
+	/**
+	 * ReservationSystem
+	 */
 	private ReservationSystem rSystem;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param scanner scanner for input
+	 * @param tables  List of tables in restaurant
+	 */
 	public ReservationUI(Scanner scanner, List<Table> tables) {
 		sc = scanner;
 		rSystem = new ReservationSystem(tables);
 	}
 
+	/**
+	 * This method is to display the System messages for reservations and get the
+	 * and getting the required input
+	 * 
+	 * @return void
+	 */
 	public void checkReservationUI() {
 		System.out.println("Which date would you like to view the reservations for? Please enter in dd/MM/yyyy");
 		String dateIn = sc.nextLine();
@@ -55,7 +76,7 @@ public class ReservationUI {
 				dateIn = sc.nextLine();
 			}
 		}
-		ArrayList<Reservation> rList = rSystem.getPastReservation(reservationDate);
+		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
 		for (int i = 0; i < rList.size(); i++) {
 			System.out.println("Date: " + dateIn);
 			System.out.println("Time: " + rList.get(i).getTime());
@@ -66,6 +87,12 @@ public class ReservationUI {
 		}
 	}
 
+	/**
+	 * This method is to display the System messages for removing the reservation
+	 * and getting the required input
+	 * 
+	 * @return void
+	 */
 	public void removeReservationUI() {
 		System.out.println("What date is the reservation you would you like to remove?");
 		LocalDate currentDate = LocalDate.now();
@@ -99,6 +126,12 @@ public class ReservationUI {
 		}
 	}
 
+	/**
+	 * This method is to display the System messages for making the reservations and
+	 * getting the required input
+	 * 
+	 * @return void
+	 */
 	public void makeReservationUI() {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
 		int choiceInterval;

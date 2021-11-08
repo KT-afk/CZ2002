@@ -50,12 +50,13 @@ public class Reservation implements Serializable {
 	/**
 	 * Constructor
 	 * 
-	 * @param name    Staff that create this order
-	 * @param noOfPax List of Food Dish item in this order
-	 * @param contact List of package item in this order
-	 * @param date    Reservation Information
-	 * @param time    Table of this order
-	 * @param tableNo Start time of the order
+	 * @param name    name of the person who wants to make a reservation
+	 * @param noOfPax the number of people that is booked for this reservation
+	 * @param contact the contact number of the person who wants to make a
+	 *                reservation
+	 * @param date    Reservation date
+	 * @param time    Reservation time
+	 * @param tableNo The table the reservation is assigned to
 	 */
 	public Reservation(String name, int noOfPax, String contact, LocalDate date, LocalTime time, int tableNo) {
 		this.name = name;

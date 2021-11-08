@@ -25,15 +25,26 @@ public class ReservationSystem {
 	 * List of tables
 	 */
 	protected ArrayList<Table> tList;
-	// Each reservation has a table allocated
 
+	// Each reservation has a table allocated
+	/**
+	 * Constructor
+	 * 
+	 * @param tList List of tables in the restaurant
+	 */
 	public ReservationSystem(List<Table> tables) {
 		tList = new ArrayList<>(tables);
 	}
 
+	/**
+	 * This method is to get Reservation object
+	 * 
+	 * @param Id This Reservation's Id
+	 * @return reservation object
+	 */
 	public Reservation getReservation(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
-		ArrayList<Reservation> rList = getPastReservation(d);
+		ArrayList<Reservation> rList = getReservationsByDate(d);
 		int i;
 		for (i = 0; i < rList.size(); i++) {
 			if (rList.get(i).getId() == Id) {
@@ -44,10 +55,17 @@ public class ReservationSystem {
 		return null;
 	}
 
+	/**
+	 * This method is to remove a Reservation object based on specified id and date
+	 * 
+	 * @param id The id of the reservation that we want to remove
+	 * @param d  The date of the reservation that we want to remove
+	 * @return boolean for removing reservation status
+	 */
 	public boolean removeReservation(String id, LocalDate d) {
 		int i = 0;
 		ArrayList<Reservation> rList;
-		rList = getPastReservation(d);
+		rList = getReservationsByDate(d);
 		Iterator<Reservation> reservation = rList.iterator();
 		while (reservation.hasNext()) {
 			if (rList.get(i).getId() == id) {
@@ -59,9 +77,16 @@ public class ReservationSystem {
 		return false;
 	}
 
+	/**
+	 * This method is to remove a Reservation Object as the person who booked the
+	 * reservation has arrived
+	 * 
+	 * @param id The id of the reservation that we want to remove
+	 * @return void
+	 */
 	public void reservationArrival(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
-		ArrayList<Reservation> rList = getPastReservation(d);
+		ArrayList<Reservation> rList = getReservationsByDate(d);
 		int i;
 		for (i = 0; i < rList.size(); i++) {
 			if (rList.get(i).getId() == Id) {
@@ -71,11 +96,17 @@ public class ReservationSystem {
 		rList.remove(i);
 	}
 
+	/**
+	 * This method is to remove all expired Reservation Objects
+	 * 
+	 * @param id The date that we want to check for expired reservations
+	 * @return void
+	 */
 	public void removeExpiredReservations(LocalDate d) {
 		LocalTime reservationExpiry;
 		int i = 0;
 		ArrayList<Reservation> rList;
-		rList = getPastReservation(d);
+		rList = getReservationsByDate(d);
 		Iterator<Reservation> reservation = rList.iterator();
 		//
 		while (reservation.hasNext()) {
@@ -87,15 +118,20 @@ public class ReservationSystem {
 		}
 	}
 
+	/**
+	 * This method is to check the specified table for any conflicting reservations
+	 * 
+	 * @param tableNo The table that we want to check for conflicting reservations
+	 * @param d       The date which we want to check for conflicting reservations
+	 * @param t       The time which we want to check for conflicting reservations
+	 * @return boolean to indicate if there are any conflicting reservations
+	 */
 	// For walk in
 	// Find an available table
 	// Check the reservations for that table
-	public boolean checkTableForReservation(int tableNo, LocalDate d) {
-		LocalTime reservationTime;
-
-		ArrayList<Reservation> rList = getPastReservation(d);
+	public boolean checkTableForReservation(int tableNo, LocalDate d, LocalTime t) {
+		ArrayList<Reservation> rList = getReservationsByDate(d);
 		for (int i = 0; i < rList.size(); i++) {
-			reservationTime = rList.get(i).getTime();
 			if (rList.get(i).getTableNo() == tableNo) {
 				// We need a method to force the customer to leave after 1hr 30mins for the next
 				// reservation if there is a reservation
@@ -103,8 +139,8 @@ public class ReservationSystem {
 				// reservation
 				// Set tableNo to -1 to indicate there are no tables for this reservation as it
 				// is fully booked
-				if ((reservationTime.until(rList.get(i).getTime(), ChronoUnit.MINUTES) <= 90)
-						|| (reservationTime.until(rList.get(i).getTime(), ChronoUnit.MINUTES) >= -90)) {
+				if ((t.until(rList.get(i).getTime(), ChronoUnit.MINUTES) <= 90)
+						|| (t.until(rList.get(i).getTime(), ChronoUnit.MINUTES) >= -90)) {
 					return false;
 				}
 			}
@@ -112,9 +148,15 @@ public class ReservationSystem {
 		return true;
 	}
 
+	/**
+	 * This method is to get the upcoming reservations for the specified table
+	 * 
+	 * @param tableNo The table that we want to check for upcoming reservations
+	 * @return LocalTime of the next upcoming reservations
+	 */
 	public LocalTime getUpcomingReservation(int tableNo) {
 		LocalTime reservationTime;
-		ArrayList<Reservation> rList = getPastReservation(LocalDate.now());
+		ArrayList<Reservation> rList = getReservationsByDate(LocalDate.now());
 		for (var reservation : rList) {
 			if (reservation.getTableNo() == tableNo) {
 				reservationTime = reservation.getTime();
@@ -129,13 +171,25 @@ public class ReservationSystem {
 		return null;
 	}
 
+	/**
+	 * This method is to make a reservation object with its attributes
+	 * 
+	 * @param name    name of the person who wants to make a reservation
+	 * @param noOfPax the number of people that is booked for this reservation
+	 * @param contact the contact number of the person who wants to make a
+	 *                reservation
+	 * @param date    Reservation date
+	 * @param time    Reservation time
+	 * @param tableNo The table the reservation is assigned to
+	 * @return id of the reservation that was just booked
+	 */
 	public String makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
 			LocalTime reservationTime) {
 
 		ArrayList<Reservation> rList;
 		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
 		int tableNo = -1;
-		rList = getPastReservation(reservationDate);
+		rList = getReservationsByDate(reservationDate);
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
 		if (!tList.isEmpty() && !rList.isEmpty()) {
@@ -144,7 +198,7 @@ public class ReservationSystem {
 					// Get the tableNo for those bigger than the paxNo
 					tableNo = tList.get(j).getTableNo();
 					// Check for reservations assigned to that table for any conflicts
-					if (!checkTableForReservation(tableNo, reservationDate)) {
+					if (!checkTableForReservation(tableNo, reservationDate, reservationTime)) {
 						tableNo = -1;
 					}
 				}
@@ -160,6 +214,13 @@ public class ReservationSystem {
 		return r.getId();
 	}
 
+	/**
+	 * This method is to write the list of reservations to a file
+	 * 
+	 * @param rList    name of the person who wants to make a reservation
+	 * @param fileName the name of the file we are writing to
+	 * @return void
+	 */
 	// Create the file and serialize the list with its new addition into the file
 	public void writeReservationToFile(ArrayList<Reservation> rList, String fileName) {
 		try {
@@ -174,9 +235,16 @@ public class ReservationSystem {
 		}
 	}
 
+	/**
+	 * This method is to get the reservations of a specified date from the file with
+	 * the date as its name
+	 * 
+	 * @param d date of the reservations we want to get
+	 * @return an array list of reservations on that date
+	 */
 	// Get the past reservations on the date we are looking to make a reservation
 	// by going through the arrayList for reservations on that date
-	public ArrayList<Reservation> getPastReservation(LocalDate d) {
+	public ArrayList<Reservation> getReservationsByDate(LocalDate d) {
 		// Deserialize current reservations for that date
 		File f = new File("reservation" + d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser");
 		ArrayList<Reservation> rList = new ArrayList<Reservation>();
