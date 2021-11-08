@@ -1,15 +1,10 @@
 package cz2002.ui;
 
-import cz2002.SystemClock;
-import cz2002.entity.Table;
 import cz2002.system.ReservationSystem;
 import cz2002.system.TableSystem;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class RestaurantUI {
@@ -30,7 +25,7 @@ public class RestaurantUI {
         var vacantTables = tableSystem.getAvailableTables();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
+        System.out.printf("The current time is %s\n", LocalTime.now().format(formatter));
         System.out.println("The following tables are currently available:");
 
         for(var table : vacantTables) {

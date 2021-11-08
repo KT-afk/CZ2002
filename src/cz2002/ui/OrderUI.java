@@ -2,11 +2,12 @@ package cz2002.ui;
 
 import cz2002.entity.*;
 import cz2002.system.*;
-import java.util.ArrayList;
+
+import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Scanner;
+import java.util.stream.Stream;
+
 import cz2002.util.ScannerUtil;
 
 /**
@@ -39,14 +40,13 @@ public class OrderUI {
 
 	/**
 	 * Order Management Options UI
-	 * @param staff
-	 * @param List tables of table objects
+	 * @param staff Staff
+	 * @param tables List of tables
 	 */
 	public void manageOrders(Staff staff, List<Table> tables) {
 		int uchoice;
 		do {
-			System.out.println("-----------ORDER OPTIONS-----------");
-			uchoice = ScannerUtil.CustomPrompt(sc, "View Current Orders", "View Order by ID", "New Orders", "Modify Existing Orders",
+			uchoice = ScannerUtil.CustomPrompt(sc, "-----------ORDER OPTIONS-----------", "View Current Orders", "View Order by ID", "New Orders", "Modify Existing Orders",
 					"Remove Orders", "Complete Order", "Return to Main Menu");
 
 			switch (uchoice) {
@@ -104,6 +104,7 @@ public class OrderUI {
 
 		ArrayList<FoodDish> orDish = new ArrayList<FoodDish>();
 		ArrayList<SetPackage> orPack = new ArrayList<SetPackage>();
+		MenuItem item;
 
 		do {
 
@@ -117,7 +118,7 @@ public class OrderUI {
 			case 1:
 				do {
 					System.out.println("Enter reservation ID ('n' to cancel): ");
-					resId = sc.next();
+					resId = sc.nextLine();
 
 					if (resId == "n") {
 						return;
@@ -145,117 +146,39 @@ public class OrderUI {
 
 				Table orTable = TableSystem.getTableByNo(resv.getTableNo());
 
-				System.out.println("For packages in the menu");
-				for (int i = 0; i < RestaurantMenu.setPackageMenu.size(); i++) {
-					iname = RestaurantMenu.setPackageMenu.get(i).getName();
-					desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
-					price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
-				}
 				do {
-					System.out.println("Choose packages to add into order");
-					System.out.println("Enter -1 to stop");
-					uadd = sc.nextInt();
+					item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
 
-					if (uadd == -1) {
-						break;
-					}
+					if(item != null)
+						orPack.add((SetPackage) item);
+				} while(item != null);
 
-					if (uadd <= RestaurantMenu.setPackageMenu.size()) {
-						orPack.add(new SetPackage(RestaurantMenu.setPackageMenu.get(uadd - 1).getName(),
-								RestaurantMenu.setPackageMenu.get(uadd - 1).getDescription(),
-								RestaurantMenu.setPackageMenu.get(uadd - 1).getPrice()));
-					} else {
-						System.out.println("Choice is invalid");
-					}
-
-				} while (true);
-
-				System.out.println("For menu items in the menu");
-				for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
-					iname = RestaurantMenu.alaCarteMenu.get(i).getName();
-					desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
-					price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
-				}
 				do {
-					System.out.println("Choose menu items to add into order");
-					System.out.println("Enter -1 to stop");
-					uadd = sc.nextInt();
+					item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
 
-					if (uadd == -1) {
-						break;
-					}
+					if(item != null)
+						orDish.add((FoodDish) item);
+				} while(item != null);
 
-					if (uadd <= RestaurantMenu.alaCarteMenu.size()) {
-						orDish.add(new FoodDish(RestaurantMenu.alaCarteMenu.get(uadd - 1).getName(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getDescription(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getPrice(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getType()));
-					} else {
-						System.out.println("Choice is invalid");
-					}
-
-				} while (true);
 
 				Order newOrder = new Order(staff, orDish, orPack, resv, orTable, LocalDateTime.now());
-
 				OrderSystem.addOrder(newOrder);
 
 				break;
 			case 2:
-				System.out.println("For packages in the menu");
-				for (int i = 0; i < RestaurantMenu.setPackageMenu.size(); i++) {
-					iname = RestaurantMenu.setPackageMenu.get(i).getName();
-					desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
-					price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
-				}
 				do {
-					System.out.println("Choose packages to add into order");
-					System.out.println("Enter -1 to stop");
-					uadd = sc.nextInt();
+					item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
 
-					if (uadd == -1) {
-						break;
-					}
+					if(item != null)
+						orPack.add((SetPackage) item);
+				} while(item != null);
 
-					if (uadd <= RestaurantMenu.setPackageMenu.size()) {
-						orPack.add(new SetPackage(RestaurantMenu.setPackageMenu.get(uadd - 1).getName(),
-								RestaurantMenu.setPackageMenu.get(uadd - 1).getDescription(),
-								RestaurantMenu.setPackageMenu.get(uadd - 1).getPrice()));
-					} else {
-						System.out.println("Choice is invalid");
-					}
-
-				} while (true);
-
-				System.out.println("For menu items in the menu");
-				for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
-					iname = RestaurantMenu.alaCarteMenu.get(i).getName();
-					desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
-					price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-					System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
-				}
 				do {
-					System.out.println("Choose menu items to add into order");
-					System.out.println("Enter -1 to stop");
-					uadd = sc.nextInt();
+					item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
 
-					if (uadd == -1) {
-						break;
-					}
-
-					if (uadd <= RestaurantMenu.alaCarteMenu.size()) {
-						orDish.add(new FoodDish(RestaurantMenu.alaCarteMenu.get(uadd - 1).getName(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getDescription(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getPrice(),
-								RestaurantMenu.alaCarteMenu.get(uadd - 1).getType()));
-					} else {
-						System.out.println("Choice is invalid");
-					}
-
-				} while (true);
+					if(item != null)
+						orDish.add((FoodDish) item);
+				} while(item != null);
 
 				ArrayList<Table> availTable = TableSystem.getAvailableTables();
 
@@ -275,7 +198,7 @@ public class OrderUI {
 				System.out.println("Option entered is invalid, please try again\n");
 			}
 
-			uc = ScannerUtil.CustomPrompt(sc, "Create Another Order", "End Creation");
+			uc = ScannerUtil.Prompt(sc, "Create Another Order", "End Creation");
 			if (uc == 2) {
 				return;
 			}
@@ -294,7 +217,7 @@ public class OrderUI {
 			int uinput = sc.nextInt();
 			OrderSystem.modifyOrder(uinput, RestaurantMenu);
 
-			uc = ScannerUtil.CustomPrompt(sc, "Modify Another Orders", "End Modification");
+			uc = ScannerUtil.Prompt(sc, "Modify Another Orders", "End Modification");
 			if (uc == 2) {
 				return;
 			}
@@ -311,7 +234,7 @@ public class OrderUI {
 			int uinput = sc.nextInt();
 			OrderSystem.removeOrder(uinput);
 
-			uc = ScannerUtil.CustomPrompt(sc, "Remove Another Orders", "End Removal");
+			uc = ScannerUtil.Prompt(sc, "Remove Another Orders", "End Removal");
 			if (uc == 2) {
 				return;
 			}
@@ -347,5 +270,29 @@ public class OrderUI {
 				return;
 			}
 		} while (true);
+	}
+
+	private MenuItem promptSelectMenuItem(String prompt, List<? extends MenuItem> menu) {
+		while (true) {
+			String[] menuItems = menu.stream()
+					.filter(item -> item.getEnabled())
+					.map(item -> item.toString()).toArray(String[]::new);
+			String[] optionSelection = Stream.concat(Arrays.stream(menuItems), Arrays.stream(new String[]{"Done"})).toArray(String[]::new);
+			String header = String.format("   %-5s %-20s %-15s %s\n", "Status", "Name", "Type", "Price ($S)") + "=".repeat(55) + "";
+
+			int option = ScannerUtil.CustomPrompt(sc, prompt + "\n" + header, optionSelection);
+
+			if (option <= menuItems.length) {
+
+				Optional<? extends MenuItem> toAdd = menu.stream()
+						.filter(item -> item.toString().equals(menuItems[option - 1]))
+						.findFirst();
+
+				if(toAdd.isPresent())
+					return toAdd.get();
+			}
+
+			return null;
+		}
 	}
 }
