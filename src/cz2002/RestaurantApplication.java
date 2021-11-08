@@ -30,7 +30,7 @@ public class RestaurantApplication {
 		sc.nextLine();
 		System.out.printf("Please enter password: %s\n", "*".repeat(10));
 
-		Staff currentStaff = staffList.get(staffSelection);
+		Staff currentStaff = staffList.get(staffSelection-1);
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
@@ -45,9 +45,10 @@ public class RestaurantApplication {
 		int capacity = 2;
 
 		for(int i = 0; i < 10; i++) {
-			tableSystem.addTable(capacity++);
-
-			if(capacity >= 10)
+			tableSystem.addTable(capacity);
+			capacity = capacity+2;
+			
+			if(capacity > 10)
 				capacity = 2;
 		}
 		
