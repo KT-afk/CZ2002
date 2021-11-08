@@ -33,7 +33,7 @@ public class SaleRevenueSystem {
 		//suppose OrderList is where we store all orders
 		for(Order order : orderList) {
 			Date orderDate = Timestamp.valueOf(order.getStart());
-			if(!(start.before(orderDate) || end.after(orderDate))) {
+			if(!(orderDate.before(start) || orderDate.after(end))) {
 				orderListIncluded.add(order);
 				totalPrice+=order.totalPrice();
 			}
