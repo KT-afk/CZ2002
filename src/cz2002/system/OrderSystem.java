@@ -197,13 +197,13 @@ public class OrderSystem {
 	}
 	
 	/**
-	 * Assumes customer finishes the order within 1.5 hour
+	 * Assumes any order that took longer tha 1.5hrs and is still not completed to be removed from the system
 	 */
 	public void autoCompleteOrder() {
 		Iterator<Order> it = orderList.iterator();
 		while (it.hasNext()) {
 			Order order = it.next();
-			if(order.getStart().plusHours(1).plusMinutes(30).isBefore(LocalDateTime.now())) {
+			if(order.getStatus() == false && order.getStart().plusHours(1).plusMinutes(30).isBefore(LocalDateTime.now())) {
 				order.setComplete();
 				order.getTable().freeTable();
 			}
