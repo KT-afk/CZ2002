@@ -35,7 +35,6 @@ public class ReservationSystem {
 	}
 
 	public boolean removeReservation(String id, LocalDate d) {
-		LocalTime reservationExpiry;
 		int i = 0;
 		ArrayList<Reservation> rList;
 		rList = getPastReservation(d);
