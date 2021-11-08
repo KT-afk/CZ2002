@@ -6,7 +6,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
@@ -25,11 +24,10 @@ public class OrderSystem {
 	 * Count of total orders added so far
 	 */
 	private int orderCount = 0;
-	/**
-	 * while loop checker
-	 */
-	private boolean isValid = false;
 
+	/**
+	 * Loads past order into orderSystem
+	 */
 	public OrderSystem() {
 		orderList = new ArrayList<Order>();
 		load();
@@ -196,6 +194,9 @@ public class OrderSystem {
 		
 	}
 
+	/**
+	 * Serialiser to save to order
+	 */
 	public void save() {
 		try {
 			FileOutputStream f = new FileOutputStream("order.dat");
@@ -208,6 +209,9 @@ public class OrderSystem {
 		}
 	}
 
+	/**
+	 * Serialiser to load to order
+	 */
 	public void load() {
 		File f = new File("order.dat");
 		if(f.exists()) {
