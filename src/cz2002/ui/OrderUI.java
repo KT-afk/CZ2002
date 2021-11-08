@@ -92,18 +92,13 @@ public class OrderUI {
 				break;
 			case 6:
 				// Prints Order Invoice
-				completeOrder();
+				printOrderInvoice();
 				break;
 			case 7:
 				return;
 			}
 		} while (true);
 	}
-
-	public void printOrderInvoice() {
-
-	}
-
 	/**
 	 * Gets order ID and calls OrderSystem method to view the order
 	 */
@@ -383,7 +378,7 @@ public class OrderUI {
 	/**
 	 * Gets the order ID and membership status before calling the OrderSystem method to complete and print order invoice
 	 */
-	private void completeOrder() {
+	private void printOrderInvoice() {
 		int uc;
 		do {
 			System.out.println("\nType in the order ID to pay: ");
