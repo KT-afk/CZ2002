@@ -81,6 +81,10 @@ public class ReservationUI {
 			reservationDate = LocalDate.parse(dateIn, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		}
 		session = 0;
+		System.out.println("Enter the session for which you wish to dine at our restaurant" + "\n" + "1) 1100-1330 \n"
+				+ "2) 1800-2030\n");
+		session = sc.nextInt();
+		sc.nextLine();
 		while (session != 1 && session != 2) {
 			System.out.println("An invalid session has been chosen.\n"
 					+ "Enter the session for which you wish to dine at our restaurant" + "\n" + "1) 1100-1330 \n"
@@ -151,7 +155,7 @@ public class ReservationUI {
 				break;
 			}
 			default: {
-				System.out.println("Invalid choice:\n");
+				System.out.println("Invalid choice\n");
 			}
 			}
 
@@ -220,16 +224,23 @@ public class ReservationUI {
 				break;
 			}
 			default: {
-				System.out.println("Invalid choice:\n");
+				System.out.println("Invalid choice\n");
 			}
 			}
 		}
 
-		System.out.println("Enter number of pax: ");
+		System.out.println("Enter number of pax (1-10): ");
 		int paxNo = sc.nextInt();
-		if (paxNo > 10) {
-			System.out.println(
-					"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
+		while (paxNo > 10 || paxNo <= 0) {
+			if (paxNo > 10)
+			{
+				System.out.println(
+						"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
+			}
+			else
+			{
+				System.out.println("Number of pax cannot be less than or equal to 0. Please enter a valid number\nEnter number of pax: ");
+			}
 			paxNo = sc.nextInt();
 		}
 		String rID;

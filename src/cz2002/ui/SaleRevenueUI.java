@@ -17,7 +17,7 @@ public class SaleRevenueUI {
     private SaleRevenueSystem saleRevenueSystem;
 
     public SaleRevenueUI(SaleRevenueSystem saleRevenueSystem, Scanner scanner) {
-        saleRevenueSystem = saleRevenueSystem;
+        this.saleRevenueSystem = saleRevenueSystem;
         sc = scanner;
     }
 
