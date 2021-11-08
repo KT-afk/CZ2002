@@ -21,10 +21,6 @@ public class OrderSystem {
 	 * Count of total orders added so far
 	 */
 	private int orderCount = 0;
-	/**
-	 * while loop checker
-	 */
-	private boolean isValid = false;
 	
 	/**
 	 * Get the whole ArrayList of orders

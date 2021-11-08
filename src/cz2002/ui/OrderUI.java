@@ -127,7 +127,7 @@ public class OrderUI {
 						return;
 					}
 
-					if (resId.length() != 8) {
+					if (resId.length() < 8) {
 						System.out.println("Invalid reservation ID");
 						continue;
 					}
