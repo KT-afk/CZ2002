@@ -63,16 +63,21 @@ public class ReservationSystem {
 	 * @return boolean for removing reservation status
 	 */
 	public boolean removeReservation(String id, LocalDate d) {
-		int i = 0;
 		ArrayList<Reservation> rList;
+		int i;
+		boolean status = false;
+		String fileName = "reservation" + d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
 		rList = getReservationsByDate(d);
-		Iterator<Reservation> reservation = rList.iterator();
-		while (reservation.hasNext()) {
-			if (rList.get(i).getId() == id) {
-				reservation.remove();
-				return true;
+		for (i = 0; i < rList.size(); i++) {
+			if (rList.get(i).getId().equals(id)) {
+				status = true;
+				break;
 			}
-			i++;
+		}
+		if (status) {
+			rList.remove(i);
+			writeReservationToFile(rList, fileName);
+			return true;
 		}
 		return false;
 	}
@@ -82,10 +87,10 @@ public class ReservationSystem {
 	 * reservation has arrived
 	 * 
 	 * @param id The id of the reservation that we want to remove
-	 * @return void
 	 */
 	public void reservationArrival(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
+		String fileName = "reservation" + d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
 		ArrayList<Reservation> rList = getReservationsByDate(d);
 		int i;
 		for (i = 0; i < rList.size(); i++) {
@@ -94,28 +99,30 @@ public class ReservationSystem {
 			}
 		}
 		rList.remove(i);
+		writeReservationToFile(rList, fileName);
 	}
 
 	/**
 	 * This method is to remove all expired Reservation Objects
 	 * 
 	 * @param id The date that we want to check for expired reservations
-	 * @return void
 	 */
 	public void removeExpiredReservations(LocalDate d) {
 		LocalTime reservationExpiry;
-		int i = 0;
 		ArrayList<Reservation> rList;
 		rList = getReservationsByDate(d);
-		Iterator<Reservation> reservation = rList.iterator();
-		//
-		while (reservation.hasNext()) {
+		String fileName = "reservation" + d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
+		ArrayList<Reservation> removeList = new ArrayList<Reservation>();
+		for (int i = 0; i < rList.size(); i++) {
 			reservationExpiry = rList.get(i).getTime().plusMinutes(15);
 			if (reservationExpiry.isBefore(LocalTime.now())) {
-				reservation.remove();
+				removeList.add(rList.get(i));
 			}
-			i++;
 		}
+		for (int i = 0; i < removeList.size(); i++) {
+			rList.remove(removeList.get(i));
+		}
+		writeReservationToFile(rList, fileName);
 	}
 
 	/**
@@ -219,7 +226,6 @@ public class ReservationSystem {
 	 * 
 	 * @param rList    name of the person who wants to make a reservation
 	 * @param fileName the name of the file we are writing to
-	 * @return void
 	 */
 	// Create the file and serialize the list with its new addition into the file
 	public void writeReservationToFile(ArrayList<Reservation> rList, String fileName) {
