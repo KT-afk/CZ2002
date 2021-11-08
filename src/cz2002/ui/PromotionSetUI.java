@@ -8,16 +8,35 @@ import cz2002.util.ScannerUtil;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * User Interface for Managing Set Packages
+ * 
+ * @author Benjamin Cheong
+ * @version 1.0
+ * @since 2021-11-08
+ *
+ */
 public class PromotionSetUI extends MenuUI {
-
+	/**
+	 * List of Food Dishes
+	 */
     private List<FoodDish> foodDishMenu;
-
+    
+    /**
+     * Creates new User Interface for managing Set Packages
+     * @param scanner Scanner object
+     * @param setPackageMenu ArrayList of Set Packages
+     * @param foodDishMenu ArrayList of Food Dishes
+     */
     public PromotionSetUI(Scanner scanner, ArrayList<SetPackage> setPackageMenu, ArrayList<FoodDish> foodDishMenu) {
         super(scanner, setPackageMenu);
         this.foodDishMenu = foodDishMenu;
         setFormatting("   %-5s %-20s %s", "Status", "Name", "Price ($S)");
     }
-
+    
+    /**
+     * User Interface for Creating Set Package
+     */
     @Override
     void createMenuItem() {
 
@@ -82,7 +101,11 @@ public class PromotionSetUI extends MenuUI {
         System.out.println("\nPress enter to return to main menu..");
         sc.nextLine();
     }
-
+    
+    /**
+     * User Interface for Editing Set Package
+     * @param item Set Package to be edited
+     */
     @Override
     void editMenuItem(MenuItem item) {
 
@@ -193,7 +216,11 @@ public class PromotionSetUI extends MenuUI {
             }
         }
     }
-
+    
+    /**
+     * Prints details and items contained in Set Package
+     * @param item Set Package to be printed
+     */
     private void printItemDetails(SetPackage item) {
         System.out.printf("%-13s: %s\n", "Name", item.getName());
         System.out.printf("%-13s: %s\n", "Description", item.getDescription());

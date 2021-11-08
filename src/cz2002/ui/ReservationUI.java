@@ -54,10 +54,10 @@ public class ReservationUI {
 			sc.nextLine();
 
 			switch (option) {
-				case 1 -> checkReservationUI();
-				case 2 -> makeReservationUI();
-				case 3 -> removeReservationUI();
-				case 4 -> running = false;
+			case 1 -> checkReservationUI();
+			case 2 -> makeReservationUI();
+			case 3 -> removeReservationUI();
+			case 4 -> running = false;
 			}
 		}
 	}
@@ -66,7 +66,7 @@ public class ReservationUI {
 	 * This method is to display the System messages for reservations and get the
 	 * and getting the required input
 	 *
-	 * @return void
+	 * 
 	 */
 	public void checkReservationUI() {
 		System.out.println("Which date would you like to view the reservations for? Please enter in dd/MM/yyyy");
@@ -76,9 +76,10 @@ public class ReservationUI {
 		while (true) {
 			try {
 				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
-				if (reservationDate.isAfter(currentDate)) {
-					dateIn = sc.nextLine();
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
+				if (reservationDate.isBefore(currentDate)) {
+					throw new Exception("Sorry! You are entering a date that has already passed!");
+				} else {
 					break;
 					/*
 					 * if (reservationDate.isAfter(currentDate.plusDays(1))) { break; } else { throw
@@ -86,8 +87,6 @@ public class ReservationUI {
 					 * Exception("Sorry! You are only allowed to make a reservation 1 day in advance"
 					 * ); }
 					 */
-				} else {
-					throw new Exception("Sorry! You are entering a date that has already passed!");
 				}
 			} catch (DateTimeParseException e) {
 				System.out.println("You have entered an invalid date!");
@@ -107,11 +106,14 @@ public class ReservationUI {
 			System.out.println("NoOfPax: " + rList.get(i).getNoOfPax());
 			System.out.println("TableNo: " + rList.get(i).getTableNo());
 		}
+		if (rList.size() == 0)
+			System.out.println("There are no reservations for this date.");
 	}
 
 	/**
 	 * This method is to display the System messages for removing the reservation
 	 * and getting the required input
+	 * 
 	 */
 	public void removeReservationUI() {
 		System.out.println("What date is the reservation you would you like to remove?");
@@ -121,11 +123,11 @@ public class ReservationUI {
 		while (true) {
 			try {
 				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
-				if (reservationDate.isAfter(currentDate)) {
-					break;
-				} else {
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
+				if (reservationDate.isBefore(currentDate)) {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
+				} else {
+					break;
 				}
 			} catch (DateTimeParseException e) {
 				System.out.println("You have entered an invalid date!");
@@ -139,7 +141,8 @@ public class ReservationUI {
 
 		System.out.println("Which reservation would you like to remove?");
 		String rID = sc.nextLine();
-		if (rSystem.removeReservation(rID, reservationDate)) {
+		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
+		if (rList.size() > 0) {
 			System.out.println("Reservation has been removed successfully");
 		} else {
 			System.out.println("The reservation you would like to remove cannot be found");
@@ -148,7 +151,10 @@ public class ReservationUI {
 
 	/**
 	 * This method is to display the System messages for making the reservations and
-	 * getting the required input
+	 * getting the required input <<<<<<< HEAD
+	 * 
+	 * 
+	 * ======= >>>>>>> 5e7022461e0abe4c877087e4b6eae0662d54e69e
 	 */
 	public void makeReservationUI() {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
@@ -169,14 +175,16 @@ public class ReservationUI {
 		while (true) {
 			try {
 				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT));
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
 				if (reservationDate.isAfter(currentDate)) {
-					dateIn = sc.nextLine();
-					if (reservationDate.isAfter(currentDate.plusDays(1))) {
-						break;
-					} else {
-						throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
-					}
+
+					break;
+					/*
+					 * if (reservationDate.isAfter(currentDate.plusDays(1))) { break; } else { throw
+					 * new
+					 * Exception("Sorry! You are only allowed to make a reservation 1 day in advance"
+					 * ); }
+					 */
 				} else {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
 				}

@@ -6,13 +6,28 @@ import cz2002.util.ScannerUtil;
 
 import java.util.*;
 
+/**
+ * User Interface for Managing individual Food Dishes
+ * 
+ * @author Benjamin Cheong
+ * @version 1.0
+ * @since 2021-11-08
+ *
+ */
 public class FoodDishUI extends MenuUI {
-
-    public FoodDishUI(Scanner scanner, ArrayList<FoodDish> restaurantMenu) {
+	/**
+	 * Creates new User Interface for managing individual Food Dishes
+	 * @param scanner Scanner object
+	 * @param restaurantMenu ArrayList of Food Dishes
+	 */
+	public FoodDishUI(Scanner scanner, ArrayList<FoodDish> restaurantMenu) {
         super(scanner, restaurantMenu);
         setFormatting("   %-5s %-20s %-15s %s", "Status", "Name", "Type", "Price ($S)");
     }
-
+	
+	/**
+	 * User Interface for Creating individual Food Dish
+	 */
     @Override
     void createMenuItem() {
         FoodDish.menuItemType type = FoodDish.menuItemType.MAIN_COURSE;
@@ -55,7 +70,11 @@ public class FoodDishUI extends MenuUI {
         System.out.println("Press enter to return to main menu..");
         sc.nextLine();
     }
-
+    
+    /**
+     * User Interface for Editing individual Food Dish
+     * @param item Food Dish to be edited
+     */
     @Override
     void editMenuItem(MenuItem item) {
 
@@ -117,7 +136,11 @@ public class FoodDishUI extends MenuUI {
             }
         }
     }
-
+    
+    /**
+     * Prints details of Food Dish
+     * @param item Food Dish to be printed
+     */
     private void printItemDetails(FoodDish item) {
         String typeString = "";
         switch (item.getType()) {
