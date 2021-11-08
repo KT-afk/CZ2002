@@ -1,6 +1,7 @@
 package cz2002;
 
 import cz2002.entity.*;
+import cz2002.system.OrderSystem;
 import cz2002.system.ReservationSystem;
 import cz2002.system.SaleRevenueSystem;
 import cz2002.system.TableSystem;
@@ -43,13 +44,14 @@ public class RestaurantApplication {
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
-		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem();
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
+		OrderSystem orderSystem = new OrderSystem();
+		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem(orderSystem);
 
 		ReservationUI reservationUI = new ReservationUI(sc, tableSystem.getTableList());
 		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
-		OrderUI orderUI = new OrderUI(sc, reservationSystem, tableSystem, menu);
+		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu);
 
 		int capacity = 2;
 

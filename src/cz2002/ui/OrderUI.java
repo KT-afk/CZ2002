@@ -19,6 +19,7 @@ import cz2002.util.ScannerUtil;
 public class OrderUI {
 
 	private Scanner sc;
+	private OrderSystem OrderSystem;
 	private ReservationSystem ReservationSystem;
 	private TableSystem TableSystem;
 	private RestaurantMenu RestaurantMenu;
@@ -26,13 +27,15 @@ public class OrderUI {
 	/**
 	 * OrderUI Constructor with the necessary systems
 	 * @param scanner
+	 * @param OrderSystem
 	 * @param ReservationSystem
 	 * @param TableSystem
 	 * @param RestaurantMenu
 	 */
-	public OrderUI(Scanner scanner, ReservationSystem ReservationSystem, TableSystem TableSystem,
+	public OrderUI(Scanner scanner, OrderSystem OrderSystem, ReservationSystem ReservationSystem, TableSystem TableSystem,
 			RestaurantMenu RestaurantMenu) {
 		sc = scanner;
+		this.OrderSystem = OrderSystem;
 		this.ReservationSystem = ReservationSystem;
 		this.TableSystem = TableSystem;
 		this.RestaurantMenu = RestaurantMenu;
@@ -294,5 +297,6 @@ public class OrderUI {
 
 			return null;
 		}
+
 	}
 }
