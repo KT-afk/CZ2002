@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 /**
  * Utility Class for Scanner object
+ *     @author Abdul Siddiq
+ *     @version 1.0
+ *     @since 2021-11-08
  */
 public class ScannerUtil {
 
