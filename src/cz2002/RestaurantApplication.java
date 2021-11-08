@@ -56,7 +56,7 @@ public class RestaurantApplication {
 		ReservationUI reservationUI = new ReservationUI(sc, tableSystem.getTableList());
 		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
-		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu);
+		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu, restaurant);
 
 		int capacity = 2;
 
@@ -71,9 +71,8 @@ public class RestaurantApplication {
 		while (true) {
 			reservationSystem.removeExpiredReservations(LocalDate.now());
 			int option = ScannerUtil.Prompt(sc, "Manage Menu Items", "Manage Promotion Sets", "Manage Orders",
-					"Manage Reservations", "Check Table Availability", "Print Order Invoice",
+					"Manage Reservations", "Check Table Availability",
 					"Print Sale Revenue Report",
-					// "Change Date/Time",
 					"Quit");
 
 			sc.nextLine();
@@ -101,12 +100,9 @@ public class RestaurantApplication {
 				restaurantUI.checkTableAvailability();
 				break;
 			case 6:
-				orderUI.printOrderInvoice();
-				break;
-			case 7:
 				saleRevenueUI.printSaleRevenueReport();
 				break;
-			case 8:
+			case 7:
 				return;
 			}
 		}

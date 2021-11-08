@@ -114,7 +114,6 @@ public class ReservationUI {
 	 * This method is to display the System messages for removing the reservation
 	 * and getting the required input
 	 * 
-	 * 
 	 */
 	public void removeReservationUI() {
 		System.out.println("What date is the reservation you would you like to remove?");
@@ -152,9 +151,10 @@ public class ReservationUI {
 
 	/**
 	 * This method is to display the System messages for making the reservations and
-	 * getting the required input
+	 * getting the required input <<<<<<< HEAD
 	 * 
 	 * 
+	 * ======= >>>>>>> 5e7022461e0abe4c877087e4b6eae0662d54e69e
 	 */
 	public void makeReservationUI() {
 		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance

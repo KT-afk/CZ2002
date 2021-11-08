@@ -1,21 +1,39 @@
 package cz2002.entity;
 
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Entity class for Restaurant Menu
+ * 
+ * @author Benjamin Cheong
+ * @version 1.0
+ * @since 2021-11-08
+ *
+ */
 public class RestaurantMenu implements Serializable {
+	/**
+	 * ArrayList of all individual Food Dishes contained in this Restaurant Menu
+	 */
 	public ArrayList<FoodDish> alaCarteMenu;
+	/**
+	 * ArrayList of all Set Packages contained in this Restaurant Menu
+	 */
 	public ArrayList<SetPackage> setPackageMenu;
 	
+	/**
+	 * Creates new Restaurant Menu
+	 */
 	public RestaurantMenu()
 	{
 		alaCarteMenu = new ArrayList<FoodDish>();
 		setPackageMenu = new ArrayList<SetPackage>();
-
 		load();
 	}
-
+	
+	/**
+	 * Saves this Restaurant Menu to menu.dat file
+	 */
 	public void save() {
 		try {
 			FileOutputStream f = new FileOutputStream("menu.dat");
@@ -27,7 +45,10 @@ public class RestaurantMenu implements Serializable {
 			System.out.println(e);
 		}
 	}
-
+	
+	/**
+	 * Loads Restaurant Menu from menu.dat file
+	 */
 	public void load() {
 		File f = new File("menu.dat");
 		if(f.exists()) {
@@ -41,36 +62,5 @@ public class RestaurantMenu implements Serializable {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void printAllMenu()
-	{
-		System.out.println("\nRestaurant Menu Promotion Packages: ");
-        System.out.printf("   %-20s %-20s %-20s\n", "Name", "Price ($S)", "Description");
-        System.out.println("=".repeat(55));
-        if(!setPackageMenu.isEmpty()) {
-            int i = 1;
-            for(SetPackage item : setPackageMenu) {
-                System.out.printf("%d) %s\n", i++, item.customerToString());
-            }
-        } else  {
-            System.out.println("-- No Promotion Packages --");
-        }
-        
-		System.out.println("\nRestaurant Menu Dishes: ");
-		System.out.printf("   %-20s %-20s %-20s %-20s\n", "Name", "Type", "Price ($S)", "Description");
-        System.out.println("=".repeat(80));
-		
-        if(!alaCarteMenu.isEmpty()) {
-            int i = 1;
-            for(FoodDish item : alaCarteMenu) {
-                if (item.getEnabled())
-                {
-                	System.out.printf("%d) %s\n", i++, item.customerToString());
-                }
-            }
-        } else  {
-            System.out.println("-- No Dishes --");
-        }
 	}
 }

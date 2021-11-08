@@ -3,8 +3,9 @@ package cz2002.system;
 import cz2002.entity.*;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
@@ -23,11 +24,10 @@ public class OrderSystem {
 	 * Count of total orders added so far
 	 */
 	private int orderCount = 0;
-	/**
-	 * while loop checker
-	 */
-	private boolean isValid = false;
 
+	/**
+	 * Loads past order into orderSystem
+	 */
 	public OrderSystem() {
 		orderList = new ArrayList<Order>();
 		load();
@@ -85,12 +85,14 @@ public class OrderSystem {
 		ori = 0;
 		System.out.println("\n----------------Current Order List----------------");
 		for(Order order: orderList) {
-			System.out.println("[" + (ori++ + 1) + "] -Order ID: " + order.getID() + " -Created On: " + order.getStart());
-			for(MenuItem item: order.getDishItems()) {
-				System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
-			}
-			for(MenuItem item: order.getPackItems()) {
-				System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+			if(order.getStatus() == false) {
+				System.out.println("[" + (ori++ + 1) + "] -Order ID: " + order.getID() + " -Created On: " + order.getStart());
+				for(MenuItem item: order.getDishItems()) {
+					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+				}
+				for(MenuItem item: order.getPackItems()) {
+					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+				}
 			}
 		}
 	}
@@ -128,7 +130,8 @@ public class OrderSystem {
 		while (it.hasNext()) {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
-			  it.remove();
+			  order.setComplete();
+			  order.getTable().freeTable();
 			  return;
 		  }
 		}
@@ -145,15 +148,25 @@ public class OrderSystem {
 	 * @param uinput
 	 * @param discountamt
 	 */
-	public void completeOrder(int uinput, double discountamt) {
-		
+	public void completeOrder(int uinput, double discountamt, Restaurant Restaurant) {
 		double discount = 1 * discountamt;
 		Iterator<Order> it = orderList.iterator();
 		
 		while (it.hasNext()) {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
-			System.out.println("=================== Order " + order.getID() + " ===================");
+			System.out.println("************************************************");
+		    System.out.printf("%15s: %s\n", "Name", Restaurant.getname());
+			System.out.printf("%15s: %s\n", "Address", Restaurant.getaddress());
+			System.out.printf("%15s: %s\n", "OpeningHours", Restaurant.getopenhr());
+			System.out.println();
+			System.out.printf("%7s: %3s", "Server", order.getCreator().getName());
+			System.out.printf("%15s: %10s\n", "Date", order.getStart().toLocalDate());
+			System.out.printf("%7s: %3s", "Table", order.getTable().getTableNo());
+			System.out.printf("%15s: %10s\n", "Time", order.getStart().toLocalTime());
+			System.out.println();
+			System.out.printf("%25s %s\n", "Order", order.getID());
+			System.out.println("===============================================");
 			System.out.println("Order Items: ");
 			for(int i=0;i<order.getDishItems().size();i++) {
 				System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
@@ -162,10 +175,16 @@ public class OrderSystem {
 			for(int i=0;i<order.getPackItems().size();i++) {
 				System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
 			}
-			System.out.println("Total Cost: $" + order.totalPrice()*discount );
-			System.out.println("Order created on " + order.getStart());
+			System.out.println();
+			System.out.println("----------------------------------------------");
+			System.out.printf("Total Cost: %30s$%s\n", "", order.totalPrice()*discount );
+			System.out.println("----------------------------------------------");
+			System.out.println();
+			System.out.printf("Order ended on %s %s\n", LocalDate.now(), LocalTime.now());
 			System.out.println("==============================================");
-			it.remove();
+			System.out.println("************************************************");
+			order.setComplete();
+			order.getTable().freeTable();
 			return;
 		  }
 		}
@@ -175,6 +194,9 @@ public class OrderSystem {
 		
 	}
 
+	/**
+	 * Serialiser to save to order
+	 */
 	public void save() {
 		try {
 			FileOutputStream f = new FileOutputStream("order.dat");
@@ -187,6 +209,9 @@ public class OrderSystem {
 		}
 	}
 
+	/**
+	 * Serialiser to load to order
+	 */
 	public void load() {
 		File f = new File("order.dat");
 		if(f.exists()) {

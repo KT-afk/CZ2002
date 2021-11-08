@@ -13,9 +13,9 @@ public class Restaurant {
 
 	/**
 	 * Creates a Restaurant object
-	 * @param nameOfRestaurant
-	 * @param address
-	 * @param openingHours
+	 * @param nameOfRestaurant Restaurant Name
+	 * @param address Restaurant Address
+	 * @param openingHours Restaurant Opening Hours
 	 */
 	public Restaurant(String nameOfRestaurant, String address, String openingHours) {
 		this.nameOfRestaurant = nameOfRestaurant;
@@ -23,6 +23,30 @@ public class Restaurant {
 		this.openingHours = openingHours;
 	}
 
+	/**
+	 * Return name of restaurant
+	 * @return
+	 */
+	public String getname() {
+		return nameOfRestaurant;
+	}
+	
+	/**
+	 * Return address
+	 * @return
+	 */
+	public String getaddress() {
+		return address;
+	}
+	
+	/**
+	 * Return opening hours
+	 * @return
+	 */
+	public String getopenhr() {
+		return openingHours;
+	}
+	
 	/**
 	 * Print restaurant information
 	 */

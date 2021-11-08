@@ -19,11 +19,30 @@ import cz2002.util.ScannerUtil;
  */
 public class OrderUI {
 
+	/**
+	 * Scanner obj
+	 */
 	private Scanner sc;
+	/**
+	 * OrderSystem obj
+	 */
 	private OrderSystem OrderSystem;
+	/**
+	 * RestaurantSystem obj
+	 */
 	private ReservationSystem ReservationSystem;
+	/**
+	 * TableSystem obj
+	 */
 	private TableSystem TableSystem;
+	/**
+	 * RestaurantMenu obj
+	 */
 	private RestaurantMenu RestaurantMenu;
+	/**
+	 * Restaurant obj
+	 */
+	private Restaurant Restaurant;
 
 	/**
 	 * OrderUI Constructor with the necessary systems
@@ -34,12 +53,13 @@ public class OrderUI {
 	 * @param RestaurantMenu
 	 */
 	public OrderUI(Scanner scanner, OrderSystem OrderSystem, ReservationSystem ReservationSystem, TableSystem TableSystem,
-			RestaurantMenu RestaurantMenu) {
+			RestaurantMenu RestaurantMenu, Restaurant Restaurant) {
 		sc = scanner;
 		this.OrderSystem = OrderSystem;
 		this.ReservationSystem = ReservationSystem;
 		this.TableSystem = TableSystem;
 		this.RestaurantMenu = RestaurantMenu;
+		this.Restaurant = Restaurant;
 	}
 
 	/**
@@ -72,18 +92,13 @@ public class OrderUI {
 				break;
 			case 6:
 				// Prints Order Invoice
-				completeOrder();
+				printOrderInvoice();
 				break;
 			case 7:
 				return;
 			}
 		} while (true);
 	}
-
-	public void printOrderInvoice() {
-
-	}
-
 	/**
 	 * Gets order ID and calls OrderSystem method to view the order
 	 */
@@ -195,6 +210,8 @@ public class OrderUI {
 				}
 
 				Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
+				
+				availTable.get(i).reserveTable();
 
 				OrderSystem.addOrder(newOrder2);
 
@@ -361,7 +378,7 @@ public class OrderUI {
 	/**
 	 * Gets the order ID and membership status before calling the OrderSystem method to complete and print order invoice
 	 */
-	private void completeOrder() {
+	private void printOrderInvoice() {
 		int uc;
 		do {
 			System.out.println("\nType in the order ID to pay: ");
@@ -372,17 +389,17 @@ public class OrderUI {
 				String mem = sc.next();
 				
 				if(mem == "y") {
-					OrderSystem.completeOrder(uinput, 0.9);
+					OrderSystem.completeOrder(uinput, 0.9, Restaurant);
 					break;
 				}
 				else {
-					OrderSystem.completeOrder(uinput, 1);
+					OrderSystem.completeOrder(uinput, 1, Restaurant);
 					break;
 				}
 			} while(true);
 			
 
-			uc = ScannerUtil.CustomPrompt(sc, "Pay Another Order", "End Pay");
+			uc = ScannerUtil.Prompt(sc, "Pay Another Order", "End Pay");
 			if (uc == 2) {
 				return;
 			}
