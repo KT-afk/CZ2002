@@ -13,7 +13,7 @@ public class TableSystem {
 		return tableList;
 	}
 	public String addTable(int capacity) {
-		if(capacity<2 || capacity>10) return "Invalid capacity!";
+		if(capacity<2 || capacity>10 || capacity%2 == 1 ) return "Invalid capacity!";
 		Table table = new Table(capacity, ++tableCounter);
 		if(tableList.add(table)) return "Table added successfully!";
 		else return "Failed to add table!";
