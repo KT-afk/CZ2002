@@ -1,19 +1,16 @@
 package cz2002.ui;
 
 import cz2002.entity.*;
-import cz2002.entity.Person.Gender;
 import cz2002.system.*;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
 import cz2002.SystemClock;
+import cz2002.util.ScannerUtil;
 
 /**
  * Represents the Order UI only
@@ -52,7 +49,7 @@ public class OrderUI {
 		int uchoice;
 		do {
 			System.out.println("-----------ORDER OPTIONS-----------");
-			uchoice = Prompt(sc, "View Current Orders", "View Order by ID", "New Orders", "Modify Existing Orders",
+			uchoice = ScannerUtil.CustomPrompt(sc, "View Current Orders", "View Order by ID", "New Orders", "Modify Existing Orders",
 					"Remove Orders", "Complete Order", "Return to Main Menu");
 
 			switch (uchoice) {
@@ -272,7 +269,7 @@ public class OrderUI {
 				System.out.println("Option entered is invalid, please try again\n");
 			}
 
-			uc = Prompt(sc, "Create Another Order", "End Creation");
+			uc = ScannerUtil.CustomPrompt(sc, "Create Another Order", "End Creation");
 			if (uc == 2) {
 				return;
 			}
@@ -288,7 +285,7 @@ public class OrderUI {
 			int uinput = sc.nextInt();
 			OrderSystem.modifyOrder(uinput, RestaurantMenu);
 
-			uc = Prompt(sc, "Modify Another Orders", "End Modification");
+			uc = ScannerUtil.CustomPrompt(sc, "Modify Another Orders", "End Modification");
 			if (uc == 2) {
 				return;
 			}
@@ -302,7 +299,7 @@ public class OrderUI {
 			int uinput = sc.nextInt();
 			OrderSystem.removeOrder(uinput);
 
-			uc = Prompt(sc, "Remove Another Orders", "End Removal");
+			uc = ScannerUtil.CustomPrompt(sc, "Remove Another Orders", "End Removal");
 			if (uc == 2) {
 				return;
 			}
@@ -330,38 +327,10 @@ public class OrderUI {
 			} while(true);
 			
 
-			uc = Prompt(sc, "Pay Another Order", "End Pay");
+			uc = ScannerUtil.CustomPrompt(sc, "Pay Another Order", "End Pay");
 			if (uc == 2) {
 				return;
 			}
 		} while (true);
 	}
-
-	// Utility Functions
-	private static int Prompt(Scanner scanner, String... options) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		System.out.println();
-		System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
-		System.out.println("Please select one of the following options: ");
-		for (int i = 1; i <= options.length; i++)
-			System.out.printf("%d) %s\n", i, options[i - 1]);
-		System.out.print("> ");
-
-		try {
-			int option = scanner.nextInt();
-			if (option > options.length)
-				throw new Exception();
-
-			scanner.nextLine();
-			return option;
-		} catch (Exception e) {
-			// Clear buffer if there's an error
-			if (e instanceof InputMismatchException)
-				scanner.next();
-
-			System.out.println("You have selected an invalid option..");
-			return Prompt(scanner, options);
-		}
-	}
-
 }
