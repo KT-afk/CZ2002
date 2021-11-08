@@ -147,12 +147,10 @@ public class OrderUI {
 
 				System.out.println("For packages in the menu");
 				for (int i = 0; i < RestaurantMenu.setPackageMenu.size(); i++) {
-					if(RestaurantMenu.setPackageMenu.get(i).getEnabled()) {
-						iname = RestaurantMenu.setPackageMenu.get(i).getName();
-						desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
-						price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-						System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
-					}
+					iname = RestaurantMenu.setPackageMenu.get(i).getName();
+					desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
+					price = RestaurantMenu.setPackageMenu.get(i).getPrice();
+					System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
 				}
 				do {
 					System.out.println("Choose packages to add into order");
@@ -175,12 +173,10 @@ public class OrderUI {
 
 				System.out.println("For menu items in the menu");
 				for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
-					if(RestaurantMenu.alaCarteMenu.get(i).getEnabled()) {
-						iname = RestaurantMenu.alaCarteMenu.get(i).getName();
-						desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
-						price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-						System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
-					}
+					iname = RestaurantMenu.alaCarteMenu.get(i).getName();
+					desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
+					price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
+					System.out.println((i + 1) + ") " + iname + " | " + desc + " | $" + price);
 				}
 				do {
 					System.out.println("Choose menu items to add into order");
