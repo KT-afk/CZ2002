@@ -72,4 +72,21 @@ public class Table  implements Serializable {
 	public int getTableNo() {
 		return tableNo;
 	}
+
+	/**
+	 * Sets table status to Vacant
+	 */
+	public void freeTable() {
+		type = Status.VACANT;
+	}
+
+	/**
+	 * Sets table status to Occupied
+	 */
+	public void reserveTable() {
+		// Assuming that reservation system has checked the table and ensured that its
+		// free
+		type = Status.OCCUPIED;
+	}
+
 }
