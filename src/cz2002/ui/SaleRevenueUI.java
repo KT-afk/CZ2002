@@ -13,7 +13,7 @@ import java.util.Scanner;
  *     User Interface for SaleRevenueSystem
  *     @author Abdul Siddiq
  *     @version 1.0
- *     @since 2020-11-08
+ *     @since 2021-11-08
  */
 
 public class SaleRevenueUI {

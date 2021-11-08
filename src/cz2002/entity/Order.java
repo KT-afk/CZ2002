@@ -1,5 +1,6 @@
 package cz2002.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2020-11-01
  */
-public class Order {
+public class Order implements Serializable {
 	/**
 	 * Order ID counter
 	 */
