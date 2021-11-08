@@ -255,7 +255,7 @@ public class OrderUI {
 								item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
 
 								if(item != null)
-									orDish.add((FoodDish) item);
+									order.addDishItem((FoodDish) item);
 							} while(item != null);
 							
 							break;
