@@ -211,14 +211,128 @@ public class OrderUI {
 	}
 
 	/**
-	 * Gets the order ID and calls the OrderSystem method to modify the order
+	 * Gets the order ID and modifies the order according to user request
 	 */
 	private void modifyOrders() {
 		int uc;
 		do {
 			System.out.println("\nType in the order ID to modify: ");
 			int uinput = sc.nextInt();
-			OrderSystem.modifyOrder(uinput, RestaurantMenu);
+			int ucho, uadd;
+			String iname, desc;
+			double price;
+			MenuItem item;
+			ArrayList<Order> orderList = OrderSystem.getOrderList();
+			
+			for(Order order: orderList) {
+				if(order.getID() == uinput) {
+					System.out.println("=================== Order " + order.getID() + " ===================");
+					System.out.println("Order Items: ");
+					for(int i=0;i<order.getDishItems().size();i++) {
+						System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+					}
+					System.out.println("Set Packages: ");
+					for(int i=0;i<order.getPackItems().size();i++) {
+						System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+					}
+					System.out.println("Total Cost: $" + order.totalPrice() );
+					System.out.println("Order created on " + order.getStart());
+					System.out.println("==============================================");
+					
+					do {
+						System.out.println("Select one of the options: ");
+						System.out.println("1) Add menu item");
+						System.out.println("2) Add set package");
+						System.out.println("3) Remove menu item");
+						System.out.println("4) Remove set package");
+						System.out.println("5) End Modify");
+						
+						ucho = sc.nextInt();
+						
+						switch(ucho) {
+						case 1:
+							do {
+								item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
+
+								if(item != null)
+									orDish.add((FoodDish) item);
+							} while(item != null);
+							
+							break;
+						case 2:
+							do {
+								item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
+
+								if(item != null)
+									order.addPackItem((SetPackage) item);
+							} while(item != null);
+							
+							break;
+						case 3:
+							do {
+								System.out.println("Order Items: ");
+								if (order.getDishItems().size() < 1) {
+									System.out.println("  --No Item Left");
+									break;
+								}
+								for(int i=0;i<order.getDishItems().size();i++) {
+									System.out.println((i+1) + ") " + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+								}
+							
+								System.out.println("Choose menu items to remove from order");
+								System.out.println("Enter -1 to stop");
+								uadd = sc.nextInt();
+
+								if (uadd == -1) {
+									break;
+								}
+
+								if (uadd <= order.getDishItems().size()) {
+									order.getDishItems().remove(uadd-1);
+								} 
+								else if (uadd == 0 || uadd > order.getDishItems().size()){
+									System.out.println("Choice is invalid");
+								}
+
+							} while (true);
+							break;
+						case 4:
+							do {
+								System.out.println("Set Packages: ");
+								if (order.getPackItems().size() < 1) {
+									System.out.println("  --No Item Left");
+									break;
+								}
+								for(int i=0;i<order.getPackItems().size();i++) {
+									System.out.println((i+1) + ") " + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+								}
+							
+								System.out.println("Choose set packages to remove from order");
+								System.out.println("Enter -1 to stop");
+								uadd = sc.nextInt();
+
+								if (uadd == -1) {
+									break;
+								}
+
+								if (uadd <= order.getPackItems().size()) {
+									order.getPackItems().remove(uadd-1);
+								} 
+								else if (uadd == 0 || uadd > order.getPackItems().size()){
+									System.out.println("Choice is invalid");
+								}
+
+							} while (true);
+							break;
+						case 5: 
+							return;
+						}
+						
+					} while(true);
+					
+				}
+			}
+			System.out.println("No order with ID " + uinput + " is found\n");
 
 			uc = ScannerUtil.Prompt(sc, "Modify Another Orders", "End Modification");
 			if (uc == 2) {
