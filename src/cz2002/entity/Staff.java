@@ -1,4 +1,7 @@
 package cz2002.entity;
+
+import java.io.Serializable;
+
 /**
  * Person class
  * @author Tran Trung Dung

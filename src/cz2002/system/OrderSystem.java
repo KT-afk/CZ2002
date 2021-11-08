@@ -1,6 +1,8 @@
 package cz2002.system;
 
 import cz2002.entity.*;
+
+import java.io.*;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class OrderSystem {
 	/**
 	 * ArrayList of all the orders in the system
 	 */
-	private ArrayList<Order> orderList = new ArrayList<Order>();
+	private ArrayList<Order> orderList;
 	/**
 	 * Count of total orders added so far
 	 */
@@ -25,6 +27,11 @@ public class OrderSystem {
 	 * while loop checker
 	 */
 	private boolean isValid = false;
+
+	public OrderSystem() {
+		orderList = new ArrayList<Order>();
+		load();
+	}
 	
 	/**
 	 * Get the whole ArrayList of orders
@@ -60,6 +67,8 @@ public class OrderSystem {
 		}
 		System.out.println("Order created on " + order.getStart());
 		System.out.println("==============================================");
+
+		save();
 	}
 	
 	/**
@@ -125,6 +134,7 @@ public class OrderSystem {
 		}
 
 		System.out.println("No order with ID " + uinput + " is found");
+		save();
 		return;
 		
 	}
@@ -163,5 +173,32 @@ public class OrderSystem {
 		System.out.println("No order with ID " + uinput + " is found");
 		return;
 		
+	}
+
+	public void save() {
+		try {
+			FileOutputStream f = new FileOutputStream("order.dat");
+			ObjectOutputStream out = new ObjectOutputStream(f);
+			out.writeObject(orderList);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void load() {
+		File f = new File("order.dat");
+		if(f.exists()) {
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+				var orderList = (ArrayList<Order>) ois.readObject();
+				this.orderList = orderList;
+				this.orderCount = orderList.size();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

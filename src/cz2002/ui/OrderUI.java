@@ -64,6 +64,7 @@ public class OrderUI {
 				break;
 			case 4:
 				modifyOrders();
+				OrderSystem.save();
 				break;
 			case 5:
 				removeOrders();
