@@ -2,9 +2,10 @@ package cz2002.entity;
 
 import cz2002.entity.Reservation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Table {
+public class Table  implements Serializable {
 	public enum Status {
 		VACANT, OCCUPIED
 	}

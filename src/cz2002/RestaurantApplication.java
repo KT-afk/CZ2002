@@ -15,6 +15,9 @@ import java.util.Scanner;
 
 /**
  * Restaurant Application Main entry class for the project
+ *     @author Abdul Siddiq
+ *     @version 1.0
+ *     @since 2021-11-08
  */
 public class RestaurantApplication {
 

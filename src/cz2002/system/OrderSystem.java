@@ -1,6 +1,8 @@
 package cz2002.system;
 
 import cz2002.entity.*;
+
+import java.io.*;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class OrderSystem {
 	/**
 	 * ArrayList of all the orders in the system
 	 */
-	private ArrayList<Order> orderList = new ArrayList<Order>();
+	private ArrayList<Order> orderList;
 	/**
 	 * Count of total orders added so far
 	 */
@@ -25,6 +27,11 @@ public class OrderSystem {
 	 * while loop checker
 	 */
 	private boolean isValid = false;
+
+	public OrderSystem() {
+		orderList = new ArrayList<Order>();
+		load();
+	}
 	
 	/**
 	 * Get the whole ArrayList of orders
@@ -60,6 +67,8 @@ public class OrderSystem {
 		}
 		System.out.println("Order created on " + order.getStart());
 		System.out.println("==============================================");
+
+		save();
 	}
 	
 	/**
@@ -107,172 +116,7 @@ public class OrderSystem {
 		System.out.println("No order with ID " + iinput + " is found\n");
 		
 	}
-	
-	/**
-	 * Modify the order items with the orderID 
-	 * @param uinput
-	 * @param RestaurantMenu
-	 */
-	public void modifyOrder(int uinput, RestaurantMenu RestaurantMenu) {
 		
-		Scanner sc = new Scanner(System.in);
-		
-		int ucho, uadd;
-		String iname, desc;
-		double price;
-		
-		for(Order order: orderList) {
-			if(order.getID() == uinput) {
-				System.out.println("=================== Order " + order.getID() + " ===================");
-				System.out.println("Order Items: ");
-				for(int i=0;i<order.getDishItems().size();i++) {
-					System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
-				}
-				System.out.println("Set Packages: ");
-				for(int i=0;i<order.getPackItems().size();i++) {
-					System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
-				}
-				System.out.println("Total Cost: $" + order.totalPrice() );
-				System.out.println("Order created on " + order.getStart());
-				System.out.println("==============================================");
-				
-				do {
-					System.out.println("Select one of the options: ");
-					System.out.println("1) Add menu item");
-					System.out.println("2) Add set package");
-					System.out.println("3) Remove menu item");
-					System.out.println("4) Remove set package");
-					System.out.println("5) End Modify");
-					
-					ucho = sc.nextInt();
-					
-					switch(ucho) {
-					case 1:
-						System.out.println("For packages in the menu");
-						for (int i = 0; i < RestaurantMenu.setPackageMenu.size(); i++) {
-							iname = RestaurantMenu.setPackageMenu.get(i).getName();
-							desc = RestaurantMenu.setPackageMenu.get(i).getDescription();
-							price = RestaurantMenu.setPackageMenu.get(i).getPrice();
-							System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
-						}
-						do {
-							System.out.println("Choose packages to add into order");
-							System.out.println("Enter -1 to stop");
-							uadd = sc.nextInt();
-
-							if (uadd == -1) {
-								break;
-							}
-
-							if (uadd <= RestaurantMenu.setPackageMenu.size()) {
-								order.addPackItem(new SetPackage(RestaurantMenu.setPackageMenu.get(uadd - 1).getName(),
-										RestaurantMenu.setPackageMenu.get(uadd - 1).getDescription(),
-										RestaurantMenu.setPackageMenu.get(uadd - 1).getPrice()));
-							} 
-							else {
-								System.out.println("Choice is invalid");
-							}
-
-						} while (true);
-						break;
-					case 2:
-						System.out.println("For menu items in the menu");
-						for (int i = 0; i < RestaurantMenu.alaCarteMenu.size(); i++) {
-							iname = RestaurantMenu.alaCarteMenu.get(i).getName();
-							desc = RestaurantMenu.alaCarteMenu.get(i).getDescription();
-							price = RestaurantMenu.alaCarteMenu.get(i).getPrice();
-							System.out.println((i + 1) + ") " + iname + " | " + desc + " | " + price);
-						}
-						do {
-							System.out.println("Choose menu items to add into order");
-							System.out.println("Enter -1 to stop");
-							uadd = sc.nextInt();
-
-							if (uadd == -1) {
-								break;
-							}
-
-							if (uadd <= RestaurantMenu.alaCarteMenu.size()) {
-								order.addDishItem(new FoodDish(RestaurantMenu.alaCarteMenu.get(uadd - 1).getName(),
-										RestaurantMenu.alaCarteMenu.get(uadd - 1).getDescription(),
-										RestaurantMenu.alaCarteMenu.get(uadd - 1).getPrice(),
-										RestaurantMenu.alaCarteMenu.get(uadd - 1).getType()));
-							} 
-							else {
-								System.out.println("Choice is invalid");
-							}
-
-						} while (true);
-						break;
-					case 3:
-						do {
-							System.out.println("Order Items: ");
-							if (order.getDishItems().size() < 1) {
-								System.out.println("  --No Item Left");
-								break;
-							}
-							for(int i=0;i<order.getDishItems().size();i++) {
-								System.out.println((i+1) + ") " + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
-							}
-						
-							System.out.println("Choose menu items to remove from order");
-							System.out.println("Enter -1 to stop");
-							uadd = sc.nextInt();
-
-							if (uadd == -1) {
-								break;
-							}
-
-							if (uadd <= order.getDishItems().size()) {
-								order.getDishItems().remove(uadd-1);
-							} 
-							else if (uadd == 0 || uadd > order.getDishItems().size()){
-								System.out.println("Choice is invalid");
-							}
-
-						} while (true);
-						break;
-					case 4:
-						do {
-							System.out.println("Set Packages: ");
-							if (order.getPackItems().size() < 1) {
-								System.out.println("  --No Item Left");
-								break;
-							}
-							for(int i=0;i<order.getPackItems().size();i++) {
-								System.out.println((i+1) + ") " + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
-							}
-						
-							System.out.println("Choose set packages to remove from order");
-							System.out.println("Enter -1 to stop");
-							uadd = sc.nextInt();
-
-							if (uadd == -1) {
-								break;
-							}
-
-							if (uadd <= order.getPackItems().size()) {
-								order.getPackItems().remove(uadd-1);
-							} 
-							else if (uadd == 0 || uadd > order.getPackItems().size()){
-								System.out.println("Choice is invalid");
-							}
-
-						} while (true);
-						break;
-					case 5: 
-						return;
-					}
-					
-				} while(true);
-				
-			}
-		}
-		System.out.println("No order with ID " + uinput + " is found\n");
-		return;
-		
-	}
-	
 	/**
 	 * Removed order from the order ArrayList
 	 * @param uinput
@@ -290,6 +134,7 @@ public class OrderSystem {
 		}
 
 		System.out.println("No order with ID " + uinput + " is found");
+		save();
 		return;
 		
 	}
@@ -328,5 +173,32 @@ public class OrderSystem {
 		System.out.println("No order with ID " + uinput + " is found");
 		return;
 		
+	}
+
+	public void save() {
+		try {
+			FileOutputStream f = new FileOutputStream("order.dat");
+			ObjectOutputStream out = new ObjectOutputStream(f);
+			out.writeObject(orderList);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void load() {
+		File f = new File("order.dat");
+		if(f.exists()) {
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+				var orderList = (ArrayList<Order>) ois.readObject();
+				this.orderList = orderList;
+				this.orderCount = orderList.size();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
