@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import cz2002.system.ReservationSystem;
+import cz2002.system.TableSystem;
 
 public class ReservationUI {
 
@@ -197,7 +198,7 @@ public class ReservationUI {
 					"We only allow up to 10 people in a group at our restaurant. Please enter a smaller number\nEnter number of pax: ");
 			paxNo = sc.nextInt();
 		}
-		ReservationSystem rSystem = new ReservationSystem();
+		ReservationSystem rSystem = new ReservationSystem(TableSystem.CreateMockTableList());
 		boolean rStatus = rSystem.makeReservation(nameIn, paxNo, contactIn, reservationDate, reservationTime,
 				customerId);
 		if (!rStatus)

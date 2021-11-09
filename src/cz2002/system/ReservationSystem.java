@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
@@ -17,8 +18,8 @@ public class ReservationSystem {
 	protected ArrayList<Table> tList;
 	// Each reservation has a table allocated
 
-	public ReservationSystem() {
-
+	public ReservationSystem(List<Table> tables) {
+		tList = new ArrayList<>(tables);
 	}
 
 	public void reservationArrival(String Id) {
@@ -72,6 +73,23 @@ public class ReservationSystem {
 			}
 		}
 		return true;
+	}
+
+	public LocalTime getUpcomingReservation(int tableNo) {
+		LocalTime reservationTime;
+		ArrayList<Reservation> rList = getPastReservation(LocalDate.now());
+		for (var reservation : rList) {
+			if (reservation.getTableNo() == tableNo) {
+				reservationTime = reservation.getTime();
+
+				if(reservationTime.isBefore(LocalTime.now()))
+					continue;
+				else
+					return reservationTime;
+			}
+		}
+
+		return null;
 	}
 
 	public boolean makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,

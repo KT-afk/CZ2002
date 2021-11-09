@@ -1,5 +1,6 @@
 package cz2002;
 
+import cz2002.entity.Table;
 import cz2002.system.TableSystem;
 import cz2002.ui.ReservationUI;
 import cz2002.ui.RestaurantUI;
@@ -17,6 +18,8 @@ public class RestaurantApplication {
 		ReservationUI reservationUI = new ReservationUI(sc);
 		RestaurantUI restaurantUI = new RestaurantUI(sc);
 
+		var mockTables = TableSystem.CreateMockTableList();
+
 		while(true) {
 			int option = Prompt(sc,
 		"Manage Menu Items",
@@ -26,7 +29,7 @@ public class RestaurantApplication {
 				"Check Table Availability",
 				"Print Order Invoice",
 				"Print Sale Revenue Report",
-				"Change Date/Time",
+//				"Change Date/Time",
 				"Quit"
 			);
 
@@ -35,7 +38,7 @@ public class RestaurantApplication {
 				case 2 -> ManagePromotionSet(sc);
 				case 3 -> ManageOrder(sc);
 				case 4 -> reservationUI.makeReservationUI();
-				case 5 -> restaurantUI.checkTableAvailability(restaurantUI.createMockTable());
+				case 5 -> restaurantUI.checkTableAvailability(mockTables);
 				case 6 -> PrintOrderInvoice(sc);
 				case 7 -> PrintRevenueReport(sc);
 				case 8 -> { return; }
@@ -103,7 +106,7 @@ public class RestaurantApplication {
 	public static int Prompt(Scanner scanner, String... options) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		System.out.println();
-		System.out.println(SystemClock.GetCurrentDateTime().format(formatter));
+		System.out.printf("The current time is %s\n", SystemClock.GetCurrentDateTime().format(formatter));
 		System.out.println("Please select one of the following options: ");
 		for(int i = 1; i <= options.length; i++)
 			System.out.printf("%d) %s\n", i, options[i-1]);
