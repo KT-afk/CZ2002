@@ -7,8 +7,19 @@ package cz2002.entity;
  *     @since 2021-11-08
  */
 public class Restaurant {
+	/**
+	 * Name of Restaurant
+	 */
 	private String nameOfRestaurant;
+
+	/**
+	 * Address of Restaurant
+	 */
 	private String address;
+
+	/**
+	 * Opening Hours of Restaurant
+	 */
 	private String openingHours;
 
 	/**
@@ -25,7 +36,7 @@ public class Restaurant {
 
 	/**
 	 * Return name of restaurant
-	 * @return
+	 * @return Restaurant Name
 	 */
 	public String getname() {
 		return nameOfRestaurant;
@@ -33,7 +44,7 @@ public class Restaurant {
 	
 	/**
 	 * Return address
-	 * @return
+	 * @return Restaurant Address
 	 */
 	public String getaddress() {
 		return address;
@@ -41,7 +52,7 @@ public class Restaurant {
 	
 	/**
 	 * Return opening hours
-	 * @return
+	 * @return Restaurant Opening Hours
 	 */
 	public String getopenhr() {
 		return openingHours;

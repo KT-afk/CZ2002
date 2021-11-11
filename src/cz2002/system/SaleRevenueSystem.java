@@ -15,7 +15,15 @@ import java.util.Date;
  */
 public class SaleRevenueSystem {
 
+	/**
+	 * Order System
+	 */
 	private OrderSystem orderSystem;
+
+	/**
+	 *
+	 * @param orderSystem Order System that Sale Revenue System relies on
+	 */
 	public SaleRevenueSystem(OrderSystem orderSystem) {
 		this.orderSystem = orderSystem;
 	}

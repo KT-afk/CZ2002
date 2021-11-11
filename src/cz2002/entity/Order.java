@@ -83,7 +83,7 @@ public class Order implements Serializable {
 	}
 	/**
 	 * This method checks whether status is compeleted
-	 * @return
+	 * @return Order status
 	 */
 	public boolean getStatus() {
 		return isCompleted;
@@ -141,8 +141,8 @@ public class Order implements Serializable {
 
 	/**
 	 * This method is to add a Food Dish item to this order
-	 * 
-	 * @return a message about status of this method to system
+	 * @param item Food Dish to add into Order
+	 * @return A message about status of this method to system
 	 */
 	public String addDishItem(FoodDish item) {
 		if (fdItems.add(item))
@@ -152,8 +152,8 @@ public class Order implements Serializable {
 	}
 	
 	/**
-	 * This method is to get the table obj
-	 * @return
+	 * This method is to get the table object
+	 * @return Table for the current order object
 	 */
 	public Table getTable() {
 		return table;
@@ -161,7 +161,7 @@ public class Order implements Serializable {
 	
 	/**
 	 * This method is to remove a Food Dish item to this order
-	 * 
+	 * @param item Dish to remove from Order
 	 * @return a message about status of this method to system
 	 */
 	public String removeDishItem(FoodDish item) {
@@ -173,7 +173,7 @@ public class Order implements Serializable {
 
 	/**
 	 * This method is to add a Package item to this order
-	 * 
+	 * @param item Set Package to add into Order
 	 * @return a message about status of this method to system
 	 */
 	public String addPackItem(SetPackage item) {
@@ -185,7 +185,7 @@ public class Order implements Serializable {
 
 	/**
 	 * This method is to remove a Package item to this order
-	 * 
+	 * @param item Set Package to remove from Order
 	 * @return a message about status of this method to system
 	 */
 	public String removePackItem(SetPackage item) {
@@ -212,6 +212,10 @@ public class Order implements Serializable {
 		return totalPrice;
 	}
 
+	/**
+	 * Returns GST based on total price
+	 * @return GST of Order
+	 */
 	public double getGST() {
 		return  0.07 * totalPrice();
 	}

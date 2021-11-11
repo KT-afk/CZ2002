@@ -45,12 +45,13 @@ public class OrderUI {
 	private Restaurant Restaurant;
 
 	/**
-	 * OrderUI Constructor with the necessary systems
-	 * @param scanner
-	 * @param OrderSystem
-	 * @param ReservationSystem
-	 * @param TableSystem
-	 * @param RestaurantMenu
+	 * OrderUI Constructor with the necessary systems to function
+	 * @param scanner Scanner
+	 * @param OrderSystem Order System
+	 * @param ReservationSystem Reservation System
+	 * @param TableSystem Table System
+	 * @param RestaurantMenu Restaurant Menu
+	 * @param Restaurant Restaurant
 	 */
 	public OrderUI(Scanner scanner, OrderSystem OrderSystem, ReservationSystem ReservationSystem, TableSystem TableSystem,
 			RestaurantMenu RestaurantMenu, Restaurant Restaurant) {
@@ -112,8 +113,8 @@ public class OrderUI {
 	 * Check the type of order whether it is a reservation or a walk in,
 	 * allowing user to add items and packages into order before
 	 * calling the OrderSystem method to create a new order
-	 * @param staff
-	 * @param tables
+	 * @param staff Current Staff
+	 * @param tables List of tables
 	 */
 	private void newOrder(Staff staff, List<Table> tables) {
 		int orderType, uadd, uc;
@@ -406,6 +407,12 @@ public class OrderUI {
 		} while (true);
 	}
 
+	/**
+	 * Prompts user to select menu item
+	 * @param prompt Prompt string to print out
+	 * @param menu Menu Item to display (Ala Carte or Set Package)
+	 * @return Selected Menu Item
+	 */
 	private MenuItem promptSelectMenuItem(String prompt, List<? extends MenuItem> menu) {
 		while (true) {
 			String[] menuItems = menu.stream()

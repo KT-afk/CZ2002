@@ -45,7 +45,7 @@ public class OrderSystem {
 	/**
 	 * Adds an order into the ArrayList with information
 	 * from OrderUI and shows the total order
-	 * @param order
+	 * @param order Order to add into OrderSystem
 	 */
 	public void addOrder(Order order) {
 		orderList.add(order);
@@ -100,7 +100,7 @@ public class OrderSystem {
 	
 	/**
 	 * View the specific order details from orderID
-	 * @param iinput
+	 * @param iinput OrderID of Order to view order from
 	 */
 	public void viewOrder(int iinput) {
 	
@@ -122,7 +122,7 @@ public class OrderSystem {
 		
 	/**
 	 * Removed order from the order ArrayList
-	 * @param uinput
+	 * @param uinput OrderID of Order to remove order from
 	 */
 	public void removeOrder(int uinput) {
 		
@@ -146,8 +146,9 @@ public class OrderSystem {
 	/**
 	 * Prints out order invoice and total amount based on membership status
 	 * Deletes order from the order ArrayList
-	 * @param uinput
-	 * @param discountamt
+	 * @param uinput OrderID of Order to complete Order
+	 * @param discountamt Discount Amount offered to Customer
+	 * @param Restaurant Restaurant Object used print restaurant details in receipt
 	 */
 	public void completeOrder(int uinput, double discountamt, Restaurant Restaurant) {
 		double discount = 1 * discountamt;

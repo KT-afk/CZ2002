@@ -30,7 +30,7 @@ public class ReservationSystem {
 	/**
 	 * Constructor
 	 * 
-	 * @param tList List of tables in the restaurant
+	 * @param tables List of tables in the restaurant
 	 */
 	public ReservationSystem(List<Table> tables) {
 		tList = new ArrayList<>(tables);
@@ -86,7 +86,7 @@ public class ReservationSystem {
 	 * This method is to remove a Reservation Object as the person who booked the
 	 * reservation has arrived
 	 * 
-	 * @param id The id of the reservation that we want to remove
+	 * @param Id The id of the reservation that we want to remove
 	 */
 	public void reservationArrival(String Id) {
 		LocalDate d = LocalDate.parse(Id.substring(0, 8), DateTimeFormatter.ofPattern("ddMMyyyy"));
@@ -105,7 +105,7 @@ public class ReservationSystem {
 	/**
 	 * This method is to remove all expired Reservation Objects
 	 * 
-	 * @param id The date that we want to check for expired reservations
+	 * @param d The date that we want to check for expired reservations
 	 */
 	public void removeExpiredReservations(LocalDate d) {
 		LocalTime reservationExpiry;
@@ -181,13 +181,12 @@ public class ReservationSystem {
 	/**
 	 * This method is to make a reservation object with its attributes
 	 * 
-	 * @param name    name of the person who wants to make a reservation
-	 * @param noOfPax the number of people that is booked for this reservation
-	 * @param contact the contact number of the person who wants to make a
+	 * @param nameIn    name of the person who wants to make a reservation
+	 * @param paxNo the number of people that is booked for this reservation
+	 * @param contactIn the contact number of the person who wants to make a
 	 *                reservation
-	 * @param date    Reservation date
-	 * @param time    Reservation time
-	 * @param tableNo The table the reservation is assigned to
+	 * @param reservationDate    Reservation date
+	 * @param reservationTime    Reservation time
 	 * @return id of the reservation that was just booked
 	 */
 	public String makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,

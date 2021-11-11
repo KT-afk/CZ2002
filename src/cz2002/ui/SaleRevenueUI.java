@@ -90,6 +90,7 @@ public class SaleRevenueUI {
     /**
      * Request user to key in Date
      * @param prompt Prompt to print out when requesting
+     * @return Date entered
      */
     private Date promptDate(String prompt) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

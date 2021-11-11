@@ -43,10 +43,11 @@ public class ScannerUtil {
     }
 
     /**
-     *
-     * @param scanner
-     * @param options
-     * @return
+     * Prompt uses to select from a list of given options
+     * Checks for invalid input and when user enter value that's not within the range of given values
+     * @param scanner Scanner Object
+     * @param options List of options for user to select from
+     * @return Option that user has picked
      */
     public static int Prompt(Scanner scanner, String... options) {
         return CustomPrompt(scanner, "Please select one of the following options: ", options);
