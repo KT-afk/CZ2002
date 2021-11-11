@@ -3,6 +3,7 @@ package cz2002.ui;
 import cz2002.system.ReservationSystem;
 import cz2002.system.TableSystem;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class RestaurantUI {
         var vacantTables = tableSystem.getAvailableTables();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.printf("The current time is %s\n", LocalTime.now().format(formatter));
+        System.out.printf("The current time is %s\n", LocalDateTime.now().format(formatter));
         System.out.println("The following tables are currently available:");
 
         for(var table : vacantTables) {
