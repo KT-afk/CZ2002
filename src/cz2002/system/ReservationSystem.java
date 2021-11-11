@@ -195,7 +195,7 @@ public class ReservationSystem {
 
 		ArrayList<Reservation> rList;
 		String fileName = "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser";
-		int tableNo = -1;
+		int confirmedTableNo = -1, tableNo = -1;
 		rList = getReservationsByDate(reservationDate);
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
@@ -205,13 +205,14 @@ public class ReservationSystem {
 					// Get the tableNo for those bigger than the paxNo
 					tableNo = tList.get(j).getTableNo();
 					// Check for reservations assigned to that table for any conflicts
-					if (!checkTableForReservation(tableNo, reservationDate, reservationTime)) {
-						tableNo = -1;
+					if (checkTableForReservation(tableNo, reservationDate, reservationTime)) {
+						confirmedTableNo = tableNo;
+						break;
 					}
 				}
 			}
 			// Fully booked
-			if (tableNo == -1)
+			if (confirmedTableNo == -1)
 				return "";
 		}
 

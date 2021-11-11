@@ -28,6 +28,10 @@ public class ReservationUI {
 	 */
 	private Scanner sc;
 	/**
+	 * List of tables
+	 */
+	private List<Table> tList;
+	/**
 	 * ReservationSystem
 	 */
 	private ReservationSystem rSystem;
@@ -41,6 +45,7 @@ public class ReservationUI {
 	public ReservationUI(Scanner scanner, List<Table> tables) {
 		sc = scanner;
 		rSystem = new ReservationSystem(tables);
+		tList = tables;
 	}
 
 	/**
@@ -50,9 +55,9 @@ public class ReservationUI {
 		boolean running = true;
 
 		while (running) {
+			rSystem.removeExpiredReservations(LocalDate.now());
 			int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation", "Back");
 			sc.nextLine();
-
 			switch (option) {
 			case 1 -> checkReservationUI();
 			case 2 -> makeReservationUI();
@@ -60,6 +65,40 @@ public class ReservationUI {
 			case 4 -> running = false;
 			}
 		}
+	}
+
+	/**
+	 * This method is to get the reservations of a specified date from the file with
+	 * the date as its name
+	 * 
+	 * @param dateIn          date of the reservations we want to validate
+	 * @param makeReservation to specify if it is invoked by the makeReservationUI
+	 * @return a date in LocalDate format based on dateIn
+	 */
+	public LocalDate validateDate(String dateIn, boolean makeReservation) {
+		LocalDate reservationDate;
+		LocalDate currentDate = LocalDate.now();
+		while (true) {
+			try {
+				reservationDate = LocalDate.parse(dateIn,
+						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
+				if (reservationDate.isBefore(currentDate)) {
+					throw new Exception("Sorry! You are entering a date that has already passed!");
+				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
+					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
+				} else
+					break;
+			} catch (DateTimeParseException e) {
+				System.out.println("You have entered an invalid date!");
+				System.out.println("Enter reservation date (dd/mm/yyyy): ");
+				dateIn = sc.nextLine();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println("Enter reservation date (dd/mm/yyyy): ");
+				dateIn = sc.nextLine();
+			}
+		}
+		return reservationDate;
 	}
 
 	/**
@@ -71,40 +110,20 @@ public class ReservationUI {
 	public void checkReservationUI() {
 		System.out.println("Which date would you like to view the reservations for? Please enter in dd/MM/yyyy");
 		String dateIn = sc.nextLine();
-		LocalDate currentDate = LocalDate.now();
-		LocalDate reservationDate;
-		while (true) {
-			try {
-				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
-				if (reservationDate.isBefore(currentDate)) {
-					throw new Exception("Sorry! You are entering a date that has already passed!");
-				} else {
-					break;
-					/*
-					 * if (reservationDate.isAfter(currentDate.plusDays(1))) { break; } else { throw
-					 * new
-					 * Exception("Sorry! You are only allowed to make a reservation 1 day in advance"
-					 * ); }
-					 */
-				}
-			} catch (DateTimeParseException e) {
-				System.out.println("You have entered an invalid date!");
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			} catch (Exception e) {
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			}
-		}
+		LocalDate reservationDate = validateDate(dateIn, false);
 		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
-		for (int i = 0; i < rList.size(); i++) {
-			System.out.println("Date: " + dateIn);
-			System.out.println("Time: " + rList.get(i).getTime());
-			System.out.println("Name: " + rList.get(i).getName());
-			System.out.println("ReservationID: " + rList.get(i).getId());
-			System.out.println("NoOfPax: " + rList.get(i).getNoOfPax());
-			System.out.println("TableNo: " + rList.get(i).getTableNo());
+		for (int i = 0; i < tList.size(); i++) {
+			for (int j = 0; j < rList.size(); j++) {
+				if (rList.get(j).getTableNo() == tList.get(i).getTableNo()) {
+					System.out.println("Date: " + dateIn);
+					System.out.println("Time: " + rList.get(j).getTime());
+					System.out.println("Name: " + rList.get(j).getName());
+					System.out.println("ReservationID: " + rList.get(j).getId());
+					System.out.println("NoOfPax: " + rList.get(j).getNoOfPax());
+					System.out.println("TableNo: " + rList.get(j).getTableNo());
+					System.out.println("");
+				}
+			}
 		}
 		if (rList.size() == 0)
 			System.out.println("There are no reservations for this date.");
@@ -117,32 +136,19 @@ public class ReservationUI {
 	 */
 	public void removeReservationUI() {
 		System.out.println("What date is the reservation you would you like to remove?");
-		LocalDate currentDate = LocalDate.now();
 		String dateIn = sc.nextLine();
-		LocalDate reservationDate;
-		while (true) {
-			try {
-				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
-				if (reservationDate.isBefore(currentDate)) {
-					throw new Exception("Sorry! You are entering a date that has already passed!");
-				} else {
-					break;
-				}
-			} catch (DateTimeParseException e) {
-				System.out.println("You have entered an invalid date!");
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			} catch (Exception e) {
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			}
-		}
-
+		int i;// deleteIndex
+		LocalDate reservationDate = validateDate(dateIn, false);
 		System.out.println("Which reservation would you like to remove?");
 		String rID = sc.nextLine();
 		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
 		if (rList.size() > 0) {
+			for (i = 0; i < rList.size(); i++) {
+				if (rList.get(i).getId().equals(rID))
+					break;
+			}
+			rList.remove(rList.get(i));
+			rSystem.writeReservationToFile(rList, "reservation" + dateIn + ".ser");
 			System.out.println("Reservation has been removed successfully");
 		} else {
 			System.out.println("The reservation you would like to remove cannot be found");
@@ -151,52 +157,29 @@ public class ReservationUI {
 
 	/**
 	 * This method is to display the System messages for making the reservations and
-	 * getting the required input <<<<<<< HEAD
+	 * getting the required input
 	 * 
 	 * 
-	 * ======= >>>>>>> 5e7022461e0abe4c877087e4b6eae0662d54e69e
 	 */
 	public void makeReservationUI() {
-		LocalDate currentDate = LocalDate.now(); // Pick some date to set the number of days in advance
 		int choiceInterval;
 		int session;
 		LocalTime reservationTime = LocalTime.now();
 		boolean continueOn = true;
-		// Reservation resv = new Reservation();
 
-		System.out.println("Enter name: ");
+		System.out.println("Enter your name: ");
 		String nameIn = sc.nextLine();
 
-		System.out.println("Enter contact no.: ");
+		System.out.println("Enter your 8 digit contact number: ");
 		String contactIn = sc.nextLine();
+		while (contactIn.length() != 8) {
+			System.out.println("Invalid contact no! Please enter a 8 digit contact number.");
+			System.out.println("Enter your 8 digit contact number: ");
+			contactIn = sc.nextLine();
+		}
 		System.out.println("Enter reservation date (dd/mm/yyyy): ");
 		String dateIn = sc.nextLine();
-		LocalDate reservationDate;
-		while (true) {
-			try {
-				reservationDate = LocalDate.parse(dateIn,
-						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
-				if (reservationDate.isAfter(currentDate)) {
-
-					break;
-					/*
-					 * if (reservationDate.isAfter(currentDate.plusDays(1))) { break; } else { throw
-					 * new
-					 * Exception("Sorry! You are only allowed to make a reservation 1 day in advance"
-					 * ); }
-					 */
-				} else {
-					throw new Exception("Sorry! You are entering a date that has already passed!");
-				}
-			} catch (DateTimeParseException e) {
-				System.out.println("You have entered an invalid date!");
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			} catch (Exception e) {
-				System.out.println("Enter reservation date: ");
-				dateIn = sc.nextLine();
-			}
-		}
+		LocalDate reservationDate = validateDate(dateIn, true);
 		session = 0;
 		System.out.println("Enter the session for which you wish to dine at our restaurant" + "\n" + "1) 1100-1330 \n"
 				+ "2) 1800-2030\n");
@@ -235,7 +218,6 @@ public class ReservationUI {
 				continueOn = false;
 				break;
 			}
-
 			case 5: {
 				reservationTime = LocalTime.parse("12:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
@@ -311,32 +293,32 @@ public class ReservationUI {
 				break;
 			}
 			case 6: {
-				reservationTime = LocalTime.parse("19:15", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("22:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 7: {
-				reservationTime = LocalTime.parse("19:30", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("22:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 
 			}
 			case 8: {
-				reservationTime = LocalTime.parse("19:45", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("22:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 9: {
-				reservationTime = LocalTime.parse("20:00", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("22:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 10: {
-				reservationTime = LocalTime.parse("20:15", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("21:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 11: {
-				reservationTime = LocalTime.parse("20:30", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("21:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}

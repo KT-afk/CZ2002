@@ -15,9 +15,10 @@ import java.util.Scanner;
 
 /**
  * Restaurant Application Main entry class for the project
- *     @author Abdul Siddiq
- *     @version 1.0
- *     @since 2021-11-08
+ * 
+ * @author Abdul Siddiq
+ * @version 1.0
+ * @since 2021-11-08
  */
 public class RestaurantApplication {
 
@@ -49,6 +50,11 @@ public class RestaurantApplication {
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
+		tableSystem.addTable(10);
+		tableSystem.addTable(8);
+		tableSystem.addTable(8);
+		tableSystem.addTable(10);
+		tableSystem.addTable(4);
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
 		OrderSystem orderSystem = new OrderSystem();
 		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem(orderSystem);
@@ -71,9 +77,7 @@ public class RestaurantApplication {
 		while (true) {
 			reservationSystem.removeExpiredReservations(LocalDate.now());
 			int option = ScannerUtil.Prompt(sc, "Manage Menu Items", "Manage Promotion Sets", "Manage Orders",
-					"Manage Reservations", "Check Table Availability",
-					"Print Sale Revenue Report",
-					"Quit");
+					"Manage Reservations", "Check Table Availability", "Print Sale Revenue Report", "Quit");
 
 			sc.nextLine();
 			switch (option) {
