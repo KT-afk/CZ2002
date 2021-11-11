@@ -76,6 +76,7 @@ public class RestaurantApplication {
 
 		while (true) {
 			reservationSystem.removeExpiredReservations(LocalDate.now());
+			orderSystem.autoCompleteOrder();
 			int option = ScannerUtil.Prompt(sc, "Manage Menu Items", "Manage Promotion Sets", "Manage Orders",
 					"Manage Reservations", "Check Table Availability", "Print Sale Revenue Report", "Quit");
 
