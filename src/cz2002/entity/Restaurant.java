@@ -64,7 +64,7 @@ public class Restaurant {
 	public void printRestaurantDetails() {
 		System.out.printf("%15s: %s\n", "Name", nameOfRestaurant);
 		System.out.printf("%15s: %s\n", "Address", address);
-		System.out.printf("%15s: %s\n", "OpeningHours", openingHours);
+		System.out.printf("%15s: %s\n", "Opening Hours", openingHours);
 		System.out.println("-----------------------------------");
 	}
 }

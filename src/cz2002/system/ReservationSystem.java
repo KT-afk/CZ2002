@@ -198,7 +198,7 @@ public class ReservationSystem {
 		rList = getReservationsByDate(reservationDate);
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
-		if (!tList.isEmpty() && !rList.isEmpty()) {
+		if (!tList.isEmpty()) {
 			for (int j = 0; j < tList.size(); j++) {
 				if (tList.get(j).getCapacity() >= paxNo) {
 					// Get the tableNo for those bigger than the paxNo
@@ -262,6 +262,15 @@ public class ReservationSystem {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
+		}
+		if (!rList.isEmpty())
+		{
+			String counter = rList.get(rList.size()-1).getId().substring(8);
+			Reservation.setReservationIdCounter(Integer.parseInt(counter));
+		}
+		else
+		{
+			Reservation.setReservationIdCounter(0);
 		}
 		return rList;
 	}

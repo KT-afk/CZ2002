@@ -65,7 +65,7 @@ public class Reservation implements Serializable {
 		this.date = date;
 		this.time = time;
 		this.tableNo = tableNo;
-		this.id = date.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + reservationIdCounter++;
+		this.id = date.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + ++reservationIdCounter;
 	}
 
 	/**
@@ -129,5 +129,15 @@ public class Reservation implements Serializable {
 	 */
 	public int getTableNo() {
 		return tableNo;
+	}
+	
+	/**
+	 * This method is to set reservationIdCounter
+	 * 
+	 * @param counter New reservationIdCounter value
+	 */
+	public static void setReservationIdCounter(int counter)
+	{
+		reservationIdCounter = counter;
 	}
 }
