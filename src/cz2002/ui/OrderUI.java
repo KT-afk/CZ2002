@@ -73,36 +73,31 @@ public class OrderUI {
 	 */
 	public void manageOrders(Staff staff, List<Table> tables) {
 		int uchoice;
-		do {
-			uchoice = ScannerUtil.CustomPrompt(sc, "-----------ORDER OPTIONS-----------", "View Current Orders",
-					"View Order by ID", "New Orders", "Modify Existing Orders", "Remove Orders", "Complete Order",
-					"Return to Main Menu");
+		uchoice = ScannerUtil.CustomPrompt(sc, "-----------ORDER OPTIONS-----------", "View Current Orders",
+				"View Order by ID", "New Orders", "Modify Existing Orders", "Remove Orders", "Complete Order");
 
-			switch (uchoice) {
-			case 1:
-				OrderSystem.viewAllOrders();
-				break;
-			case 2:
-				viewOrder();
-				break;
-			case 3:
-				newOrder(staff, tables);
-				break;
-			case 4:
-				modifyOrders();
-				OrderSystem.save();
-				break;
-			case 5:
-				removeOrders();
-				break;
-			case 6:
-				// Prints Order Invoice
-				printOrderInvoice();
-				break;
-			case 7:
-				return;
-			}
-		} while (true);
+		switch (uchoice) {
+		case 1:
+			OrderSystem.viewAllOrders();
+			break;
+		case 2:
+			viewOrder();
+			break;
+		case 3:
+			newOrder(staff, tables);
+			break;
+		case 4:
+			modifyOrders();
+			OrderSystem.save();
+			break;
+		case 5:
+			removeOrders();
+			break;
+		case 6:
+			// Prints Order Invoice
+			printOrderInvoice();
+			break;
+		}
 	}
 
 	/**

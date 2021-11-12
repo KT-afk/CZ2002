@@ -52,18 +52,14 @@ public class ReservationUI {
 	 * Runs Reservation UI routine
 	 */
 	public void run() {
-		boolean running = true;
 
-		while (running) {
-			rSystem.removeExpiredReservations(LocalDate.now());
-			int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation", "Back");
-			sc.nextLine();
-			switch (option) {
-			case 1 -> checkReservationUI();
-			case 2 -> makeReservationUI();
-			case 3 -> removeReservationUI();
-			case 4 -> running = false;
-			}
+		rSystem.removeExpiredReservations(LocalDate.now());
+		int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation");
+		sc.nextLine();
+		switch (option) {
+		case 1 -> checkReservationUI();
+		case 2 -> makeReservationUI();
+		case 3 -> removeReservationUI();
 		}
 	}
 
@@ -87,7 +83,8 @@ public class ReservationUI {
 				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
 					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
 				} else if (reservationDate.isAfter(currentDate.plusMonths(1))) {
-					throw new Exception("Sorry! You are only allowed to process a reservation made within the next 30 days");
+					throw new Exception(
+							"Sorry! You are only allowed to process a reservation made within the next 30 days");
 				} else
 					break;
 			} catch (DateTimeParseException e) {
