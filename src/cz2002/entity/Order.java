@@ -17,7 +17,7 @@ public class Order implements Serializable {
 	/**
 	 * Order ID counter
 	 */
-	public static Integer OrderIDCounter = 0;
+	public static Integer OrderIDCounter = 1;
 	/**
 	 * Order ID
 	 */
