@@ -50,11 +50,16 @@ public class RestaurantApplication {
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
-		tableSystem.addTable(10);
-		tableSystem.addTable(8);
-		tableSystem.addTable(8);
-		tableSystem.addTable(10);
-		tableSystem.addTable(4);
+		int capacity = 2;
+
+		for (int i = 0; i < 5; i++) {
+			tableSystem.addTable(capacity);
+			tableSystem.addTable(capacity);
+			capacity = capacity + 2;
+
+			if (capacity > 10)
+				capacity = 2;
+		}
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
 		OrderSystem orderSystem = new OrderSystem();
 		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem(orderSystem);
@@ -64,15 +69,6 @@ public class RestaurantApplication {
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
 		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu, restaurant);
 
-		int capacity = 2;
-
-		for (int i = 0; i < 10; i++) {
-			tableSystem.addTable(capacity);
-			capacity = capacity + 2;
-
-			if (capacity > 10)
-				capacity = 2;
-		}
 
 		while (true) {
 			reservationSystem.removeExpiredReservations(LocalDate.now());
@@ -83,14 +79,11 @@ public class RestaurantApplication {
 			sc.nextLine();
 			switch (option) {
 			case 1:
-
-				// ManageMenu(sc);
 				MenuUI menuManager = new FoodDishUI(sc, menu.alaCarteMenu);
 				menuManager.run("Menu Item");
 				menu.save();
 				break;
 			case 2:
-				// ManagePromotionSet(sc);
 				menuManager = new PromotionSetUI(sc, menu.setPackageMenu, menu.alaCarteMenu);
 				menuManager.run("Set Package");
 				menu.save();

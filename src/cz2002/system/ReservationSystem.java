@@ -198,7 +198,7 @@ public class ReservationSystem {
 		rList = getReservationsByDate(reservationDate);
 		// Check if conflict with any existing reservation by filtering through the
 		// table list
-		if (!tList.isEmpty() && !rList.isEmpty()) {
+		if (!tList.isEmpty()) {
 			for (int j = 0; j < tList.size(); j++) {
 				if (tList.get(j).getCapacity() >= paxNo) {
 					// Get the tableNo for those bigger than the paxNo
