@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.stream.Stream;
 
+import javax.lang.model.util.ElementScanner14;
+
 import cz2002.util.ScannerUtil;
 
 /**
@@ -84,14 +86,32 @@ public class OrderUI {
 			viewOrder();
 			break;
 		case 3:
-			newOrder(staff, tables);
+			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+				newOrder(staff, tables);
+			} else {
+				System.out.println("You can only order between 11am-3pm or 6pm-10pm.");
+			}
 			break;
 		case 4:
-			modifyOrders();
-			OrderSystem.save();
+			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+				modifyOrders();
+				OrderSystem.save();
+			} else {
+				System.out.println("You can only modify the order between 11am-3pm or 6pm-10pm.");
+			}
 			break;
 		case 5:
-			removeOrders();
+			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+				removeOrders();
+			} else {
+				System.out.println("You can only remove an order between 11am-3pm or 6pm-10pm.");
+			}
 			break;
 		case 6:
 			// Prints Order Invoice
