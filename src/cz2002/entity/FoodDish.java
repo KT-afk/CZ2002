@@ -25,9 +25,9 @@ public class FoodDish extends MenuItem {
 		 */
 		DRINKS,
 		/**
-		 * Menu Item Type is Desert
+		 * Menu Item Type is Dessert
 		 */
-		DESERT
+		DESSERT
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class FoodDish extends MenuItem {
 		String typeString = "";
 		switch (type) {
 			case MAIN_COURSE    -> typeString = "Main Course";
-			case DESERT         -> typeString = "Desert";
+			case DESSERT         -> typeString = "Dessert";
 			case DRINKS         -> typeString = "Drinks";
 		}
 
