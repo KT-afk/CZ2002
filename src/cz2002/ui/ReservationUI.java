@@ -86,6 +86,8 @@ public class ReservationUI {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
 				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
 					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
+				} else if (reservationDate.isAfter(currentDate.plusMonths(1))) {
+					throw new Exception("Sorry! You are only allowed to make a reservation at most 1 month in advance");
 				} else
 					break;
 			} catch (DateTimeParseException e) {
@@ -147,16 +149,14 @@ public class ReservationUI {
 			for (i = 0; i < rList.size(); i++) {
 				if (rList.get(i).getId().equals(rID))
 					found = 1;
-					break;
+				break;
 			}
-			if (found == 1)
-			{
+			if (found == 1) {
 				rList.remove(rList.get(i));
-				rSystem.writeReservationToFile(rList, "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser");
+				rSystem.writeReservationToFile(rList,
+						"reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser");
 				System.out.println("Reservation has been removed successfully");
-			}
-			else
-			{
+			} else {
 				System.out.println("Unable to remove reservation. Invalid reservation ID");
 			}
 		} else {
