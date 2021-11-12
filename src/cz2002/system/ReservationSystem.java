@@ -263,6 +263,15 @@ public class ReservationSystem {
 				e.printStackTrace();
 			}
 		}
+		if (!rList.isEmpty())
+		{
+			String counter = rList.get(rList.size()-1).getId().substring(8);
+			Reservation.setReservationIdCounter(Integer.parseInt(counter));
+		}
+		else
+		{
+			Reservation.setReservationIdCounter(0);
+		}
 		return rList;
 	}
 

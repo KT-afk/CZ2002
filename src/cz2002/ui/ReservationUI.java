@@ -112,8 +112,8 @@ public class ReservationUI {
 		String dateIn = sc.nextLine();
 		LocalDate reservationDate = validateDate(dateIn, false);
 		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
-		for (int i = 0; i < tList.size(); i++) {
-			for (int j = 0; j < rList.size(); j++) {
+		for (int j = 0; j < rList.size(); j++) {
+			for (int i = 0; i < tList.size(); i++) {
 				if (rList.get(j).getTableNo() == tList.get(i).getTableNo()) {
 					System.out.println("Date: " + dateIn);
 					System.out.println("Time: " + rList.get(j).getTime());
@@ -135,23 +135,32 @@ public class ReservationUI {
 	 * 
 	 */
 	public void removeReservationUI() {
-		System.out.println("What date is the reservation you would you like to remove?");
+		System.out.println("Date of reservation to be removed (dd/mm/yyyy):");
 		String dateIn = sc.nextLine();
 		int i;// deleteIndex
 		LocalDate reservationDate = validateDate(dateIn, false);
-		System.out.println("Which reservation would you like to remove?");
+		System.out.println("ID of reservation to be removed:");
 		String rID = sc.nextLine();
 		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
-		if (rList.size() > 0) {
+		int found = 0;
+		if (!rList.isEmpty()) {
 			for (i = 0; i < rList.size(); i++) {
 				if (rList.get(i).getId().equals(rID))
+					found = 1;
 					break;
 			}
-			rList.remove(rList.get(i));
-			rSystem.writeReservationToFile(rList, "reservation" + dateIn + ".ser");
-			System.out.println("Reservation has been removed successfully");
+			if (found == 1)
+			{
+				rList.remove(rList.get(i));
+				rSystem.writeReservationToFile(rList, "reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser");
+				System.out.println("Reservation has been removed successfully");
+			}
+			else
+			{
+				System.out.println("Unable to remove reservation. Invalid reservation ID");
+			}
 		} else {
-			System.out.println("The reservation you would like to remove cannot be found");
+			System.out.println("Unable to remove reservation. There are no reservations for this date");
 		}
 	}
 
@@ -293,32 +302,32 @@ public class ReservationUI {
 				break;
 			}
 			case 6: {
-				reservationTime = LocalTime.parse("22:45", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("19:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 7: {
-				reservationTime = LocalTime.parse("22:30", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("19:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 
 			}
 			case 8: {
-				reservationTime = LocalTime.parse("22:15", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("19:45", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 9: {
-				reservationTime = LocalTime.parse("22:00", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("20:00", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 10: {
-				reservationTime = LocalTime.parse("21:30", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("20:15", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
 			case 11: {
-				reservationTime = LocalTime.parse("21:45", DateTimeFormatter.ofPattern("HH:mm"));
+				reservationTime = LocalTime.parse("20:30", DateTimeFormatter.ofPattern("HH:mm"));
 				continueOn = false;
 				break;
 			}
