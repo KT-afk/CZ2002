@@ -24,7 +24,7 @@ public class ReservationSystem {
 	/**
 	 * List of tables
 	 */
-	protected ArrayList<Table> tList;
+	private ArrayList<Table> tList;
 
 	// Each reservation has a table allocated
 	/**
@@ -181,12 +181,13 @@ public class ReservationSystem {
 	/**
 	 * This method is to make a reservation object with its attributes
 	 * 
-	 * @param nameIn    name of the person who wants to make a reservation
-	 * @param paxNo the number of people that is booked for this reservation
-	 * @param contactIn the contact number of the person who wants to make a
-	 *                reservation
-	 * @param reservationDate    Reservation date
-	 * @param reservationTime    Reservation time
+	 * @param nameIn          name of the person who wants to make a reservation
+	 * @param paxNo           the number of people that is booked for this
+	 *                        reservation
+	 * @param contactIn       the contact number of the person who wants to make a
+	 *                        reservation
+	 * @param reservationDate Reservation date
+	 * @param reservationTime Reservation time
 	 * @return id of the reservation that was just booked
 	 */
 	public String makeReservation(String nameIn, int paxNo, String contactIn, LocalDate reservationDate,
@@ -263,13 +264,10 @@ public class ReservationSystem {
 				e.printStackTrace();
 			}
 		}
-		if (!rList.isEmpty())
-		{
-			String counter = rList.get(rList.size()-1).getId().substring(8);
+		if (!rList.isEmpty()) {
+			String counter = rList.get(rList.size() - 1).getId().substring(8);
 			Reservation.setReservationIdCounter(Integer.parseInt(counter));
-		}
-		else
-		{
+		} else {
 			Reservation.setReservationIdCounter(0);
 		}
 		return rList;
