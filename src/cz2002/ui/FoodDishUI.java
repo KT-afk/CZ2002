@@ -35,11 +35,11 @@ public class FoodDishUI extends MenuUI {
         String description;
         double price;
 
-        int typeSelection = ScannerUtil.CustomPrompt(sc, "Please enter type of dish", "Main Course", "Drinks", "Desert");
+        int typeSelection = ScannerUtil.CustomPrompt(sc, "Please enter type of dish", "Main Course", "Drinks", "Dessert");
         switch (typeSelection) {
             case 1 -> type = FoodDish.menuItemType.MAIN_COURSE;
             case 2 -> type = FoodDish.menuItemType.DRINKS;
-            case 3 -> type = FoodDish.menuItemType.DESERT;
+            case 3 -> type = FoodDish.menuItemType.DESSERT;
         }
 
         System.out.println();
@@ -99,11 +99,11 @@ public class FoodDishUI extends MenuUI {
                     item.setName(name);
                     break;
                 case 2:
-                    int typeSelection = ScannerUtil.CustomPrompt(sc, "Please enter type of dish", "Main Course", "Drinks", "Desert");
+                    int typeSelection = ScannerUtil.CustomPrompt(sc, "Please enter type of dish", "Main Course", "Drinks", "Dessert");
                     switch (typeSelection) {
                         case 1 -> type = FoodDish.menuItemType.MAIN_COURSE;
                         case 2 -> type = FoodDish.menuItemType.DRINKS;
-                        case 3 -> type = FoodDish.menuItemType.DESERT;
+                        case 3 -> type = FoodDish.menuItemType.DESSERT;
                     }
 
                     ((FoodDish) item).setType(type);
@@ -145,7 +145,7 @@ public class FoodDishUI extends MenuUI {
         String typeString = "";
         switch (item.getType()) {
             case MAIN_COURSE    -> typeString = "Main Course";
-            case DESERT         -> typeString = "Desert";
+            case DESSERT         -> typeString = "Dessert";
             case DRINKS         -> typeString = "Drinks";
         }
 

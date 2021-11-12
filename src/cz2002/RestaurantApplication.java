@@ -1,5 +1,6 @@
 package cz2002;
 
+import cz2002.db.InitialiseData;
 import cz2002.entity.*;
 import cz2002.system.OrderSystem;
 import cz2002.system.ReservationSystem;
@@ -47,7 +48,9 @@ public class RestaurantApplication {
 		System.out.printf("Please enter password: %s\n", "*".repeat(10));
 
 		Staff currentStaff = staffList.get(staffSelection - 1);
-
+		
+		//InitialiseData.initialiseMenu();
+		
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
 		int capacity = 2;
