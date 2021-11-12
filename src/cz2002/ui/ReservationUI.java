@@ -76,6 +76,7 @@ public class ReservationUI {
 		LocalDate currentDate = LocalDate.now();
 		while (true) {
 			try {
+				System.out.printf("%s (dd/MM/yyyy): ", prompt);
 				reservationDate = LocalDate.parse(dateIn,
 						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
 				if (reservationDate.isBefore(currentDate)) {
