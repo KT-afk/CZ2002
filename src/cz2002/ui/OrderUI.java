@@ -148,6 +148,8 @@ public class OrderUI {
 		MenuItem item;
 
 		do {
+			orDish = new ArrayList<FoodDish>();
+			orPack = new ArrayList<SetPackage>();
 
 			System.out.println("Select type of order (1 or 2)");
 			System.out.println("-----------------------------");
@@ -207,8 +209,6 @@ public class OrderUI {
 
 				Order newOrder = new Order(staff, orDish, orPack, resv, orTable, LocalDateTime.now());
 				OrderSystem.addOrder(newOrder);
-				orDish.clear();
-				orPack.clear();
 
 				break;
 			case 2:
@@ -243,9 +243,6 @@ public class OrderUI {
 				availTable.get(i).reserveTable();
 
 				OrderSystem.addOrder(newOrder2);
-				
-				orDish.clear();
-				orPack.clear();
 				
 				break;
 			default:

@@ -21,10 +21,6 @@ public class OrderSystem {
 	 * ArrayList of all the orders in the system
 	 */
 	private ArrayList<Order> orderList;
-	/**
-	 * Count of total orders added so far
-	 */
-	private int orderCount = 0;
 
 	/**
 	 * Loads past order into orderSystem
@@ -50,15 +46,14 @@ public class OrderSystem {
 	public void addOrder(Order order) {
 		if(order.getDishItems().size() == 0 && order.getPackItems().size() == 0) {
 			
-			System.out.println("\nOrder " + (orderCount + 1) + " is not created");
+			System.out.println("\nOrder " + order.getID() + " is not created");
 			System.out.println("Order cannot be empty!");
 			order.getTable().freeTable();
 			return;
 		}
 		orderList.add(order);
-		orderCount++;
-		System.out.println("\nOrder " + orderCount + " Successfully Created");
-		System.out.println("=================== Order " + orderCount + " ===================");
+		System.out.println("\nOrder " + order.getID() + " Successfully Created");
+		System.out.println("=================== Order " + order.getID() + " ===================");
 		System.out.println("Order Items: ");
 		if (order.getDishItems().size() < 1) {
 			System.out.println("    <No Item>");
@@ -140,6 +135,7 @@ public class OrderSystem {
 		  if (order.getID().equals(uinput)) {
 			  order.setComplete();
 			  order.getTable().freeTable();
+			  System.out.println("Order ID " + uinput + " is removed");
 			  return;
 		  }
 		}
@@ -164,6 +160,10 @@ public class OrderSystem {
 		while (it.hasNext()) {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
+			if (order.getStatus()) {
+				System.out.println("Order " + order.getID() + " is already completed");
+				return;
+			}
 			System.out.println("************************************************");
 		    System.out.printf("%15s: %s\n", "Name", Restaurant.getname());
 			System.out.printf("%15s: %s\n", "Address", Restaurant.getaddress());
@@ -190,6 +190,7 @@ public class OrderSystem {
 			double serviceCharge = (subtotal*discount)*0.1;
 			double gst = (subtotal*discount*1.1)*0.07;
 			double totalPay = (subtotal*discount)+serviceCharge+gst;
+			order.setTotalPayable(totalPay);
 			System.out.printf("Sub-Total: %29s$%.2f\n", "", subtotal);
 			System.out.printf("Discount: %30s-$%.2f\n", "", subtotal*discountamt);
 			System.out.printf("10%% Service Charge: %20s+$%.2f\n", "", (subtotal*discount)*0.1);
@@ -250,7 +251,8 @@ public class OrderSystem {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
 				var orderList = (ArrayList<Order>) ois.readObject();
 				this.orderList = orderList;
-				this.orderCount = orderList.size();
+				int id = orderList.get(orderList.size()-1).getID();
+				Order.setOrderIDCounter(id+1);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
