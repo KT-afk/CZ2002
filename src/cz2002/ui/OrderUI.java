@@ -138,9 +138,8 @@ public class OrderUI {
 	 * @param tables List of tables
 	 */
 	private void newOrder(Staff staff, List<Table> tables) {
-		int orderType, uadd, uc;
-		String iname, desc, resId;
-		double price;
+		int orderType, uc;
+		String resId;
 		Reservation resv;
 		ReservationSystem reservationSystem = new ReservationSystem(tables);
 
@@ -208,6 +207,8 @@ public class OrderUI {
 
 				Order newOrder = new Order(staff, orDish, orPack, resv, orTable, LocalDateTime.now());
 				OrderSystem.addOrder(newOrder);
+				orDish.clear();
+				orPack.clear();
 
 				break;
 			case 2:
@@ -242,7 +243,10 @@ public class OrderUI {
 				availTable.get(i).reserveTable();
 
 				OrderSystem.addOrder(newOrder2);
-
+				
+				orDish.clear();
+				orPack.clear();
+				
 				break;
 			default:
 				System.out.println("Option entered is invalid, please try again\n");
