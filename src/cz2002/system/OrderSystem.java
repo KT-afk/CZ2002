@@ -24,7 +24,7 @@ public class OrderSystem {
 	/**
 	 * Count of total orders added so far
 	 */
-	private int orderCount = 0;
+	private int orderCount = 1;
 
 	/**
 	 * Loads past order into orderSystem
@@ -50,13 +50,12 @@ public class OrderSystem {
 	public void addOrder(Order order) {
 		if(order.getDishItems().size() == 0 && order.getPackItems().size() == 0) {
 			
-			System.out.println("\nOrder " + (orderCount + 1) + " is not created");
+			System.out.println("\nOrder " + orderCount + " is not created");
 			System.out.println("Order cannot be empty!");
 			order.getTable().freeTable();
 			return;
 		}
 		orderList.add(order);
-		orderCount++;
 		System.out.println("\nOrder " + orderCount + " Successfully Created");
 		System.out.println("=================== Order " + orderCount + " ===================");
 		System.out.println("Order Items: ");
@@ -75,6 +74,7 @@ public class OrderSystem {
 		}
 		System.out.println("Order created on " + order.getStart());
 		System.out.println("==============================================");
+		orderCount++;
 
 		save();
 	}
@@ -140,6 +140,7 @@ public class OrderSystem {
 		  if (order.getID().equals(uinput)) {
 			  order.setComplete();
 			  order.getTable().freeTable();
+			  System.out.println("Order ID " + uinput + " is removed");
 			  return;
 		  }
 		}
