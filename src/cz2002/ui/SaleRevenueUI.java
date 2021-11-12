@@ -105,6 +105,7 @@ public class SaleRevenueUI {
 
         while(true) {
             try {
+                System.out.printf("%s (dd/MM/yyyy): ", prompt);
                 return LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
             } catch (Exception e) {
                 System.out.println("You have entered an invalid date");

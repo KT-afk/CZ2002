@@ -52,21 +52,25 @@ public class ReservationUI {
 	 * Runs Reservation UI routine
 	 */
 	public void run() {
+		boolean running = true;
 
-		rSystem.removeExpiredReservations(LocalDate.now());
-		int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation");
-		sc.nextLine();
-		switch (option) {
-		case 1 -> checkReservationUI();
-		case 2 -> makeReservationUI();
-		case 3 -> removeReservationUI();
+		while (running) {
+			rSystem.removeExpiredReservations(LocalDate.now());
+			int option = ScannerUtil.Prompt(sc, "Check Reservation", "Make Reservation", "Remove Reservation", "Back");
+			sc.nextLine();
+			switch (option) {
+			case 1 -> checkReservationUI();
+			case 2 -> makeReservationUI();
+			case 3 -> removeReservationUI();
+			case 4 -> running = false;
+			}
 		}
 	}
 
 	/**
 	 * This method is to get the reservations of a specified date from the file with
 	 * the date as its name
-	 * 
+	 *
 	 * @param dateIn          date of the reservations we want to validate
 	 * @param makeReservation to specify if it is invoked by the makeReservationUI
 	 * @return a date in LocalDate format based on dateIn
@@ -76,16 +80,14 @@ public class ReservationUI {
 		LocalDate currentDate = LocalDate.now();
 		while (true) {
 			try {
-				System.out.printf("%s (dd/MM/yyyy): ", prompt);
 				reservationDate = LocalDate.parse(dateIn,
 						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
 				if (reservationDate.isBefore(currentDate)) {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
-				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(1))) {
+				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
 					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
 				} else if (reservationDate.isAfter(currentDate.plusMonths(1))) {
-					throw new Exception(
-							"Sorry! You are only allowed to process a reservation made within the next 30 days");
+					throw new Exception("Sorry! You are only allowed to process a reservation made within the next 30 days");
 				} else
 					break;
 			} catch (DateTimeParseException e) {
