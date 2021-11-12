@@ -407,10 +407,10 @@ public class OrderUI {
 				String mem = sc.next();
 
 				if (mem.equalsIgnoreCase("y")) {
-					OrderSystem.completeOrder(uinput, 0.9, Restaurant);
+					OrderSystem.completeOrder(uinput, 0.1, Restaurant);
 					break;
 				} else {
-					OrderSystem.completeOrder(uinput, 1, Restaurant);
+					OrderSystem.completeOrder(uinput, 0, Restaurant);
 					break;
 				}
 			} while (true);

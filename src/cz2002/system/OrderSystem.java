@@ -151,7 +151,7 @@ public class OrderSystem {
 	 * @param Restaurant Restaurant Object used print restaurant details in receipt
 	 */
 	public void completeOrder(int uinput, double discountamt, Restaurant Restaurant) {
-		double discount = 1 * discountamt;
+		double discount = 1 - discountamt;
 		Iterator<Order> it = orderList.iterator();
 		
 		while (it.hasNext()) {
@@ -179,7 +179,15 @@ public class OrderSystem {
 			}
 			System.out.println();
 			System.out.println("----------------------------------------------");
-			System.out.printf("Total Cost: %30s$%s\n", "", order.totalPrice()*discount );
+			double subtotal = order.totalPrice();
+			double serviceCharge = (subtotal*discount)*0.1;
+			double gst = (subtotal*discount*1.1)*0.07;
+			double totalPay = (subtotal*discount)+serviceCharge+gst;
+			System.out.printf("Sub-Total: %29s$%.2f\n", "", subtotal);
+			System.out.printf("Discount: %30s-$%.2f\n", "", subtotal*discountamt);
+			System.out.printf("10%% Service Charge: %20s+$%.2f\n", "", (subtotal*discount)*0.1);
+			System.out.printf("7%% GST: %32s+$%.2f\n", "", (subtotal*discount*1.1)*0.07);
+			System.out.printf("Total Payable: %25s$%.2f\n", "", totalPay);
 			
 			System.out.println("----------------------------------------------");
 			System.out.println();
