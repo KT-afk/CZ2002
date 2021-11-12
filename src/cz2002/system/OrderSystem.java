@@ -165,6 +165,10 @@ public class OrderSystem {
 		while (it.hasNext()) {
 		  Order order = it.next();
 		  if (order.getID().equals(uinput)) {
+			if (order.getStatus()) {
+				System.out.println("Order " + order.getID() + " is already completed");
+				return;
+			}
 			System.out.println("************************************************");
 		    System.out.printf("%15s: %s\n", "Name", Restaurant.getname());
 			System.out.printf("%15s: %s\n", "Address", Restaurant.getaddress());
