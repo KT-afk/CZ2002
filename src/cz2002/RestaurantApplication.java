@@ -30,7 +30,7 @@ public class RestaurantApplication {
 	 */
 	public static void main(String[] args) {
 
-		Restaurant restaurant = new Restaurant("NTUCates", "50 Nanyang Ave, 639798", "1100 - 2200");
+		Restaurant restaurant = new Restaurant("NTUCates", "50 Nanyang Ave, 639798", "1100 - 1500 | 1800 - 2200");
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Restaurant Reservation Management System");
@@ -48,9 +48,9 @@ public class RestaurantApplication {
 		System.out.printf("Please enter password: %s\n", "*".repeat(10));
 
 		Staff currentStaff = staffList.get(staffSelection - 1);
-		
-		//InitialiseData.initialiseMenu();
-		
+
+		// InitialiseData.initialiseMenu();
+
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
 		int capacity = 2;
@@ -71,7 +71,6 @@ public class RestaurantApplication {
 		RestaurantUI restaurantUI = new RestaurantUI(reservationSystem, tableSystem, sc);
 		SaleRevenueUI saleRevenueUI = new SaleRevenueUI(saleRevenueSystem, sc);
 		OrderUI orderUI = new OrderUI(sc, orderSystem, reservationSystem, tableSystem, menu, restaurant);
-
 
 		while (true) {
 			reservationSystem.removeExpiredReservations(LocalDate.now());
