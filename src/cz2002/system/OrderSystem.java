@@ -21,10 +21,6 @@ public class OrderSystem {
 	 * ArrayList of all the orders in the system
 	 */
 	private ArrayList<Order> orderList;
-	/**
-	 * Count of total orders added so far
-	 */
-	private int orderCount = 1;
 
 	/**
 	 * Loads past order into orderSystem
@@ -50,14 +46,14 @@ public class OrderSystem {
 	public void addOrder(Order order) {
 		if(order.getDishItems().size() == 0 && order.getPackItems().size() == 0) {
 			
-			System.out.println("\nOrder " + orderCount + " is not created");
+			System.out.println("\nOrder " + order.getID() + " is not created");
 			System.out.println("Order cannot be empty!");
 			order.getTable().freeTable();
 			return;
 		}
 		orderList.add(order);
-		System.out.println("\nOrder " + orderCount + " Successfully Created");
-		System.out.println("=================== Order " + orderCount + " ===================");
+		System.out.println("\nOrder " + order.getID() + " Successfully Created");
+		System.out.println("=================== Order " + order.getID() + " ===================");
 		System.out.println("Order Items: ");
 		if (order.getDishItems().size() < 1) {
 			System.out.println("    <No Item>");
@@ -74,7 +70,6 @@ public class OrderSystem {
 		}
 		System.out.println("Order created on " + order.getStart());
 		System.out.println("==============================================");
-		orderCount++;
 
 		save();
 	}
@@ -252,7 +247,6 @@ public class OrderSystem {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
 				var orderList = (ArrayList<Order>) ois.readObject();
 				this.orderList = orderList;
-				this.orderCount = orderList.size();
 				int id = orderList.get(orderList.size()-1).getID();
 				Order.setOrderIDCounter(id+1);
 			} catch (IOException e) {
