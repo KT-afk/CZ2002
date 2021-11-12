@@ -44,6 +44,11 @@ public class SaleRevenueUI {
         Date startDate = promptDate("Please enter start period");
         Date endDate = promptDate("Please enter end period");
 
+        if(startDate.after(endDate)) {
+            System.out.println("Start Date cannot be later than End Date");
+            return;
+        }
+
         System.out.println("=".repeat(30));
         System.out.println("\nSale Revenue Report\n");
         System.out.printf("Start Period: %s\n", startDate.toString());
