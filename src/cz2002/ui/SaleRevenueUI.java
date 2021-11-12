@@ -6,6 +6,9 @@ import cz2002.entity.SaleRevenue;
 import cz2002.system.SaleRevenueSystem;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -41,10 +44,10 @@ public class SaleRevenueUI {
      * Runs 'Print Sale Revenue' routine
      */
     public void printSaleRevenueReport() {
-        Date startDate = promptDate("Please enter start period");
-        Date endDate = promptDate("Please enter end period");
+        LocalDate startDate = promptDate("Please enter start period");
+        LocalDate endDate = promptDate("Please enter end period");
 
-        if(startDate.after(endDate)) {
+        if(startDate.isAfter(endDate)) {
             System.out.println("Start Date cannot be later than End Date");
             return;
         }
@@ -97,13 +100,12 @@ public class SaleRevenueUI {
      * @param prompt Prompt to print out when requesting
      * @return Date entered
      */
-    private Date promptDate(String prompt) {
+    private LocalDate promptDate(String prompt) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         while(true) {
             try {
-                System.out.printf("%s (dd/MM/yyyy): ", prompt);
-                return formatter.parse(sc.nextLine());
+                return LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
             } catch (Exception e) {
                 System.out.println("You have entered an invalid date");
             }
