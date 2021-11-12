@@ -80,7 +80,7 @@ public class ReservationUI {
 						DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.SMART));
 				if (reservationDate.isBefore(currentDate)) {
 					throw new Exception("Sorry! You are entering a date that has already passed!");
-				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
+				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(1))) {
 					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
 				} else if (reservationDate.isAfter(currentDate.plusMonths(1))) {
 					throw new Exception(
