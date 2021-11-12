@@ -13,6 +13,7 @@ import cz2002.util.ScannerUtil;
 
 /**
  * Represents the Order UI only
+ * 
  * @author Richie Ang
  * @version 1.0
  * @since 2021-11-6
@@ -46,15 +47,16 @@ public class OrderUI {
 
 	/**
 	 * OrderUI Constructor with the necessary systems to function
-	 * @param scanner Scanner
-	 * @param OrderSystem Order System
+	 * 
+	 * @param scanner           Scanner
+	 * @param OrderSystem       Order System
 	 * @param ReservationSystem Reservation System
-	 * @param TableSystem Table System
-	 * @param RestaurantMenu Restaurant Menu
-	 * @param Restaurant Restaurant
+	 * @param TableSystem       Table System
+	 * @param RestaurantMenu    Restaurant Menu
+	 * @param Restaurant        Restaurant
 	 */
-	public OrderUI(Scanner scanner, OrderSystem OrderSystem, ReservationSystem ReservationSystem, TableSystem TableSystem,
-			RestaurantMenu RestaurantMenu, Restaurant Restaurant) {
+	public OrderUI(Scanner scanner, OrderSystem OrderSystem, ReservationSystem ReservationSystem,
+			TableSystem TableSystem, RestaurantMenu RestaurantMenu, Restaurant Restaurant) {
 		sc = scanner;
 		this.OrderSystem = OrderSystem;
 		this.ReservationSystem = ReservationSystem;
@@ -65,14 +67,16 @@ public class OrderUI {
 
 	/**
 	 * Order Management Options UI
-	 * @param staff Staff
+	 * 
+	 * @param staff  Staff
 	 * @param tables List of tables
 	 */
 	public void manageOrders(Staff staff, List<Table> tables) {
 		int uchoice;
 		do {
-			uchoice = ScannerUtil.CustomPrompt(sc, "-----------ORDER OPTIONS-----------", "View Current Orders", "View Order by ID", "New Orders", "Modify Existing Orders",
-					"Remove Orders", "Complete Order", "Return to Main Menu");
+			uchoice = ScannerUtil.CustomPrompt(sc, "-----------ORDER OPTIONS-----------", "View Current Orders",
+					"View Order by ID", "New Orders", "Modify Existing Orders", "Remove Orders", "Complete Order",
+					"Return to Main Menu");
 
 			switch (uchoice) {
 			case 1:
@@ -100,6 +104,7 @@ public class OrderUI {
 			}
 		} while (true);
 	}
+
 	/**
 	 * Gets order ID and calls OrderSystem method to view the order
 	 */
@@ -110,10 +115,11 @@ public class OrderUI {
 	}
 
 	/**
-	 * Check the type of order whether it is a reservation or a walk in,
-	 * allowing user to add items and packages into order before
-	 * calling the OrderSystem method to create a new order
-	 * @param staff Current Staff
+	 * Check the type of order whether it is a reservation or a walk in, allowing
+	 * user to add items and packages into order before calling the OrderSystem
+	 * method to create a new order
+	 * 
+	 * @param staff  Current Staff
 	 * @param tables List of tables
 	 */
 	private void newOrder(Staff staff, List<Table> tables) {
@@ -135,12 +141,12 @@ public class OrderUI {
 			System.out.println("2) From walk-in order");
 			orderType = sc.nextInt();
 			sc.nextLine();
-			
+
 			switch (orderType) {
 			case 1:
 				do {
 					System.out.println("Enter reservation ID ('n' to cancel): ");
-					
+
 					resId = sc.nextLine();
 
 					if (resId.equals("n")) {
@@ -170,19 +176,20 @@ public class OrderUI {
 				Table orTable = TableSystem.getTableByNo(resv.getTableNo());
 
 				do {
-					item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
+					item = promptSelectMenuItem("Please select Set Package to add into order",
+							RestaurantMenu.setPackageMenu);
 
-					if(item != null)
+					if (item != null)
 						orPack.add((SetPackage) item);
-				} while(item != null);
+				} while (item != null);
 
 				do {
-					item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
+					item = promptSelectMenuItem("Please select Food Dish to add into order",
+							RestaurantMenu.alaCarteMenu);
 
-					if(item != null)
+					if (item != null)
 						orDish.add((FoodDish) item);
-				} while(item != null);
-
+				} while (item != null);
 
 				Order newOrder = new Order(staff, orDish, orPack, resv, orTable, LocalDateTime.now());
 				OrderSystem.addOrder(newOrder);
@@ -190,30 +197,33 @@ public class OrderUI {
 				break;
 			case 2:
 				do {
-					item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
+					item = promptSelectMenuItem("Please select Set Package to add into order",
+							RestaurantMenu.setPackageMenu);
 
-					if(item != null)
+					if (item != null)
 						orPack.add((SetPackage) item);
-				} while(item != null);
+				} while (item != null);
 
 				do {
-					item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
+					item = promptSelectMenuItem("Please select Food Dish to add into order",
+							RestaurantMenu.alaCarteMenu);
 
-					if(item != null)
+					if (item != null)
 						orDish.add((FoodDish) item);
-				} while(item != null);
+				} while (item != null);
 
 				ArrayList<Table> availTable = TableSystem.getAvailableTables();
 
 				int i;
 				for (i = 0; i < availTable.size(); i++) {
-					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(), LocalTime.now())) {
+					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(),
+							LocalTime.now())) {
 						break;
 					}
 				}
 
 				Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
-				
+
 				availTable.get(i).reserveTable();
 
 				OrderSystem.addOrder(newOrder2);
@@ -243,22 +253,24 @@ public class OrderUI {
 			int ucho, uadd;
 			MenuItem item;
 			ArrayList<Order> orderList = OrderSystem.getOrderList();
-			
-			for(Order order: orderList) {
-				if(order.getID() == uinput) {
+
+			for (Order order : orderList) {
+				if (order.getID() == uinput) {
 					System.out.println("=================== Order " + order.getID() + " ===================");
 					System.out.println("Order Items: ");
-					for(int i=0;i<order.getDishItems().size();i++) {
-						System.out.println("   --" + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+					for (int i = 0; i < order.getDishItems().size(); i++) {
+						System.out.println("   --" + order.getDishItems().get(i).getName() + " $"
+								+ order.getDishItems().get(i).getPrice());
 					}
 					System.out.println("Set Packages: ");
-					for(int i=0;i<order.getPackItems().size();i++) {
-						System.out.println("   --" + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+					for (int i = 0; i < order.getPackItems().size(); i++) {
+						System.out.println("   --" + order.getPackItems().get(i).getName() + " $"
+								+ order.getPackItems().get(i).getPrice());
 					}
-					System.out.println("Total Cost: $" + order.totalPrice() );
+					System.out.println("Total Cost: $" + order.totalPrice());
 					System.out.println("Order created on " + order.getStart());
 					System.out.println("==============================================");
-					
+
 					do {
 						System.out.println("Select one of the options: ");
 						System.out.println("1) Add menu item");
@@ -266,27 +278,29 @@ public class OrderUI {
 						System.out.println("3) Remove menu item");
 						System.out.println("4) Remove set package");
 						System.out.println("5) End Modify");
-						
+
 						ucho = sc.nextInt();
-						
-						switch(ucho) {
+
+						switch (ucho) {
 						case 1:
 							do {
-								item = promptSelectMenuItem("Please select Food Dish to add into order", RestaurantMenu.alaCarteMenu);
+								item = promptSelectMenuItem("Please select Food Dish to add into order",
+										RestaurantMenu.alaCarteMenu);
 
-								if(item != null)
+								if (item != null)
 									order.addDishItem((FoodDish) item);
-							} while(item != null);
-							
+							} while (item != null);
+
 							break;
 						case 2:
 							do {
-								item = promptSelectMenuItem("Please select Set Package to add into order", RestaurantMenu.setPackageMenu);
+								item = promptSelectMenuItem("Please select Set Package to add into order",
+										RestaurantMenu.setPackageMenu);
 
-								if(item != null)
+								if (item != null)
 									order.addPackItem((SetPackage) item);
-							} while(item != null);
-							
+							} while (item != null);
+
 							break;
 						case 3:
 							do {
@@ -295,10 +309,11 @@ public class OrderUI {
 									System.out.println("  --No Item Left");
 									break;
 								}
-								for(int i=0;i<order.getDishItems().size();i++) {
-									System.out.println((i+1) + ") " + order.getDishItems().get(i).getName() + " $" + order.getDishItems().get(i).getPrice());
+								for (int i = 0; i < order.getDishItems().size(); i++) {
+									System.out.println((i + 1) + ") " + order.getDishItems().get(i).getName() + " $"
+											+ order.getDishItems().get(i).getPrice());
 								}
-							
+
 								System.out.println("Choose menu items to remove from order");
 								System.out.println("Enter -1 to stop");
 								uadd = sc.nextInt();
@@ -308,9 +323,8 @@ public class OrderUI {
 								}
 
 								if (uadd <= order.getDishItems().size()) {
-									order.getDishItems().remove(uadd-1);
-								} 
-								else if (uadd == 0 || uadd > order.getDishItems().size()){
+									order.getDishItems().remove(uadd - 1);
+								} else if (uadd == 0 || uadd > order.getDishItems().size()) {
 									System.out.println("Choice is invalid");
 								}
 
@@ -323,10 +337,11 @@ public class OrderUI {
 									System.out.println("  --No Item Left");
 									break;
 								}
-								for(int i=0;i<order.getPackItems().size();i++) {
-									System.out.println((i+1) + ") " + order.getPackItems().get(i).getName() + " $" + order.getPackItems().get(i).getPrice());
+								for (int i = 0; i < order.getPackItems().size(); i++) {
+									System.out.println((i + 1) + ") " + order.getPackItems().get(i).getName() + " $"
+											+ order.getPackItems().get(i).getPrice());
 								}
-							
+
 								System.out.println("Choose set packages to remove from order");
 								System.out.println("Enter -1 to stop");
 								uadd = sc.nextInt();
@@ -336,20 +351,19 @@ public class OrderUI {
 								}
 
 								if (uadd <= order.getPackItems().size()) {
-									order.getPackItems().remove(uadd-1);
-								} 
-								else if (uadd == 0 || uadd > order.getPackItems().size()){
+									order.getPackItems().remove(uadd - 1);
+								} else if (uadd == 0 || uadd > order.getPackItems().size()) {
 									System.out.println("Choice is invalid");
 								}
 
 							} while (true);
 							break;
-						case 5: 
+						case 5:
 							return;
 						}
-						
-					} while(true);
-					
+
+					} while (true);
+
 				}
 			}
 			System.out.println("No order with ID " + uinput + " is found\n");
@@ -377,30 +391,29 @@ public class OrderUI {
 			}
 		} while (true);
 	}
-	
+
 	/**
-	 * Gets the order ID and membership status before calling the OrderSystem method to complete and print order invoice
+	 * Gets the order ID and membership status before calling the OrderSystem method
+	 * to complete and print order invoice
 	 */
 	private void printOrderInvoice() {
 		int uc;
 		do {
 			System.out.println("\nType in the order ID to pay: ");
 			int uinput = sc.nextInt();
-			
+
 			do {
 				System.out.println("Is the customer a member? (y/n) ");
 				String mem = sc.next();
-				
-				if(mem == "y") {
+
+				if (mem.equalsIgnoreCase("y")) {
 					OrderSystem.completeOrder(uinput, 0.9, Restaurant);
 					break;
-				}
-				else {
+				} else {
 					OrderSystem.completeOrder(uinput, 1, Restaurant);
 					break;
 				}
-			} while(true);
-			
+			} while (true);
 
 			uc = ScannerUtil.Prompt(sc, "Pay Another Order", "End Pay");
 			if (uc == 2) {
@@ -411,27 +424,28 @@ public class OrderUI {
 
 	/**
 	 * Prompts user to select menu item
+	 * 
 	 * @param prompt Prompt string to print out
-	 * @param menu Menu Item to display (Ala Carte or Set Package)
+	 * @param menu   Menu Item to display (Ala Carte or Set Package)
 	 * @return Selected Menu Item
 	 */
 	private MenuItem promptSelectMenuItem(String prompt, List<? extends MenuItem> menu) {
 		while (true) {
-			String[] menuItems = menu.stream()
-					.filter(item -> item.getEnabled())
-					.map(item -> item.toString()).toArray(String[]::new);
-			String[] optionSelection = Stream.concat(Arrays.stream(menuItems), Arrays.stream(new String[]{"Done"})).toArray(String[]::new);
-			String header = String.format("   %-5s %-20s %-15s %s\n", "Status", "Name", "Type", "Price ($S)") + "=".repeat(55) + "";
+			String[] menuItems = menu.stream().filter(item -> item.getEnabled()).map(item -> item.toString())
+					.toArray(String[]::new);
+			String[] optionSelection = Stream.concat(Arrays.stream(menuItems), Arrays.stream(new String[] { "Done" }))
+					.toArray(String[]::new);
+			String header = String.format("   %-5s %-20s %-15s %s\n", "Status", "Name", "Type", "Price ($S)")
+					+ "=".repeat(55) + "";
 
 			int option = ScannerUtil.CustomPrompt(sc, prompt + "\n" + header, optionSelection);
 
 			if (option <= menuItems.length) {
 
 				Optional<? extends MenuItem> toAdd = menu.stream()
-						.filter(item -> item.toString().equals(menuItems[option - 1]))
-						.findFirst();
+						.filter(item -> item.toString().equals(menuItems[option - 1])).findFirst();
 
-				if(toAdd.isPresent())
+				if (toAdd.isPresent())
 					return toAdd.get();
 			}
 
