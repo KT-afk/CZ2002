@@ -198,7 +198,7 @@ public class OrderSystem {
 	}
 	
 	/**
-	 * Assumes any order that took longer tha 1.5hrs and is still not completed to be removed from the system
+	 * Assumes any order that has existed for at least 1.5hrs and is still not completed to be automatically completed from the system
 	 */
 	public void autoCompleteOrder() {
 		Iterator<Order> it = orderList.iterator();
