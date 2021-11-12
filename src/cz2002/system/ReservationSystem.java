@@ -258,9 +258,7 @@ public class ReservationSystem {
 		if (f.exists()) {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
 				rList = (ArrayList<Reservation>) ois.readObject();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
