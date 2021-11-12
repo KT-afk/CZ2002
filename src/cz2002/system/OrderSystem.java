@@ -190,6 +190,7 @@ public class OrderSystem {
 			double serviceCharge = (subtotal*discount)*0.1;
 			double gst = (subtotal*discount*1.1)*0.07;
 			double totalPay = (subtotal*discount)+serviceCharge+gst;
+			order.setTotalPayable(totalPay);
 			System.out.printf("Sub-Total: %29s$%.2f\n", "", subtotal);
 			System.out.printf("Discount: %30s-$%.2f\n", "", subtotal*discountamt);
 			System.out.printf("10%% Service Charge: %20s+$%.2f\n", "", (subtotal*discount)*0.1);
@@ -251,6 +252,8 @@ public class OrderSystem {
 				var orderList = (ArrayList<Order>) ois.readObject();
 				this.orderList = orderList;
 				this.orderCount = orderList.size();
+				int id = orderList.get(orderList.size()-1).getID();
+				Order.setOrderIDCounter(id+1);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {

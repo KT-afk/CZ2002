@@ -67,11 +67,18 @@ public class SaleRevenueUI {
     public void printSaleRevenue(SaleRevenue saleRevenue) {
         var orderList = saleRevenue.getOrderList();
 
-        for(Order order : orderList) {
-            printOrder(order);
-        }
+        if (saleRevenue.getTotalPrice() != 0)
+        {
+        	for(Order order : orderList) {
+                printOrder(order);
+            }
 
-        System.out.printf("\nTotal Revenue: %.2f", saleRevenue.getTotalPrice());
+            System.out.printf("\nTotal Revenue: $%.2f", saleRevenue.getTotalPrice());
+        }
+        else
+        {
+        	System.out.println("No orders have been completed within this period");
+        }
     }
 
     /**
@@ -79,7 +86,7 @@ public class SaleRevenueUI {
      * @param order Order object to print
      */
     private void printOrder(Order order) {
-        System.out.printf("[%s] Order #%-2d - $%.2f\n", order.getStart(), order.getID(), order.totalPrice());
+        System.out.printf("[%s] Order #%-2d - $%.2f\n", order.getStart(), order.getID(), order.getTotalPayable());
         for(MenuItem menuItem : order.getPackItems())
             printMenuItem(menuItem);
 

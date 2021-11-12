@@ -50,6 +50,11 @@ public class Order implements Serializable {
 	 * Whether order is completed
 	 */
 	private boolean isCompleted;
+	
+	/**
+	 * Total payable amount for this order after discount, service charge & GST
+	 */
+	private double totalPayable;
 
 	/**
 	 * Constructor
@@ -71,6 +76,7 @@ public class Order implements Serializable {
 		this.table = table;
 		this.start = start;
 		this.isCompleted = false;
+		this.totalPayable = 0;
 	}
 
 	/**
@@ -87,6 +93,14 @@ public class Order implements Serializable {
 	 */
 	public boolean getStatus() {
 		return isCompleted;
+	}
+	/**
+	 * This method sets the OrderIDCounter
+	 * @param counter counter value
+	 */
+	public static void setOrderIDCounter(int counter)
+	{
+		OrderIDCounter = counter;
 	}
 	/**
 	 * This method makes the order complete
@@ -196,9 +210,9 @@ public class Order implements Serializable {
 	}
 
 	/**
-	 * This method is to get the current total price of this order
+	 * This method is to get the subtotal price of this order
 	 * 
-	 * @return current total price of order
+	 * @return current subtotal price of order
 	 */
 	public double totalPrice() {
 		double totalPrice = 0;
@@ -213,10 +227,20 @@ public class Order implements Serializable {
 	}
 
 	/**
-	 * Returns GST based on total price
-	 * @return GST of Order
+	 * This method is to get the total payable price of this order
+	 * @return total payable price of order
 	 */
-	public double getGST() {
-		return  0.07 * totalPrice();
+	public double getTotalPayable()
+	{
+		return totalPayable;
+	}
+	
+	/**
+	 * This method is to set the total payable price of this order
+	 * @param totalPayable total payable price of order
+	 */
+	public void setTotalPayable(double totalPayable)
+	{
+		this.totalPayable = totalPayable;
 	}
 }

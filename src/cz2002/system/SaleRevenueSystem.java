@@ -42,10 +42,13 @@ public class SaleRevenueSystem {
 		double totalPrice=0;
 		//suppose OrderList is where we store all orders
 		for(Order order : orderList) {
-			var orderDate = order.getStart();
-			if(!(orderDate.isBefore(ChronoLocalDateTime.from(start)) || orderDate.isAfter(ChronoLocalDateTime.from(end)))) {
-				orderListIncluded.add(order);
-				totalPrice+=order.totalPrice();
+			var orderDate = order.getStart().toLocalDate();
+			if (order.getStatus())
+			{
+				if(!(orderDate.isBefore(start) || orderDate.isAfter(end))) {
+					orderListIncluded.add(order);
+					totalPrice+=order.getTotalPayable();
+				}
 			}
 		}
 		return new SaleRevenue(orderListIncluded, totalPrice);

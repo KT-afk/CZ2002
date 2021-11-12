@@ -86,32 +86,32 @@ public class OrderUI {
 			viewOrder();
 			break;
 		case 3:
-			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
-					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
-							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+			//if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					//|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							//&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
 				newOrder(staff, tables);
-			} else {
-				System.out.println("You can only order between 11am-3pm or 6pm-10pm.");
-			}
+			//} else {
+				//System.out.println("You can only order between 11am-3pm or 6pm-10pm.");
+			//}
 			break;
 		case 4:
-			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
-					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
-							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+			//if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					//|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							//&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
 				modifyOrders();
 				OrderSystem.save();
-			} else {
-				System.out.println("You can only modify the order between 11am-3pm or 6pm-10pm.");
-			}
+			//} else {
+				//System.out.println("You can only modify the order between 11am-3pm or 6pm-10pm.");
+			//}
 			break;
 		case 5:
-			if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
-					|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
-							&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
+			//if ((LocalTime.now().isAfter(LocalTime.of(11, 0)) && LocalTime.now().isBefore(LocalTime.of(15, 0)))
+					//|| (LocalTime.now().isAfter(LocalTime.of(18, 0))
+							//&& LocalTime.now().isBefore(LocalTime.of(22, 0)))) {
 				removeOrders();
-			} else {
-				System.out.println("You can only remove an order between 11am-3pm or 6pm-10pm.");
-			}
+			//} else {
+				//System.out.println("You can only remove an order between 11am-3pm or 6pm-10pm.");
+			//}
 			break;
 		case 6:
 			// Prints Order Invoice
