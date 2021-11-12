@@ -4,6 +4,8 @@ import cz2002.entity.Order;
 import cz2002.entity.SaleRevenue;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,14 +36,14 @@ public class SaleRevenueSystem {
 	 * @param end end date of this period
 	 * @return a SaleRevenue object which contain all orders included in this period and total price of all orders
 	 */
-	public SaleRevenue generateSaleRevenueRep(Date start, Date end) {
+	public SaleRevenue generateSaleRevenueRep(LocalDate start, LocalDate end) {
 		ArrayList<Order> orderListIncluded = new ArrayList<>();
 		var orderList = orderSystem.getOrderList();
 		double totalPrice=0;
 		//suppose OrderList is where we store all orders
 		for(Order order : orderList) {
-			Date orderDate = Timestamp.valueOf(order.getStart());
-			if(!(orderDate.before(start) || orderDate.after(end))) {
+			var orderDate = order.getStart();
+			if(!(orderDate.isBefore(ChronoLocalDateTime.from(start)) || orderDate.isAfter(ChronoLocalDateTime.from(end)))) {
 				orderListIncluded.add(order);
 				totalPrice+=order.totalPrice();
 			}
