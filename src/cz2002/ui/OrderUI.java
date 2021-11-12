@@ -134,14 +134,16 @@ public class OrderUI {
 			System.out.println("1) From reservation");
 			System.out.println("2) From walk-in order");
 			orderType = sc.nextInt();
-
+			sc.nextLine();
+			
 			switch (orderType) {
 			case 1:
 				do {
 					System.out.println("Enter reservation ID ('n' to cancel): ");
+					
 					resId = sc.nextLine();
 
-					if (resId == "n") {
+					if (resId.equals("n")) {
 						return;
 					}
 
@@ -152,7 +154,7 @@ public class OrderUI {
 					try {
 						resv = reservationSystem.getReservation(resId);
 					} catch (Exception e) {
-						System.out.println("Invalid reservation ID");
+						System.out.println("Reservation ID " + resId + " not found");
 						continue;
 					}
 
