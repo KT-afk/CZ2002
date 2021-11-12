@@ -87,7 +87,7 @@ public class ReservationUI {
 				} else if (makeReservation && reservationDate.isBefore(currentDate.plusDays(0))) {
 					throw new Exception("Sorry! You are only allowed to make a reservation 1 day in advance");
 				} else if (reservationDate.isAfter(currentDate.plusMonths(1))) {
-					throw new Exception("Sorry! You are only allowed to make a reservation at most 1 month in advance");
+					throw new Exception("Sorry! You are only allowed to process a reservation made within the next 30 days");
 				} else
 					break;
 			} catch (DateTimeParseException e) {
