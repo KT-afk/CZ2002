@@ -48,6 +48,12 @@ public class OrderSystem {
 	 * @param order Order to add into OrderSystem
 	 */
 	public void addOrder(Order order) {
+		if(order.getDishItems().size() == 0 && order.getPackItems().size() == 0) {
+			System.out.println("\nOrder " + orderCount + " is not created");
+			System.out.println("Order cannot be empty!");
+			order.getTable().freeTable();
+			return;
+		}
 		orderList.add(order);
 		orderCount++;
 		System.out.println("\nOrder " + orderCount + " Successfully Created");
