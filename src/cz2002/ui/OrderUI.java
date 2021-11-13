@@ -212,6 +212,16 @@ public class OrderUI {
 
 				break;
 			case 2:
+				int pax;
+				do {
+					System.out.println("Enter the number of pax dining in");
+					pax = sc.nextInt();
+					if (pax < 1) {
+						System.out.println("Number cannot be less than 1");
+					}
+					else break;
+				} while (true);
+				
 				do {
 					item = promptSelectMenuItem("Please select Set Package to add into order",
 							RestaurantMenu.setPackageMenu);
@@ -233,9 +243,14 @@ public class OrderUI {
 				int i;
 				for (i = 0; i < availTable.size(); i++) {
 					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(),
-							LocalTime.now())) {
+							LocalTime.now()) && availTable.get(i).getCapacity() >= pax) {
 						break;
 					}
+				}
+				
+				if (i == availTable.size()) {
+					System.out.println("There are no available tables that allow the number of pax requested");
+					break;
 				}
 
 				Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
