@@ -13,7 +13,7 @@ public class InitialiseData {
 		FoodDish food2 = new FoodDish("Cheeseburger", "Juicy beef burger with cheese", 5.00, menuItemType.MAIN_COURSE);
 		FoodDish food3 = new FoodDish("Ice Lemon Tea", "Homemade Ice Lemon Tea", 2.00, menuItemType.DRINKS);
 		FoodDish food4 = new FoodDish("Plain Water", "Warm/Cold", 0.20, menuItemType.DRINKS);
-		FoodDish food5 = new FoodDish("Ice Cream", "Choice of Vanilla, Chocolate, Strawberry", 2.00, menuItemType.DESSERT);
+		FoodDish food5 = new FoodDish("Ice Cream", "1x scoop. Choice of Vanilla, Chocolate, Strawberry", 2.00, menuItemType.DESSERT);
 		FoodDish food6 = new FoodDish("Tiramisu", "Coffee-flavoured Italian dessert", 3.00, menuItemType.DESSERT);
 		
 		menu.alaCarteMenu.add(food1);
@@ -24,11 +24,11 @@ public class InitialiseData {
 		menu.alaCarteMenu.add(food6);
 		
 		
-		SetPackage package1 = new SetPackage("Burger Set Meal", "Cheeseburger & Ice Lemon Tea", 6.50);
+		SetPackage package1 = new SetPackage("Burger Set Meal", "1x Cheeseburger & 1x Ice Lemon Tea", 6.50);
 		package1.addFood(food2);
 		package1.addFood(food3);
 		
-		SetPackage package2 = new SetPackage("Ice Cream Combo", "3 scoops of ice cream", 5.00);
+		SetPackage package2 = new SetPackage("Ice Cream Combo", "3x scoops of ice cream", 5.00);
 		package2.addFood(food5);
 		package2.addFood(food5);
 		package2.addFood(food5);
