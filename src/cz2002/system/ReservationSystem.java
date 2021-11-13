@@ -47,7 +47,7 @@ public class ReservationSystem {
 		ArrayList<Reservation> rList = getReservationsByDate(d);
 		int i;
 		for (i = 0; i < rList.size(); i++) {
-			if (rList.get(i).getId() == Id) {
+			if (rList.get(i).getId().equals(Id)) {
 				return rList.get(i);
 			}
 		}
