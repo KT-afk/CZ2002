@@ -231,12 +231,14 @@ public class ReservationSystem {
 	// Create the file and serialize the list with its new addition into the file
 	public void writeReservationToFile(ArrayList<Reservation> rList, String fileName) {
 		try {
-			FileOutputStream fout = new FileOutputStream(fileName);
-			ObjectOutputStream out = new ObjectOutputStream(fout);
-			out.writeObject(rList);
-			out.flush();
-			// closing the stream
-			out.close();
+			if(!rList.isEmpty()) {
+				FileOutputStream fout = new FileOutputStream(fileName);
+				ObjectOutputStream out = new ObjectOutputStream(fout);
+				out.writeObject(rList);
+				out.flush();
+				// closing the stream
+				out.close();
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
