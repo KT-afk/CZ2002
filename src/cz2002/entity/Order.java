@@ -52,7 +52,7 @@ public class Order implements Serializable {
 	private boolean isCompleted;
 	
 	/**
-	 * Total payable amount for this order after discount, service charge & GST
+	 * Total payable amount for this order after discount, service charge and GST
 	 */
 	private double totalPayable;
 

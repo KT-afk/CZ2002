@@ -5,7 +5,13 @@ import cz2002.entity.FoodDish.menuItemType;
 import cz2002.entity.RestaurantMenu;
 import cz2002.entity.SetPackage;
 
+/**
+ * This class is responsible for initialising menu.dat on first run.
+ */
 public class InitialiseData {
+	/**
+	 * Initialises Restaurant Menu with default set of menu item.
+	 */
 	public static void initialiseMenu()
 	{
 		RestaurantMenu menu = new RestaurantMenu();

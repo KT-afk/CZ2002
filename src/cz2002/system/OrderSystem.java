@@ -22,10 +22,14 @@ public class OrderSystem {
 	 */
 	private ArrayList<Order> orderList;
 
+	/**
+	 * Table System
+	 */
 	TableSystem tableSystem;
 
 	/**
 	 * Loads past order into orderSystem
+	 * @param tableSystem TableSystem
 	 */
 	public OrderSystem(TableSystem tableSystem) {
 		this.tableSystem = tableSystem;
