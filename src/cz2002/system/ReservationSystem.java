@@ -94,7 +94,7 @@ public class ReservationSystem {
 		ArrayList<Reservation> rList = getReservationsByDate(d);
 		int i;
 		for (i = 0; i < rList.size(); i++) {
-			if (rList.get(i).getId() == Id) {
+			if (rList.get(i).getId().equals(Id)) {
 				break;
 			}
 		}
@@ -231,7 +231,7 @@ public class ReservationSystem {
 	// Create the file and serialize the list with its new addition into the file
 	public void writeReservationToFile(ArrayList<Reservation> rList, String fileName) {
 		try {
-			if(!rList.isEmpty()) {
+			if (!rList.isEmpty()) {
 				FileOutputStream fout = new FileOutputStream(fileName);
 				ObjectOutputStream out = new ObjectOutputStream(fout);
 				out.writeObject(rList);
