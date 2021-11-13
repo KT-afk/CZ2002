@@ -136,28 +136,13 @@ public class ReservationUI {
 	public void removeReservationUI() {
 		System.out.println("Date of reservation to be removed (dd/mm/yyyy):");
 		String dateIn = sc.nextLine();
-		int i;// deleteIndex
 		LocalDate reservationDate = validateDate(dateIn, false);
 		System.out.println("ID of reservation to be removed:");
 		String rID = sc.nextLine();
-		ArrayList<Reservation> rList = rSystem.getReservationsByDate(reservationDate);
-		int found = 0;
-		if (!rList.isEmpty()) {
-			for (i = 0; i < rList.size(); i++) {
-				if (rList.get(i).getId().equals(rID))
-					found = 1;
-				break;
-			}
-			if (found == 1) {
-				rList.remove(rList.get(i));
-				rSystem.writeReservationToFile(rList,
-						"reservation" + reservationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".ser");
-				System.out.println("Reservation has been removed successfully");
-			} else {
-				System.out.println("Unable to remove reservation. Invalid reservation ID");
-			}
+		if (rSystem.removeReservation(rID, reservationDate)) {
+			System.out.println("Reservation has been removed successfully");
 		} else {
-			System.out.println("Unable to remove reservation. There are no reservations for this date");
+			System.out.println("Unable to remove reservation. Invalid reservation ID");
 		}
 	}
 

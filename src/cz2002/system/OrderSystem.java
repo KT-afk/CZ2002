@@ -234,11 +234,13 @@ public class OrderSystem {
 	 */
 	public void save() {
 		try {
-			FileOutputStream f = new FileOutputStream("order.dat");
-			ObjectOutputStream out = new ObjectOutputStream(f);
-			out.writeObject(orderList);
-			out.flush();
-			out.close();
+			if(!orderList.isEmpty()) {
+				FileOutputStream f = new FileOutputStream("order.dat");
+				ObjectOutputStream out = new ObjectOutputStream(f);
+				out.writeObject(orderList);
+				out.flush();
+				out.close();
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}

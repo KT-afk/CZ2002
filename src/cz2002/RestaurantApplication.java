@@ -49,7 +49,7 @@ public class RestaurantApplication {
 
 		Staff currentStaff = staffList.get(staffSelection - 1);
 
-		// InitialiseData.initialiseMenu();
+//		 InitialiseData.initialiseMenu();
 
 		RestaurantMenu menu = new RestaurantMenu();
 		TableSystem tableSystem = new TableSystem();
