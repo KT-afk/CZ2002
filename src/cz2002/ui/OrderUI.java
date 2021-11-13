@@ -186,7 +186,7 @@ public class OrderUI {
 						break;
 					}
 				} while (true);
-
+				
 				ReservationSystem.reservationArrival(resId);
 
 				Table orTable = TableSystem.getTableByNo(resv.getTableNo());
@@ -222,6 +222,21 @@ public class OrderUI {
 					else break;
 				} while (true);
 				
+				ArrayList<Table> availTable = TableSystem.getAvailableTables();
+				
+				int i;
+				for (i = 0; i < availTable.size(); i++) {
+					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(),
+							LocalTime.now()) && availTable.get(i).getCapacity() >= pax) {
+						break;
+					}
+				}
+				
+				if (i == availTable.size()) {
+					System.out.println("There are no available tables that allow the number of pax requested");
+					break;
+				}
+				
 				do {
 					item = promptSelectMenuItem("Please select Set Package to add into order",
 							RestaurantMenu.setPackageMenu);
@@ -237,21 +252,6 @@ public class OrderUI {
 					if (item != null)
 						orDish.add((FoodDish) item);
 				} while (item != null);
-
-				ArrayList<Table> availTable = TableSystem.getAvailableTables();
-
-				int i;
-				for (i = 0; i < availTable.size(); i++) {
-					if (ReservationSystem.checkTableForReservation(availTable.get(i).getTableNo(), LocalDate.now(),
-							LocalTime.now()) && availTable.get(i).getCapacity() >= pax) {
-						break;
-					}
-				}
-				
-				if (i == availTable.size()) {
-					System.out.println("There are no available tables that allow the number of pax requested");
-					break;
-				}
 
 				Order newOrder2 = new Order(staff, orDish, orPack, null, availTable.get(i), LocalDateTime.now());
 
