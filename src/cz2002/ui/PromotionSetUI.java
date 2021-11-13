@@ -69,7 +69,6 @@ public class PromotionSetUI extends MenuUI {
         while (true) {
             String[] menuItems = foodDishMenu.stream()
                     .filter(item -> item.getEnabled())
-                    .filter(item -> !newSet.getPackageItems().contains(item))
                     .map(item -> item.toString()).toArray(String[]::new);
             String[] optionSelection = Stream.concat(Arrays.stream(menuItems), Arrays.stream(new String[] { "Done"})).toArray(String[]::new);
             String prompt = "Please select dish to include into Set Package\n " + String.format("   %-5s %-20s %-15s %s\n", "Status", "Name", "Type", "Price ($S)") + "=".repeat(55) + "";
@@ -160,7 +159,6 @@ public class PromotionSetUI extends MenuUI {
                         while (true) {
                             String[] menuItems = foodDishMenu.stream()
                                     .filter(foodDish -> foodDish.getEnabled())
-                                    .filter(foodDish -> !((SetPackage) item).getPackageItems().contains(foodDish))
                                     .map(foodDish -> foodDish.toString()).toArray(String[]::new);
                             String[] optionSelection = Stream.concat(Arrays.stream(menuItems), Arrays.stream(new String[] { "Done"})).toArray(String[]::new);
                             String prompt = "Please select dish to include into Set Package\n " + String.format("   %-5s %-20s %-15s %s\n", "Status", "Name", "Type", "Price ($S)") + "=".repeat(55) + "";
