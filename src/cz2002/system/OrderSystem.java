@@ -204,6 +204,7 @@ public class OrderSystem {
 			System.out.println("************************************************");
 			order.setComplete();
 			order.getTable().freeTable();
+			save();
 			return;
 		  }
 		}
@@ -225,6 +226,7 @@ public class OrderSystem {
 				order.getTable().freeTable();
 			}
 		}
+		save();
 	}
 
 	/**
