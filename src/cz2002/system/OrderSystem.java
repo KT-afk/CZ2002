@@ -22,10 +22,13 @@ public class OrderSystem {
 	 */
 	private ArrayList<Order> orderList;
 
+	TableSystem tableSystem;
+
 	/**
 	 * Loads past order into orderSystem
 	 */
-	public OrderSystem() {
+	public OrderSystem(TableSystem tableSystem) {
+		this.tableSystem = tableSystem;
 		orderList = new ArrayList<Order>();
 		load();
 	}
@@ -91,10 +94,10 @@ public class OrderSystem {
 			if(order.getStatus() == false) {
 				System.out.println("[" + (ori++ + 1) + "] -Order ID: " + order.getID() + " -Created On: " + order.getStart());
 				for(MenuItem item: order.getDishItems()) {
-					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | $" + item.getPrice());
 				}
 				for(MenuItem item: order.getPackItems()) {
-					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | " + item.getPrice());
+					System.out.println("       --" + item.getName() + " | " + item.getDescription() + " | $" + item.getPrice());
 				}
 			}
 		}
@@ -110,10 +113,10 @@ public class OrderSystem {
 			if(order.getID() == iinput) {
 				System.out.println("Order ID: " + order.getID() + " - Created On: " + order.getStart());
 				for(FoodDish fditem: order.getDishItems()) {
-					System.out.println("  --" + fditem.getName() + " | " + fditem.getDescription() + " | " + fditem.getPrice());
+					System.out.println("  --" + fditem.getName() + " | " + fditem.getDescription() + " | $" + fditem.getPrice());
 				}
 				for(SetPackage pitem: order.getPackItems()) {
-					System.out.println("  --" + pitem.getName() + " | " + pitem.getDescription() + " | " + pitem.getPrice());
+					System.out.println("  --" + pitem.getName() + " | " + pitem.getDescription() + " | $" + pitem.getPrice());
 				}
 				return;
 			}
@@ -203,7 +206,7 @@ public class OrderSystem {
 			System.out.println("==============================================");
 			System.out.println("************************************************");
 			order.setComplete();
-			order.getTable().freeTable();
+			tableSystem.getTableByNo(order.getTable().getTableNo()).freeTable();
 			save();
 			return;
 		  }
@@ -255,6 +258,15 @@ public class OrderSystem {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
 				var orderList = (ArrayList<Order>) ois.readObject();
 				this.orderList = orderList;
+
+				for(Order order : orderList) {
+					if(!order.getStatus()) {
+						int orderTableNo = order.getTable().getTableNo();
+						Table orderTable = tableSystem.getTableByNo(orderTableNo);
+						orderTable.reserveTable();
+					}
+				}
+
 				int id = orderList.get(orderList.size()-1).getID();
 				Order.setOrderIDCounter(id+1);
 			} catch (IOException e) {

@@ -64,7 +64,7 @@ public class RestaurantApplication {
 				capacity = 2;
 		}
 		ReservationSystem reservationSystem = new ReservationSystem(tableSystem.getTableList());
-		OrderSystem orderSystem = new OrderSystem();
+		OrderSystem orderSystem = new OrderSystem(tableSystem);
 		SaleRevenueSystem saleRevenueSystem = new SaleRevenueSystem(orderSystem);
 
 		ReservationUI reservationUI = new ReservationUI(sc, tableSystem.getTableList());

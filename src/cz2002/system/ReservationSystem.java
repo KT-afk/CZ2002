@@ -238,6 +238,11 @@ public class ReservationSystem {
 				out.flush();
 				// closing the stream
 				out.close();
+			} else {
+				File f = new File(fileName);
+				if(f.exists()) {
+					f.delete();
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e);
